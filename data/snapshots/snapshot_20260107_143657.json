@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "capture_id": "cap_510a935f45444ea198b7686a58bcaae8",
+  "timestamp": "2026-01-07T19:36:54.236999+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "\u2733 Jagex Launcher RuneLite",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": true,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 240
+  },
+  "roi": {
+    "fullscreen": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "fixed": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "resizable": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "version": 1
+  },
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "interact",
+    "hover_text": "ee EE",
+    "elements": [],
+    "dialogue_options": [
+      "': File has been unexpectedly modified.",
+      "keeps changing. Let me just pass the",
+      "Ty A ee ee, ee re ss ee ey Ae ce"
+    ]
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "\u00bb The file keeps changing\n\n\u00bb Bash(cd \"C:/Users/gilli\n--max-actions 20)\nL Unknown command. Try:",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "ee EE",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "': File has been unexpectedly modified.\n\nkeeps changing. Let me just pass the\n\nTy A ee ee, ee re ss ee ey Ae ce",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "rs\\src\\app_cli.\nified. Read it\n\ns the title dir\n/projects/agent\n\nplan, quests, |",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "te\\anantncre\\cre\\ann cl:",
+      "confidence": 0.5
+    },
+    {
+      "region": "tutorial_hint",
+      "text": "L Read sY Lines\n\n> Update(OneDrive\\Des|\n\nee ee, ne |",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [
+    "\u00bb The file keeps changing",
+    "\u00bb Bash(cd \"C:/Users/gilli",
+    "--max-actions 20)",
+    "L Unknown command. Try:"
+  ],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [
+      "rs\\src\\app_cli.",
+      "ified. Read it",
+      "s the title dir",
+      "/projects/agent",
+      "plan, quests, |"
+    ],
+    "tooltips": [
+      "te\\anantncre\\cre\\ann cl:"
+    ]
+  }
+}

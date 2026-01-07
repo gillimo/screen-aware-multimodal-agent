@@ -1,0 +1,59 @@
+{
+  "decision_id": "ti_open_door",
+  "intent": "open_and_walk_through_door",
+  "confidence": 0.7,
+  "rationale": [
+    "door found, need to open and walk through"
+  ],
+  "required_cues": [],
+  "risks": [
+    "misclick"
+  ],
+  "actions": [
+    {
+      "action_id": "ti_door_click",
+      "action_type": "click",
+      "target": {
+        "x": 230,
+        "y": 320,
+        "bounds": {
+          "x": 200,
+          "y": 290,
+          "width": 80,
+          "height": 80
+        }
+      },
+      "confidence": 0.7,
+      "gating": {},
+      "payload": {
+        "click_type": "left"
+      }
+    },
+    {
+      "action_id": "ti_door_walkthrough",
+      "action_type": "click",
+      "target": {
+        "x": 230,
+        "y": 320,
+        "bounds": {
+          "x": 200,
+          "y": 290,
+          "width": 80,
+          "height": 80
+        }
+      },
+      "confidence": 0.7,
+      "gating": {},
+      "payload": {
+        "click_type": "left",
+        "delay_before_ms": 600
+      }
+    }
+  ],
+  "verify": {
+    "expected_hint_change": true,
+    "expected_location_change": true,
+    "timeout_ms": 3000,
+    "retry_on_fail": true
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "capture_id": "cap_f825add9e8eb4ab9ad41474cdf53b8af",
+  "timestamp": "2026-01-07T19:37:19.748126+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "\u2733 Jagex Launcher RuneLite",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": true,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 79
+  },
+  "roi": {
+    "fullscreen": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "fixed": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "resizable": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "version": 1
+  },
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "interact",
+    "hover_text": "ee EE",
+    "elements": [],
+    "dialogue_options": [
+      "ed ti_door_click: True",
+      "oe ee a"
+    ]
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "> remember, ths isnt the\nyou need to reflect this",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "ee EE",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "ed ti_door_click: True\n\noe ee a",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "eDrive\\Desktop\\\n\nS a runescape a",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "",
+      "confidence": 0.5
+    },
+    {
+      "region": "tutorial_hint",
+      "text": "tines (LCctrcert",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [
+    "> remember, ths isnt the",
+    "you need to reflect this"
+  ],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [
+      "eDrive\\Desktop\\",
+      "S a runescape a"
+    ],
+    "tooltips": []
+  }
+}

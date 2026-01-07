@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "capture_id": "cap_c0d4fe30277e4264a99568212d69b628",
+  "timestamp": "2026-01-07T19:37:00.464204+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "\u2733 Jagex Launcher RuneLite",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": true,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 60
+  },
+  "roi": {
+    "fullscreen": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "fixed": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "resizable": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "version": 1
+  },
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "interact",
+    "hover_text": "ee EE",
+    "elements": [],
+    "dialogue_options": [
+      "grades, estimate, scheduler, risk, pat",
+      "ines (ctrl+o to expand)"
+    ]
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "Bash(cd \"C:/Users/gilli",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "ee EE",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "grades, estimate, scheduler, risk, pat\nines (ctrl+o to expand)",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "plan, quests, |\nnner, gearfood,\nk, pathcompare,\n\n/projects/agent",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "ts\\agentosrs\\src\\app_cl:\nctedly modified. Read it",
+      "confidence": 0.5
+    },
+    {
+      "region": "tutorial_hint",
+      "text": "\u00bb UpdaTe\\LUNELPIVe \\VES!I\nL Error: File has |\n\n\u00bb Th, [21 Rn Isnnner erhan,",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [
+    "Bash(cd \"C:/Users/gilli"
+  ],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [
+      "plan, quests, |",
+      "nner, gearfood,",
+      "k, pathcompare,",
+      "/projects/agent"
+    ],
+    "tooltips": [
+      "ts\\agentosrs\\src\\app_cl:",
+      "ctedly modified. Read it"
+    ]
+  }
+}

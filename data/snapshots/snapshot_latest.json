@@ -1,152 +1,16 @@
 {
-  "version": 1,
-  "capture_id": "cap_af2527861bcb4be7be70a8d839e35041",
-  "timestamp": "2026-01-07T17:41:06.091134+00:00",
-  "session_id": "local_capture",
-  "stale": false,
-  "client": {
-    "window_title": "Old School RuneScape",
-    "bounds": {
-      "x": -7,
-      "y": -7,
-      "width": 1141,
-      "height": 717
-    },
-    "focused": true,
-    "scale": 1.0,
-    "fps": 0,
-    "capture_latency_ms": 146
-  },
-  "roi": {
-    "fullscreen": {
-      "chat_box": {
-        "x": 23,
-        "y": 484,
-        "width": 472,
-        "height": 190
-      },
-      "minimap": {
-        "x": 901,
-        "y": 56,
-        "width": 202,
-        "height": 162
-      },
-      "inventory": {
-        "x": 811,
-        "y": 321,
-        "width": 292,
-        "height": 353
-      }
-    },
-    "fixed": {
-      "chat_box": {
-        "x": 23,
-        "y": 484,
-        "width": 472,
-        "height": 190
-      },
-      "minimap": {
-        "x": 901,
-        "y": 56,
-        "width": 202,
-        "height": 162
-      },
-      "inventory": {
-        "x": 811,
-        "y": 321,
-        "width": 292,
-        "height": 353
-      }
-    },
-    "resizable": {
-      "chat_box": {
-        "x": 23,
-        "y": 484,
-        "width": 472,
-        "height": 190
-      },
-      "minimap": {
-        "x": 901,
-        "y": 56,
-        "width": 202,
-        "height": 162
-      },
-      "inventory": {
-        "x": 811,
-        "y": 321,
-        "width": 292,
-        "height": 353
-      }
-    },
-    "version": 1
-  },
-  "ui": {
-    "open_interface": "none",
-    "selected_tab": "unknown",
-    "cursor_state": "interact",
-    "hover_text": "Jalk here \u00ab.. ;",
-    "elements": [],
-    "dialogue_options": []
-  },
-  "ocr": [
-    {
-      "region": "chat_box",
-      "text": "",
-      "confidence": 0.5
-    },
-    {
-      "region": "hover_text",
-      "text": "Jalk here \u00ab.. ;",
-      "confidence": 0.5
-    },
-    {
-      "region": "dialogue",
-      "text": "",
-      "confidence": 0.5
-    },
-    {
-      "region": "inventory",
-      "text": "",
-      "confidence": 0.5
-    },
-    {
-      "region": "tooltips",
-      "text": "",
-      "confidence": 0.5
-    },
-    {
-      "region": "tutorial_hint",
-      "text": "Exit through the n\n\ni oe 2 +\u201d Ae",
-      "confidence": 0.5
-    }
-  ],
-  "chat": [],
-  "cues": {
-    "animation_state": "unknown",
-    "highlight_state": "none",
-    "modal_state": "none",
-    "hover_text": ""
-  },
-  "derived": {
-    "location": {
-      "region": "unknown",
-      "subarea": "",
-      "confidence": 0.0
-    },
-    "activity": {},
-    "combat": {}
-  },
-  "account": {
-    "name": "",
-    "membership_status": "unknown",
-    "skills": {},
-    "inventory": [],
-    "equipment": {},
-    "resources": {}
-  },
-  "ocr_metadata": {
-    "provider": "tesseract",
-    "inventory_lines": [],
-    "tooltips": []
-  }
+  "runelite_fresh": false,
+  "player_position": null,
+  "player_world": null,
+  "camera_direction": "unknown",
+  "npcs_on_screen": [],
+  "tutorial_progress": 0,
+  "inventory_count": 0,
+  "arrow_position": null,
+  "arrow_confidence": 0.0,
+  "highlight_position": null,
+  "highlight_confidence": 0.0,
+  "capture_ms": 73,
+  "detect_ms": 0,
+  "total_ms": 76
 }

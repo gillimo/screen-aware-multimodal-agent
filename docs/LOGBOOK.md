@@ -9,6 +9,7 @@ Handles:
 - Opus
 
 Entries (newest first):
+- 2026-01-07: Opus: built Rust core (GNU toolchain + WinLibs), RuneLite plugin v1.12.11; fixed build.gradle deps.
 - 2026-01-07: Opus: signed in; reviewed project structure and committed current state.
 - 2026-01-07: MimicryModel: Esc abort now interrupts sleep delays for quicker control recovery.
 - 2026-01-07: MimicryModel: added OCR config file and calibration helper to set ROI/OCR bounds from the live window.

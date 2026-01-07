@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "milestone": "tutorial_island",
+  "phase": "movement",
+  "step": 1,
+  "completed": [],
+  "current_objectives": [
+    "Learn camera controls",
+    "Talk to Survival Expert"
+  ],
+  "required_cues": [],
+  "notes": "",
+  "last_decision_id": "ti_open_door",
+  "last_execution": {
+    "timestamp": "2026-01-07T19:37:22.015846Z",
+    "decision_id": "ti_open_door",
+    "count": 2,
+    "success_count": 2,
+    "failure_count": 0,
+    "results": [
+      {
+        "intent_id": "ti_door_click",
+        "success": true,
+        "failure_reason": ""
+      },
+      {
+        "intent_id": "ti_door_walkthrough",
+        "success": true,
+        "failure_reason": ""
+      }
+    ]
+  },
+  "repeat_count": 2,
+  "decision_index": 1
+}
