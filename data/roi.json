@@ -2,9 +2,9 @@
   "fullscreen": {
     "chat_box": {
       "x": 23,
-      "y": 450,
-      "width": 520,
-      "height": 240
+      "y": 484,
+      "width": 472,
+      "height": 190
     },
     "minimap": {
       "x": 901,
@@ -22,9 +22,9 @@
   "fixed": {
     "chat_box": {
       "x": 23,
-      "y": 450,
-      "width": 520,
-      "height": 240
+      "y": 484,
+      "width": 472,
+      "height": 190
     },
     "minimap": {
       "x": 901,
@@ -42,9 +42,9 @@
   "resizable": {
     "chat_box": {
       "x": 23,
-      "y": 450,
-      "width": 520,
-      "height": 240
+      "y": 484,
+      "width": 472,
+      "height": 190
     },
     "minimap": {
       "x": 901,

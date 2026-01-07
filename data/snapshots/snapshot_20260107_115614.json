@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_24444987e5884d6db33abbad5353a4c1",
-  "timestamp": "2026-01-07T16:57:54.727197+00:00",
+  "capture_id": "cap_b31887b31b2040dfab92d3e41c27db3f",
+  "timestamp": "2026-01-07T16:56:12.618749+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 111
+    "capture_latency_ms": 194
   },
   "roi": {
     "fullscreen": {
@@ -83,8 +83,8 @@
   "ui": {
     "open_interface": "none",
     "selected_tab": "unknown",
-    "cursor_state": "default",
-    "hover_text": "",
+    "cursor_state": "interact",
+    "hover_text": "pen i 2 more options",
     "elements": [],
     "dialogue_options": []
   },
@@ -96,7 +96,7 @@
     },
     {
       "region": "hover_text",
-      "text": "",
+      "text": "pen i 2 more options",
       "confidence": 0.5
     },
     {
@@ -112,11 +112,6 @@
     {
       "region": "tooltips",
       "text": "",
-      "confidence": 0.5
-    },
-    {
-      "region": "tutorial_hint",
-      "text": "Exit through then\n\nLL. _~.ieaeeee a Vane",
       "confidence": 0.5
     }
   ],

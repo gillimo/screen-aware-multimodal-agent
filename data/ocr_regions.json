@@ -1,9 +1,9 @@
 {
   "chat_box": {
     "x": 23,
-    "y": 450,
-    "width": 520,
-    "height": 240
+    "y": 484,
+    "width": 472,
+    "height": 190
   },
   "hover_text": {
     "x": 23,
@@ -13,9 +13,9 @@
   },
   "dialogue": {
     "x": 203,
-    "y": 380,
-    "width": 760,
-    "height": 210
+    "y": 416,
+    "width": 720,
+    "height": 162
   },
   "inventory": {
     "x": 811,
@@ -28,5 +28,11 @@
     "y": 56,
     "width": 450,
     "height": 122
+  },
+  "tutorial_hint": {
+    "x": 23,
+    "y": 90,
+    "width": 400,
+    "height": 120
   }
 }

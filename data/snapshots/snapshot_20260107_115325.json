@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_24444987e5884d6db33abbad5353a4c1",
-  "timestamp": "2026-01-07T16:57:54.727197+00:00",
+  "capture_id": "cap_d5450f1357404d3987b2cb68d450b77a",
+  "timestamp": "2026-01-07T16:53:19.195841+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 111
+    "capture_latency_ms": 142
   },
   "roi": {
     "fullscreen": {
@@ -86,12 +86,14 @@
     "cursor_state": "default",
     "hover_text": "",
     "elements": [],
-    "dialogue_options": []
+    "dialogue_options": [
+      "cua Ladder"
+    ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "",
+      "text": "A",
       "confidence": 0.5
     },
     {
@@ -101,26 +103,23 @@
     },
     {
       "region": "dialogue",
-      "text": "",
+      "text": "cua Ladder",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "",
+      "text": "der\n\npions\n\na.",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
       "text": "",
       "confidence": 0.5
-    },
-    {
-      "region": "tutorial_hint",
-      "text": "Exit through then\n\nLL. _~.ieaeeee a Vane",
-      "confidence": 0.5
     }
   ],
-  "chat": [],
+  "chat": [
+    "A"
+  ],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -146,7 +145,11 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [],
+    "inventory_lines": [
+      "der",
+      "pions",
+      "a."
+    ],
     "tooltips": []
   }
 }

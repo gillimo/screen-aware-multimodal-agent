@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_24444987e5884d6db33abbad5353a4c1",
-  "timestamp": "2026-01-07T16:57:54.727197+00:00",
+  "capture_id": "cap_d5dd7db6b4214f47a888008bfeeef246",
+  "timestamp": "2026-01-07T16:57:35.903381+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -12,10 +12,10 @@
       "width": 1141,
       "height": 717
     },
-    "focused": true,
+    "focused": false,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 111
+    "capture_latency_ms": 148
   },
   "roi": {
     "fullscreen": {
@@ -86,12 +86,16 @@
     "cursor_state": "default",
     "hover_text": "",
     "elements": [],
-    "dialogue_options": []
+    "dialogue_options": [
+      "neDrive\\Desktop\\projects\\agentosrs \\dat",
+      "\u2018+ File has been unexpectedly modified.",
+      "left corner also now will show the hov"
+    ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "",
+      "text": "> the top left corner als\n\n\u00bb Read(OneDrive\\Desktop\\p\nL Read 32 Lines",
       "confidence": 0.5
     },
     {
@@ -101,26 +105,30 @@
     },
     {
       "region": "dialogue",
-      "text": "",
+      "text": "neDrive\\Desktop\\projects\\agentosrs \\dat\n\u2018+ File has been unexpectedly modified.\n\nleft corner also now will show the hov",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "",
+      "text": "AMOAMROAAMYS A A SYM!\n\nrs\\data\\ocr_reg\nified. Read it\n\nhe hover text\n\n\\data\\ocr_regio",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "tions\" Cshould be \"Open\n\nKIICctI AN Any iacn't haaing",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "Exit through then\n\nLL. _~.ieaeeee a Vane",
+      "text": "PUCK 15 partially WO]\n\u2014 hover_text: \"pen :\n\u2014 But the yellow tut",
       "confidence": 0.5
     }
   ],
-  "chat": [],
+  "chat": [
+    "> the top left corner als",
+    "\u00bb Read(OneDrive\\Desktop\\p",
+    "L Read 32 Lines"
+  ],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -146,7 +154,16 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [],
-    "tooltips": []
+    "inventory_lines": [
+      "AMOAMROAAMYS A A SYM!",
+      "rs\\data\\ocr_reg",
+      "ified. Read it",
+      "he hover text",
+      "\\data\\ocr_regio"
+    ],
+    "tooltips": [
+      "tions\" Cshould be \"Open",
+      "KIICctI AN Any iacn't haaing"
+    ]
   }
 }
