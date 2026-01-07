@@ -884,3 +884,321 @@ class ActivityScheduler:
     def get_session_time_minutes(self) -> float:
         """Get total session time in minutes."""
         return self.total_session_time / 60.0
+
+
+# =============================================================================
+# BANK ITEM MANAGEMENT
+# =============================================================================
+
+def deposit_item(
+    item_name: str,
+    quantity: int,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> bool:
+    """
+    Deposit a specific item into the bank.
+
+    Args:
+        item_name: Name of item to deposit
+        quantity: Amount (1, 5, 10, -1 for all)
+        window_bounds: Game window bounds
+        snapshot_fn: Snapshot function
+
+    Returns:
+        True if successful
+    """
+    from src.input_exec import move_mouse_path, click
+
+    snapshot = snapshot_fn()
+    if not detect_bank_open(snapshot):
+        return False
+
+    # Find item in inventory
+    inventory = snapshot.get("runelite_data", {}).get("inventory", [])
+    target_slot = None
+
+    for item in inventory:
+        if item_name.lower() in item.get("name", "").lower():
+            target_slot = item.get("slot")
+            break
+
+    if target_slot is None:
+        return False
+
+    # Click on inventory item in bank interface
+    # Bank inventory is positioned similarly to regular inventory
+    from src.game_actions import get_inventory_slot_position, get_hover_text
+    pos = get_inventory_slot_position(target_slot, window_bounds, snapshot)
+
+    if not pos:
+        return False
+
+    x, y = pos
+    move_mouse_path(x, y, steps=6, curve_strength=0.08)
+    time.sleep(0.04)
+
+    if quantity == -1 or quantity >= 28:
+        # Deposit all - right-click and find option
+        click(button='right', dwell_ms=random.randint(40, 65))
+        time.sleep(0.15)
+
+        # Find "Deposit-All" option
+        for i in range(6):
+            menu_y = y + 35 + i * 15
+            move_mouse_path(x, menu_y, steps=4)
+            time.sleep(0.03)
+
+            snap = snapshot_fn()
+            hover = get_hover_text(snap).lower()
+            if 'deposit-all' in hover or 'all' in hover:
+                click(button='left', dwell_ms=random.randint(40, 70))
+                return True
+
+    elif quantity == 1:
+        # Left-click deposits 1
+        click(button='left', dwell_ms=random.randint(45, 75))
+        return True
+
+    else:
+        # Right-click for quantity menu
+        click(button='right', dwell_ms=random.randint(40, 65))
+        time.sleep(0.15)
+
+        target_text = f'deposit-{quantity}' if quantity in [5, 10] else 'deposit-x'
+        for i in range(6):
+            menu_y = y + 35 + i * 15
+            move_mouse_path(x, menu_y, steps=4)
+            time.sleep(0.03)
+
+            snap = snapshot_fn()
+            hover = get_hover_text(snap).lower()
+            if target_text in hover:
+                click(button='left', dwell_ms=random.randint(40, 70))
+                return True
+
+    return False
+
+
+def withdraw_item(
+    item_name: str,
+    quantity: int,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> bool:
+    """
+    Withdraw an item from the bank.
+
+    Args:
+        item_name: Name of item to withdraw
+        quantity: Amount (1, 5, 10, -1 for all)
+        window_bounds: Game window bounds
+        snapshot_fn: Snapshot function
+
+    Returns:
+        True if successful
+    """
+    from src.input_exec import move_mouse_path, click
+    from src.game_actions import find_object_by_hover, get_hover_text
+
+    snapshot = snapshot_fn()
+    if not detect_bank_open(snapshot):
+        return False
+
+    win_x, win_y, win_w, win_h = window_bounds
+
+    # Bank item area (left side of bank interface)
+    bank_area = (
+        win_x + 60,
+        win_y + 85,
+        350,  # width
+        220,  # height
+    )
+
+    # Scan for item in bank
+    target_lower = item_name.lower()
+    found_pos = None
+
+    # Scan positions in bank grid
+    for row in range(6):
+        for col in range(8):
+            x = bank_area[0] + col * 40 + 20
+            y = bank_area[1] + row * 35 + 18
+
+            move_mouse_path(x, y, steps=4, curve_strength=0.03, step_delay_ms=2)
+            time.sleep(0.03)
+
+            snap = snapshot_fn()
+            hover = get_hover_text(snap).lower()
+
+            if target_lower in hover:
+                found_pos = (x, y)
+                break
+
+        if found_pos:
+            break
+
+    if not found_pos:
+        return False
+
+    x, y = found_pos
+
+    if quantity == -1:
+        # Withdraw all
+        click(button='right', dwell_ms=random.randint(40, 65))
+        time.sleep(0.15)
+
+        for i in range(6):
+            menu_y = y + 35 + i * 15
+            move_mouse_path(x, menu_y, steps=4)
+            time.sleep(0.03)
+
+            snap = snapshot_fn()
+            hover = get_hover_text(snap).lower()
+            if 'withdraw-all' in hover:
+                click(button='left', dwell_ms=random.randint(40, 70))
+                return True
+
+    elif quantity == 1:
+        click(button='left', dwell_ms=random.randint(45, 75))
+        return True
+
+    else:
+        click(button='right', dwell_ms=random.randint(40, 65))
+        time.sleep(0.15)
+
+        target_text = f'withdraw-{quantity}' if quantity in [5, 10] else 'withdraw-x'
+        for i in range(6):
+            menu_y = y + 35 + i * 15
+            move_mouse_path(x, menu_y, steps=4)
+            time.sleep(0.03)
+
+            snap = snapshot_fn()
+            hover = get_hover_text(snap).lower()
+            if target_text in hover:
+                click(button='left', dwell_ms=random.randint(40, 70))
+                return True
+
+    return False
+
+
+# =============================================================================
+# XP TRACKING
+# =============================================================================
+
+SKILLS = [
+    "Attack", "Defence", "Strength", "Hitpoints", "Ranged", "Prayer",
+    "Magic", "Cooking", "Woodcutting", "Fletching", "Fishing", "Firemaking",
+    "Crafting", "Smithing", "Mining", "Herblore", "Agility", "Thieving",
+    "Slayer", "Farming", "Runecraft", "Hunter", "Construction",
+]
+
+
+@dataclass
+class SkillXP:
+    """XP data for a skill."""
+    name: str
+    level: int = 1
+    xp: int = 0
+    xp_start: int = 0
+    xp_gained: int = 0
+    start_time: float = 0.0
+
+    def xp_per_hour(self) -> float:
+        """Calculate XP/hour rate."""
+        if self.start_time == 0:
+            return 0.0
+
+        elapsed_hours = (time.time() - self.start_time) / 3600.0
+        if elapsed_hours < 0.01:  # Less than 36 seconds
+            return 0.0
+
+        return self.xp_gained / elapsed_hours
+
+
+@dataclass
+class XPTracker:
+    """Tracks XP gains across all skills."""
+    skills: Dict[str, SkillXP] = field(default_factory=dict)
+    session_start: float = 0.0
+    last_update: float = 0.0
+
+    def __post_init__(self):
+        if not self.skills:
+            self.skills = {name: SkillXP(name=name) for name in SKILLS}
+        self.session_start = time.time()
+
+    def update_from_snapshot(self, snapshot: Dict[str, Any]) -> Dict[str, int]:
+        """
+        Update XP values from snapshot.
+        Returns dict of skills that gained XP since last update.
+        """
+        gains = {}
+        self.last_update = time.time()
+
+        runelite = snapshot.get("runelite_data", {})
+        skills_data = runelite.get("skills", {})
+
+        for skill_name, data in skills_data.items():
+            if skill_name not in self.skills:
+                continue
+
+            skill = self.skills[skill_name]
+            new_xp = data.get("xp", 0)
+            new_level = data.get("level", 1)
+
+            # Initialize start values on first update
+            if skill.xp_start == 0:
+                skill.xp_start = new_xp
+                skill.start_time = time.time()
+
+            # Calculate gains
+            if new_xp > skill.xp:
+                gained = new_xp - skill.xp
+                gains[skill_name] = gained
+                skill.xp_gained += gained
+
+            skill.xp = new_xp
+            skill.level = new_level
+
+        return gains
+
+    def get_total_xp_gained(self) -> int:
+        """Get total XP gained this session."""
+        return sum(s.xp_gained for s in self.skills.values())
+
+    def get_skill_rates(self) -> Dict[str, float]:
+        """Get XP/hour rates for all skills with gains."""
+        rates = {}
+        for name, skill in self.skills.items():
+            if skill.xp_gained > 0:
+                rates[name] = skill.xp_per_hour()
+        return rates
+
+    def get_top_skills(self, n: int = 3) -> List[Tuple[str, int, float]]:
+        """Get top N skills by XP gained."""
+        sorted_skills = sorted(
+            [(s.name, s.xp_gained, s.xp_per_hour())
+             for s in self.skills.values() if s.xp_gained > 0],
+            key=lambda x: x[1],
+            reverse=True
+        )
+        return sorted_skills[:n]
+
+    def format_summary(self) -> str:
+        """Format a summary string."""
+        elapsed = (time.time() - self.session_start) / 60.0
+        total_xp = self.get_total_xp_gained()
+        top = self.get_top_skills()
+
+        lines = [
+            f"Session time: {elapsed:.1f} min",
+            f"Total XP: {total_xp:,}",
+        ]
+
+        if top:
+            lines.append("Top skills:")
+            for name, xp, rate in top:
+                lines.append(f"  {name}: {xp:,} xp ({rate:,.0f}/hr)")
+
+        return "\n".join(lines)

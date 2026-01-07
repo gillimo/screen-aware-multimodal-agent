@@ -67,8 +67,8 @@ Core autonomous behaviors that make the agent self-sufficient.
 ### Pathfinding & Navigation
 - [x] Multi-waypoint pathfinding (click intermediate points) - walk_waypoints(), Waypoint class
 - [ ] Obstacle detection and avoidance
-- [ ] Door/gate auto-open when blocked
-- [ ] Stuck detection with auto-unstick (walk random direction)
+- [x] Door/gate auto-open when blocked - detect_blocking_door(), try_open_door(), walk_with_door_handling()
+- [x] Stuck detection with auto-unstick - StuckState class, auto_unstick()
 - [ ] Long-distance navigation using landmarks
 - [ ] Region-based navigation hints
 
@@ -78,7 +78,7 @@ Core autonomous behaviors that make the agent self-sufficient.
 - [x] Detect inventory full condition
 - [ ] Smart item organization (stack similar items)
 - [x] Use-item-on-object flow (click item, click world object)
-- [ ] Equipment management (equip/unequip items)
+- [x] Equipment management (equip/unequip items) - equip_item(), unequip_item(), EQUIPMENT_SLOTS
 
 ### Skilling Loops (src/autonomy.py)
 - [x] Generic skilling loop framework (find resource → interact → wait → repeat)
@@ -93,8 +93,8 @@ Core autonomous behaviors that make the agent self-sufficient.
 - [x] Detect bank interface open
 - [x] Click bank booth/banker to open
 - [x] Deposit all items
-- [ ] Deposit specific items
-- [ ] Withdraw items by name/quantity
+- [x] Deposit specific items - deposit_item(item_name, quantity)
+- [x] Withdraw items by name/quantity - withdraw_item(item_name, quantity)
 - [x] Close bank interface
 - [x] Bank trip loop (walk to bank → deposit → walk back)
 
@@ -128,7 +128,7 @@ Core autonomous behaviors that make the agent self-sufficient.
 
 ### Activity Scheduler (src/autonomy.py)
 - [x] Time-based activity switching
-- [ ] XP/hour tracking per skill
+- [x] XP/hour tracking per skill - SkillXP, XPTracker classes with xp_per_hour(), format_summary()
 - [ ] Goal-based activity selection (e.g., "get 40 fishing")
 - [x] Break scheduling (human-like session patterns)
 - [ ] Daily task rotation

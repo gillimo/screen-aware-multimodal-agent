@@ -1365,3 +1365,410 @@ def find_item_slot_by_hover(
             return slot
 
     return None
+
+
+# =============================================================================
+# DOOR/GATE AUTO-OPEN
+# =============================================================================
+
+DOOR_KEYWORDS = ['door', 'gate', 'fence', 'barrier', 'entrance']
+OPEN_ACTIONS = ['open', 'push', 'enter', 'go-through', 'pass']
+
+
+def detect_blocking_door(
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    search_radius: int = 100,
+) -> Optional[Tuple[int, int, str]]:
+    """
+    Detect if there's a door/gate blocking the player's path.
+    Scans near the center of the game view.
+
+    Returns (x, y, door_text) if found, None otherwise.
+    """
+    win_x, win_y, win_w, win_h = window_bounds
+
+    # Search area near center (where player would walk into a door)
+    center_x = win_x + win_w // 2
+    center_y = win_y + win_h // 2
+
+    # Scan in front of player (assume facing roughly center)
+    scan_positions = [
+        (center_x, center_y - 50),      # North
+        (center_x + 50, center_y),      # East
+        (center_x, center_y + 50),      # South
+        (center_x - 50, center_y),      # West
+        (center_x + 40, center_y - 40), # NE
+        (center_x - 40, center_y - 40), # NW
+        (center_x + 40, center_y + 40), # SE
+        (center_x - 40, center_y + 40), # SW
+    ]
+
+    for x, y in scan_positions:
+        # Add some randomness
+        x += random.randint(-10, 10)
+        y += random.randint(-10, 10)
+
+        move_mouse_path(x, y, steps=5, curve_strength=0.05, step_delay_ms=2)
+        time.sleep(0.03)
+
+        snapshot = snapshot_fn()
+        hover = get_hover_text(snapshot).lower()
+
+        # Check if it's a door/gate
+        for keyword in DOOR_KEYWORDS:
+            if keyword in hover:
+                # Check if it has an open action
+                for action in OPEN_ACTIONS:
+                    if action in hover:
+                        return (x, y, hover)
+
+    return None
+
+
+def try_open_door(
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> ActionResult:
+    """
+    Try to find and open a nearby door/gate.
+    """
+    door_info = detect_blocking_door(window_bounds, snapshot_fn)
+
+    if not door_info:
+        return ActionResult(
+            intent_id="open_door",
+            success=False,
+            failure_reason="no_door_found"
+        )
+
+    x, y, hover_text = door_info
+
+    # Move to door and click
+    move_mouse_path(x, y, steps=6, curve_strength=0.08)
+    time.sleep(0.03)
+
+    # Check if "Open" is the default action
+    if hover_text.startswith('open'):
+        click(button='left', dwell_ms=random.randint(40, 70))
+    else:
+        # Right-click for menu
+        click(button='right', dwell_ms=random.randint(35, 60))
+        time.sleep(0.15)
+
+        # Find "Open" in menu
+        for i in range(5):
+            menu_y = y + 35 + i * 15
+            move_mouse_path(x, menu_y, steps=4)
+            time.sleep(0.03)
+
+            snap = snapshot_fn()
+            menu_hover = get_hover_text(snap).lower()
+            if 'open' in menu_hover:
+                click(button='left', dwell_ms=random.randint(40, 65))
+                break
+
+    time.sleep(0.5)  # Wait for door to open
+
+    return ActionResult(
+        intent_id="open_door",
+        success=True,
+        details={"door": hover_text, "pos": (x, y)}
+    )
+
+
+def walk_with_door_handling(
+    dx: int,
+    dy: int,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    max_door_attempts: int = 2,
+) -> ActionResult:
+    """
+    Walk to a position, automatically opening doors if blocked.
+    """
+    snapshot = snapshot_fn()
+
+    for attempt in range(max_door_attempts + 1):
+        # Try to walk
+        result = click_minimap(dx, dy, window_bounds, snapshot)
+        time.sleep(1.0)  # Wait for movement
+
+        # Check if we're stuck (might be a door)
+        new_snapshot = snapshot_fn()
+        if is_player_moving(new_snapshot):
+            return result  # Successfully moving
+
+        # Check for blocking door
+        door = detect_blocking_door(window_bounds, snapshot_fn)
+        if door:
+            try_open_door(window_bounds, snapshot_fn)
+            time.sleep(0.5)
+        else:
+            # No door, might be stuck for another reason
+            break
+
+    return result
+
+
+# =============================================================================
+# STUCK DETECTION & AUTO-UNSTICK
+# =============================================================================
+
+@dataclass
+class StuckState:
+    """Tracking state for stuck detection."""
+    position_samples: List[Tuple[str, float]] = field(default_factory=list)
+    action_history: List[str] = field(default_factory=list)
+    stuck_count: int = 0
+    last_unstick_time: float = 0.0
+
+    def add_sample(self, location: str, timestamp: float):
+        self.position_samples.append((location, timestamp))
+        if len(self.position_samples) > 10:
+            self.position_samples.pop(0)
+
+    def add_action(self, action: str):
+        self.action_history.append(action)
+        if len(self.action_history) > 20:
+            self.action_history.pop(0)
+
+    def is_stuck(self, min_samples: int = 5, max_unique: int = 2) -> bool:
+        """Check if stuck based on position history."""
+        if len(self.position_samples) < min_samples:
+            return False
+
+        recent = [p[0] for p in self.position_samples[-min_samples:]]
+        unique_positions = set(recent)
+
+        return len(unique_positions) <= max_unique
+
+    def is_action_loop(self, min_repeat: int = 4) -> bool:
+        """Check if repeating the same action."""
+        if len(self.action_history) < min_repeat:
+            return False
+
+        recent = self.action_history[-min_repeat:]
+        return len(set(recent)) == 1
+
+
+def auto_unstick(
+    stuck_state: StuckState,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> ActionResult:
+    """
+    Try various strategies to get unstuck.
+    """
+    stuck_state.stuck_count += 1
+    stuck_state.last_unstick_time = time.time()
+
+    strategy = stuck_state.stuck_count % 5
+
+    if strategy == 0:
+        # Walk in random direction
+        dx = random.randint(-50, 50)
+        dy = random.randint(-50, 50)
+        snapshot = snapshot_fn()
+        click_minimap(dx, dy, window_bounds, snapshot)
+        time.sleep(1.5)
+        return ActionResult(intent_id="unstick", success=True, details={"strategy": "random_walk"})
+
+    elif strategy == 1:
+        # Rotate camera
+        rotate_camera(random.choice(['left', 'right']), amount=3)
+        time.sleep(0.5)
+        return ActionResult(intent_id="unstick", success=True, details={"strategy": "rotate"})
+
+    elif strategy == 2:
+        # Try opening a door
+        result = try_open_door(window_bounds, snapshot_fn)
+        if result.success:
+            return ActionResult(intent_id="unstick", success=True, details={"strategy": "open_door"})
+        return ActionResult(intent_id="unstick", success=True, details={"strategy": "door_attempt"})
+
+    elif strategy == 3:
+        # Click center of screen (might unstick from dialogue/interface)
+        from src.input_exec import press_key_name
+        press_key_name('ESCAPE', hold_ms=50)
+        time.sleep(0.2)
+        return ActionResult(intent_id="unstick", success=True, details={"strategy": "escape"})
+
+    else:
+        # Walk backwards (opposite of recent movement)
+        snapshot = snapshot_fn()
+        click_minimap(-30, 30, window_bounds, snapshot)  # Walk south-west
+        time.sleep(1.5)
+        return ActionResult(intent_id="unstick", success=True, details={"strategy": "walk_back"})
+
+
+# =============================================================================
+# EQUIPMENT MANAGEMENT
+# =============================================================================
+
+# Equipment slot positions relative to equipment tab
+EQUIPMENT_SLOTS = {
+    'head': (0, 0),
+    'cape': (-1, 1),
+    'neck': (0, 1),
+    'ammo': (1, 1),
+    'weapon': (-1, 2),
+    'body': (0, 2),
+    'shield': (1, 2),
+    'legs': (0, 3),
+    'hands': (-1, 4),
+    'feet': (0, 4),
+    'ring': (1, 4),
+}
+
+
+def open_equipment_tab(
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> bool:
+    """Open the equipment/worn items tab."""
+    from src.input_exec import press_key_name
+
+    # F4 opens equipment tab in default keybinds
+    press_key_name('F4', hold_ms=50)
+    time.sleep(0.2)
+
+    # Verify tab is open
+    snapshot = snapshot_fn()
+    ui = snapshot.get("ui", {})
+    return ui.get("active_tab") == "equipment"
+
+
+def get_equipment_slot_position(
+    slot_name: str,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot: Dict[str, Any],
+) -> Optional[Tuple[int, int]]:
+    """Get screen position of an equipment slot."""
+    if slot_name not in EQUIPMENT_SLOTS:
+        return None
+
+    win_x, win_y, win_w, win_h = window_bounds
+
+    # Equipment panel is in the right sidebar
+    # Approximate positions (will need calibration)
+    panel_x = win_x + win_w - 200
+    panel_y = win_y + 240
+
+    slot_offset = EQUIPMENT_SLOTS[slot_name]
+    slot_width = 40
+    slot_height = 36
+
+    x = panel_x + 85 + slot_offset[0] * slot_width
+    y = panel_y + slot_offset[1] * slot_height
+
+    return (x, y)
+
+
+def equip_item(
+    item_name: str,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> ActionResult:
+    """
+    Equip an item from inventory.
+    """
+    # Find item in inventory
+    slot = find_item_slot_by_hover(item_name, window_bounds, snapshot_fn)
+
+    if slot is None:
+        return ActionResult(
+            intent_id=f"equip_{item_name}",
+            success=False,
+            failure_reason="item_not_found"
+        )
+
+    # Click the item to equip (most items equip on left-click)
+    snapshot = snapshot_fn()
+    pos = get_inventory_slot_position(slot, window_bounds, snapshot)
+
+    if pos:
+        x, y = pos
+        move_mouse_path(x, y, steps=6, curve_strength=0.08)
+        time.sleep(0.03)
+
+        # Check if equip/wear/wield is default action
+        snap = snapshot_fn()
+        hover = get_hover_text(snap).lower()
+
+        if any(action in hover for action in ['equip', 'wear', 'wield']):
+            click(button='left', dwell_ms=random.randint(45, 75))
+        else:
+            # Right-click for menu
+            click(button='right', dwell_ms=random.randint(40, 65))
+            time.sleep(0.15)
+
+            for i in range(6):
+                menu_y = y + 35 + i * 15
+                move_mouse_path(x, menu_y, steps=4)
+                time.sleep(0.03)
+
+                snap = snapshot_fn()
+                menu_hover = get_hover_text(snap).lower()
+                if any(action in menu_hover for action in ['equip', 'wear', 'wield']):
+                    click(button='left', dwell_ms=random.randint(40, 70))
+                    break
+
+        return ActionResult(
+            intent_id=f"equip_{item_name}",
+            success=True,
+            details={"item": item_name, "slot": slot}
+        )
+
+    return ActionResult(
+        intent_id=f"equip_{item_name}",
+        success=False,
+        failure_reason="could_not_click"
+    )
+
+
+def unequip_item(
+    slot_name: str,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+) -> ActionResult:
+    """
+    Unequip an item from an equipment slot.
+    """
+    # Open equipment tab first
+    open_equipment_tab(window_bounds, snapshot_fn)
+    time.sleep(0.2)
+
+    snapshot = snapshot_fn()
+    pos = get_equipment_slot_position(slot_name, window_bounds, snapshot)
+
+    if not pos:
+        return ActionResult(
+            intent_id=f"unequip_{slot_name}",
+            success=False,
+            failure_reason="invalid_slot"
+        )
+
+    x, y = pos
+    move_mouse_path(x, y, steps=6, curve_strength=0.08)
+    time.sleep(0.03)
+
+    # Check if slot has an item
+    snap = snapshot_fn()
+    hover = get_hover_text(snap)
+
+    if not hover or 'empty' in hover.lower():
+        return ActionResult(
+            intent_id=f"unequip_{slot_name}",
+            success=False,
+            failure_reason="slot_empty"
+        )
+
+    # Click to unequip
+    click(button='left', dwell_ms=random.randint(45, 75))
+
+    return ActionResult(
+        intent_id=f"unequip_{slot_name}",
+        success=True,
+        details={"slot": slot_name, "item": hover}
+    )
