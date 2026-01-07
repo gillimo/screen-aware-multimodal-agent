@@ -1,5 +1,153 @@
 # Ticket Log
 
+## Game Logic Layer (PRIORITY - Current Sprint)
+
+The foundation (eyes, hands, humanization) is solid. These tickets fill the gap between perception/action and autonomous gameplay.
+
+### Dialogue Handling (src/game_actions.py)
+- [x] Detect dialogue box open state from UI snapshot
+- [x] Parse dialogue options from OCR (numbered choices)
+- [x] Implement click-dialogue-option by option index or text match
+- [x] Handle "Click here to continue" prompts
+- [x] Handle NPC chat vs player dialogue vs system messages
+- [x] Add dialogue state tracking (in_dialogue, dialogue_npc, last_option)
+
+### Walking & Navigation (src/game_actions.py)
+- [x] Implement walk-to-tile by clicking minimap
+- [x] Implement walk-to-object by clicking game view (via find_object_by_hover)
+- [x] Add pathfinding fallback (click intermediate points) - walk_waypoints(), walk_direction()
+- [x] Detect when player is stuck (position not changing)
+- [x] Add camera rotation to find off-screen targets
+- [x] Implement "search and walk" pattern (rotate camera, scan, walk)
+
+### NPC Interaction Flow (src/game_actions.py)
+- [x] Implement full NPC interaction: find → hover → verify text → click
+- [x] Handle right-click menu for action selection (Talk-to, Trade, Attack)
+- [x] Add NPC tracking when target moves during approach - TrackedNPC, track_npc()
+- [x] Implement "follow NPC" for moving targets - follow_npc()
+- [x] Add interaction validation (did dialogue open? did action start?) - validate_interaction()
+
+### Inventory Management (src/game_actions.py)
+- [x] Implement click-inventory-slot by slot number (0-27)
+- [x] Implement find-item-in-inventory by item name/hover text - find_item_slot_by_hover()
+- [x] Implement use-item-on-item (click item, click target)
+- [x] Implement use-item-on-object (click item, click game object) - in _use() command
+- [x] Implement drop-item with shift-click
+- [x] Add inventory state tracking (what's in each slot) - scan_inventory_slots()
+
+### Object Interaction (src/game_actions.py)
+- [x] Implement click-object by hover text match
+- [x] Handle objects requiring specific actions (chop, mine, fish) - via interact_with_object()
+- [x] Add object state detection (tree chopped, rock depleted) - detect_object_state()
+- [x] Implement wait-for-object-respawn pattern - wait_for_object_respawn()
+
+### Error Recovery (src/game_actions.py)
+- [ ] Replace silent `pass` blocks with proper error handling
+- [x] Add recovery strategies for common failures:
+  - [x] Target not found → rotate camera → retry
+  - [ ] Click missed → re-aim → retry
+  - [x] Dialogue unexpected → close → retry (via ESCAPE)
+  - [ ] Inventory full → handle gracefully
+- [x] Add stuck detection (no progress for N ticks)
+- [ ] Implement reset-to-known-state fallback
+
+### State Machine Framework (src/state_machine.py)
+- [x] Create generic Phase class with entry/exit/tick methods
+- [x] Implement phase transition detection from game state
+- [x] Add phase-specific action selection logic
+- [x] Create phase registry for different activities (questing, skilling)
+- [x] Implement goal-driven phase sequencing
+- [x] Add common phase implementations (WaitPhase, DialoguePhase, InteractPhase, WalkPhase)
+- [x] Create Tutorial Island example phases
+
+## Autonomy Features (PRIORITY - Next Sprint)
+
+Core autonomous behaviors that make the agent self-sufficient.
+
+### Pathfinding & Navigation
+- [x] Multi-waypoint pathfinding (click intermediate points) - walk_waypoints(), Waypoint class
+- [ ] Obstacle detection and avoidance
+- [ ] Door/gate auto-open when blocked
+- [ ] Stuck detection with auto-unstick (walk random direction)
+- [ ] Long-distance navigation using landmarks
+- [ ] Region-based navigation hints
+
+### Inventory Intelligence (src/autonomy.py)
+- [x] Track inventory state (item in each slot 0-27)
+- [x] Find item by name/ID in inventory
+- [x] Detect inventory full condition
+- [ ] Smart item organization (stack similar items)
+- [x] Use-item-on-object flow (click item, click world object)
+- [ ] Equipment management (equip/unequip items)
+
+### Skilling Loops (src/autonomy.py)
+- [x] Generic skilling loop framework (find resource → interact → wait → repeat)
+- [x] Woodcutting loop (find tree → chop → wait for logs → repeat)
+- [x] Fishing loop (find spot → fish → wait → repeat)
+- [x] Mining loop (find rock → mine → wait for ore → repeat)
+- [x] Resource depletion detection (tree gone, rock empty)
+- [x] Auto-drop for power training
+- [x] Inventory full → bank trip logic
+
+### Banking (src/autonomy.py)
+- [x] Detect bank interface open
+- [x] Click bank booth/banker to open
+- [x] Deposit all items
+- [ ] Deposit specific items
+- [ ] Withdraw items by name/quantity
+- [x] Close bank interface
+- [x] Bank trip loop (walk to bank → deposit → walk back)
+
+### Combat (src/autonomy.py)
+- [x] Detect combat state (in combat vs idle)
+- [x] Target selection (click enemy)
+- [x] Auto-attack continuation
+- [x] Health monitoring (eat food when low)
+- [ ] Prayer flicking (if applicable)
+- [x] Loot pickup after kill
+- [ ] Safe-spot detection and usage
+- [x] Run away when health critical
+
+### Random Events (src/autonomy.py)
+- [x] Detect random event spawn (NPC following player)
+- [x] Common random event handlers:
+  - [x] Dismiss unwanted events
+  - [x] Genie lamp (click for XP)
+  - [ ] Quiz master (answer questions)
+  - [ ] Frog princess (kiss frog)
+- [x] Pause main activity during random event
+- [x] Resume after random event resolved
+
+### World Awareness (src/autonomy.py)
+- [x] Player position tracking (via RuneLite data)
+- [x] Nearby NPC detection
+- [x] Nearby player detection (for safety)
+- [ ] Resource availability scanning
+- [x] Death detection and respawn handling
+- [ ] Login/logout state handling
+
+### Activity Scheduler (src/autonomy.py)
+- [x] Time-based activity switching
+- [ ] XP/hour tracking per skill
+- [ ] Goal-based activity selection (e.g., "get 40 fishing")
+- [x] Break scheduling (human-like session patterns)
+- [ ] Daily task rotation
+
+### Agent Command Interface (src/agent_commands.py)
+- [x] Simple text command parser (talk_to, click, chop, etc.)
+- [x] AgentCommander class for executing commands
+- [x] Context builder for model decision making
+- [x] Automatic random event handling
+- [x] Available commands list for model prompts
+
+### Autonomous Agent Loop (src/autonomous_agent.py)
+- [x] Complete perceive → decide → act loop
+- [x] Local model integration with prompt templates
+- [x] Priority action handling (random events, health, dialogue)
+- [x] Failure tracking and recovery
+- [x] Session summary and statistics
+- [x] CLI interface with goal specification
+
 ## Performance Optimization - Rust Core (Future)
 Note: Target is processing within 1 game tick (~600ms)
 - [ ] Evaluate Rust for performance-critical components

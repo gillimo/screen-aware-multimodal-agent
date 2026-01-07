@@ -1,3 +1,11 @@
+"""
+DEPRECATED: This file is superseded by src/autonomous_agent.py
+
+The old file-based loop has been replaced with a real-time perceive->decide->act loop
+that integrates with the local model. Use autonomous_agent.py instead.
+
+For backward compatibility only - will be removed in a future version.
+"""
 import json
 from pathlib import Path
 

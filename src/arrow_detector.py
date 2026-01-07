@@ -1,4 +1,12 @@
-"""Detect OSRS flashing yellow arrow indicator."""
+"""
+DEPRECATED: Arrow detection is not used.
+
+The agent uses hover text and right-click menus for target identification,
+not the yellow arrow indicator. This provides more reliable and human-like
+interaction patterns.
+
+See src/game_actions.py for the hover-text based approach.
+"""
 from __future__ import annotations
 
 from typing import Optional, Tuple
