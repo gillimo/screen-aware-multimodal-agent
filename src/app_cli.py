@@ -74,7 +74,7 @@ from src.actions import (
 from src.action_context import ActionContextLogger, log_action_context
 from src.humanization import list_profiles, get_profile, get_active_profile
 from src.human_likeness import score_from_traces, write_kpi, validate_kpi_schema, append_kpi_log
-from src.tutorial_loop import run_loop as run_tutorial_loop
+from src.agent_loop import run_loop as run_agent_loop
 from src.randomness import seed_session
 from src.idle_behavior import (
     IdleBehaviorProfile,
@@ -2284,8 +2284,8 @@ def main():
     parser.add_argument("--max-actions", type=int, default=0)
     parser.add_argument("--sleep-ms", type=int, default=0)
     parser.add_argument("--seed", type=int, default=None)
-    parser.add_argument("--tutorial-state", default=str(DATA_DIR / "tutorial_island_state.json"))
-    parser.add_argument("--tutorial-decisions", default=str(DATA_DIR / "tutorial_island_decisions.json"))
+    parser.add_argument("--tutorial-state", default=str(DATA_DIR / "agent_state.json"))
+    parser.add_argument("--tutorial-decisions", default=str(DATA_DIR / "agent_decisions.json"))
     args = parser.parse_args()
     if not args.roi:
         default_roi = DATA_DIR / "roi.json"
@@ -2294,7 +2294,7 @@ def main():
 
     cmd = args.command.lower()
     if cmd == "tutorial-loop":
-        run_tutorial_loop(args.snapshot, args.tutorial_state, args.tutorial_decisions, args.out)
+        run_agent_loop(args.snapshot, args.tutorial_state, args.tutorial_decisions, args.out)
         return
     if cmd == "go":
         profile = get_active_profile()
@@ -2306,8 +2306,8 @@ def main():
         if not args.snapshot:
             cmd_capture(args.title, 0, 0, args.roi)
             _sleep_ms(args.sleep_ms)
-        out_path = args.out or str(DATA_DIR / "tutorial_decision.json")
-        meta = run_tutorial_loop(snapshot_path, args.tutorial_state, args.tutorial_decisions, out_path)
+        out_path = args.out or str(DATA_DIR / "decision.json")
+        meta = run_agent_loop(snapshot_path, args.tutorial_state, args.tutorial_decisions, out_path)
         decision = meta.get("decision")
         if not isinstance(decision, dict):
             print("Decision payload missing.")

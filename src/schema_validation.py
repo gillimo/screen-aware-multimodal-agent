@@ -125,3 +125,8 @@ def validate_tutorial_decisions_schema(decisions):
     errors = []
     _validate_object(decisions, schema, "", errors)
     return errors
+
+
+# Aliases for agent naming
+validate_agent_state_schema = validate_tutorial_state_schema
+validate_agent_decisions_schema = validate_tutorial_decisions_schema

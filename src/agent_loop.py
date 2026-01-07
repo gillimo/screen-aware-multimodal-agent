@@ -4,8 +4,8 @@ from pathlib import Path
 from src.model_output import validate_planner_output
 from src.schema_validation import (
     validate_snapshot_schema,
-    validate_tutorial_state_schema,
-    validate_tutorial_decisions_schema,
+    validate_agent_state_schema,
+    validate_agent_decisions_schema,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,12 +51,12 @@ def run_loop(snapshot_path, state_path, decisions_path, out_path=None):
     snap_errors = validate_snapshot_schema(snapshot)
     if snap_errors:
         raise SystemExit(f"Snapshot schema errors: {snap_errors}")
-    state_errors = validate_tutorial_state_schema(state)
+    state_errors = validate_agent_state_schema(state)
     if state_errors:
-        raise SystemExit(f"Tutorial state schema errors: {state_errors}")
-    decisions_errors = validate_tutorial_decisions_schema(decisions)
+        raise SystemExit(f"Agent state schema errors: {state_errors}")
+    decisions_errors = validate_agent_decisions_schema(decisions)
     if decisions_errors:
-        raise SystemExit(f"Tutorial decisions schema errors: {decisions_errors}")
+        raise SystemExit(f"Agent decisions schema errors: {decisions_errors}")
 
     phase = state.get("phase", "welcome")
     phase_list = decisions.get("phases", {}).get(phase, [])
@@ -93,6 +93,6 @@ def run_loop(snapshot_path, state_path, decisions_path, out_path=None):
 
 if __name__ == "__main__":
     default_snapshot = DATA_DIR / "snapshots" / "snapshot_latest.json"
-    default_state = DATA_DIR / "tutorial_island_state.json"
-    default_decisions = DATA_DIR / "tutorial_island_decisions.json"
+    default_state = DATA_DIR / "agent_state.json"
+    default_decisions = DATA_DIR / "agent_decisions.json"
     run_loop(default_snapshot, default_state, default_decisions)
