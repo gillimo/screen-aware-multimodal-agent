@@ -6,7 +6,10 @@
 
 - 2026-01-07: Status audit: no open bugs; prior "pending" notes are historical and already resolved.
 - 2026-01-07: Mouse cursor jumps to top-right unexpectedly; suspect edge/offscreen travel triggers. Investigate.
+- 2026-01-07: Mitigation: edge pause/offscreen travel now rest in place to avoid corner jumps.
 - 2026-01-07: Hover checks were blocking tutorial clicks because OCR regions were zero; mark snapshot stale when OCR bounds are unset and skip hover gating when stale.
+- 2026-01-07: LiveExecutor hover mismatch blocked clicks when snapshot stale; skip hover_text match when snapshot is stale.
+- 2026-01-07: Tutorial decision template missing `gating` caused schema error; added empty gating to space-continue action.
 - 2026-01-06: None logged.
 - 2026-01-06: No issues found in round 3 (drag jitter, capture/annotate, replay viewer, context logging, seed control).
 - 2026-01-06: replay_viewer accepted non-report input and printed None fields; added required-field guard.

@@ -218,9 +218,11 @@ Checklist: refreshed to show remaining items; will update this file and docs che
 - 2026-01-07 (Codex-Aster): Added quest guide RAG stub and periodic screenshot + stuck logging hooks.
 - 2026-01-07 (Codex-Aster): Injected snapshot chat/dialogue/hover text into model decision prompts.
 - 2026-01-07 (MimicryModel): Reviewed hands chat; no new dependency requests pending from hands/eyes at this time.
+- 2026-01-07 (Codex-Aster): Adjusted edge/offscreen idle behaviors to rest in place (avoid corner jumps).
 - 2026-01-07 (MimicryModel): Re-checked hands chat; still no new dependency requests pending.
 - 2026-01-07 (MimicryModel): Added typing burst/correction/overlap handling in type execution; updated profiles and action context schema.
 - 2026-01-07 (MimicryModel): Added per-action reaction delays and camera micro-adjustments; updated profiles/status/tickets.
 - 2026-01-07 (MimicryModel): Added mimicry scoring script to apply HUMAN_MIMICRY_RUBRIC from logs.
 - 2026-01-07 (MimicryModel): Loop is stuck repeating `ti_welcome_click` because snapshots have empty OCR/UI cues (ROI/OCR bounds still zero). Need OCR/ROI calibration or a temporary phase-advance heuristic; please advise.
+- 2026-01-07 (MimicryModel): Added fallback decision cycling + stale hover bypass in executor to unstick tutorial while OCR/ROI are empty.
 - 2026-01-07 (Codex-Aster): Acknowledged: pursue both ROI/OCR calibration and a temporary unstick heuristic; watching for updates.

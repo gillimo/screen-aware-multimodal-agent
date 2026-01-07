@@ -80,11 +80,9 @@ from src.idle_behavior import (
     IdleBehaviorProfile,
     should_idle_action,
     choose_idle_action,
-    screen_edge_pause,
     idle_recovery_sequence,
     choose_tab_toggle,
 )
-from src.cursor_travel import offscreen_travel
 from src.ui_scan import scan_panel
 from src import input_exec
 
@@ -347,15 +345,15 @@ def _apply_edge_pause(bounds, profile, timing_payload):
     chance = float(idle_cfg.get("edge_pause_chance", 0.0))
     if chance <= 0 or random.random() >= chance:
         return False
-    leave, return_point = screen_edge_pause(bounds)
-    _move_cursor(leave, profile)
+    # Rest in place to avoid suspicious corner jumps.
+    _ = input_exec.get_cursor_pos()
     pause_ms = random.uniform(IdleBehaviorProfile().edge_pause_ms[0], IdleBehaviorProfile().edge_pause_ms[1])
     if isinstance(idle_cfg.get("edge_pause_ms"), (list, tuple)) and len(idle_cfg.get("edge_pause_ms")) == 2:
         pause_ms = random.uniform(float(idle_cfg["edge_pause_ms"][0]), float(idle_cfg["edge_pause_ms"][1]))
     _sleep_ms(pause_ms)
-    _move_cursor(return_point, profile)
     if isinstance(timing_payload, dict):
         timing_payload.setdefault("edge_pause_ms", float(pause_ms))
+        timing_payload.setdefault("edge_pause_stationary", True)
     return True
 
 
@@ -366,13 +364,15 @@ def _apply_offscreen_travel(bounds, profile, timing_payload):
     chance = float(idle_cfg.get("offscreen_travel_chance", 0.0))
     if chance <= 0 or random.random() >= chance:
         return False
-    path = offscreen_travel(bounds)
+    # Rest in place to avoid offscreen travel that looks suspicious.
+    path = [input_exec.get_cursor_pos()]
     start_ts = time.time()
     for point in path:
         _move_cursor(point, profile)
     elapsed_ms = (time.time() - start_ts) * 1000.0
     if isinstance(timing_payload, dict):
         timing_payload.setdefault("offscreen_travel_ms", float(elapsed_ms))
+        timing_payload.setdefault("offscreen_travel_stationary", True)
     return True
 
 

@@ -8,6 +8,9 @@ Handles:
 - Kya
 
 Entries (newest first):
+- 2026-01-07: Codex-Aster: changed edge/offscreen idle behaviors to rest in place (no corner jumps).
+- 2026-01-07: MimicryModel: fixed tutorial decision schema error by adding gating to space-continue action.
+- 2026-01-07: MimicryModel: skipped hover_text match in LiveExecutor when snapshot is stale to avoid blocking clicks.
 - 2026-01-07: MimicryModel: added repeat_count/decision_index fallback to cycle tutorial decisions when cues are missing.
 - 2026-01-07: Codex-Aster: added snapshot chat/dialogue/hover context to model decision prompts.
 - 2026-01-07: Codex-Aster: added quest guide RAG stub + periodic screenshots and stuck logging; logged mouse-jump bug.
