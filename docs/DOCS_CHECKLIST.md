@@ -1,0 +1,52 @@
+# Docs Checklist
+
+- [ ] DOCS_INDEX.md updated
+- [ ] HOW_TO_OPERATE.md updated
+- [ ] PERMISSIONS.md updated
+- [ ] CAPABILITIES.md updated
+- [ ] DEPENDENCIES.md updated
+- [ ] AUTOMATION_CONCEPTS.md updated
+- [ ] METRICS.md updated
+- [ ] PROJECT_VISION.md updated
+- [ ] SCOPE.md updated
+- [ ] END_STATE.md updated
+- [ ] INSTALL.md updated
+- [ ] LOCAL_MODEL.md updated
+- [ ] PRIORITIES.md updated
+- [ ] HANDS_AND_EYES.md updated
+- [ ] STATE_AWARENESS_REQUIREMENTS.md updated
+- [ ] HUMAN_LIKE_GOALS.md updated
+- [ ] HUMAN_LIKE_BEHAVIOR_CATALOG.md updated
+- [ ] HUMAN_LIKE_TOOLCHAIN_PLAN.md updated
+- [ ] HUMAN_LIKE_TOOLCHAIN_SCHEMA.md updated
+- [ ] SCHEMAS.md updated
+- [ ] STATE_SCHEMA.md updated
+- [ ] SNAPSHOT_SCHEMA.md updated
+- [ ] MIMICRY_AND_MODEL_ACCEPTANCE.md updated
+- [ ] MIMICRY_AND_MODEL_OVERVIEW.md updated
+- [ ] MIMICRY_AND_MODEL_STATUS.md updated
+- [ ] MODEL_OUTPUT_SCHEMA.md updated
+- [ ] HUMANIZATION_PROFILES.md updated
+- [ ] CALIBRATION_WORKFLOW.md updated
+- [ ] DATA_RETENTION_POLICY.md updated
+- [ ] humanization_profiles_schema.json updated
+- [ ] local_model.json updated
+- [ ] DECISION_TRACE_SCHEMA.md updated
+- [ ] HUMAN_LIKENESS_KPI.md updated
+- [ ] decision_trace_schema.json updated
+- [ ] human_likeness_kpi_schema.json updated
+- [ ] human_kpi_log_schema.json updated
+- [ ] HUMAN_LIKENESS_KPI_LOG.md updated
+- [ ] BUG_LOG.md updated
+- [ ] DEMO.md updated
+- [ ] DOCS_CHECKLIST.md updated
+- [ ] FEATURE_AUDITS.md updated
+- [ ] FILENAME_AUDIT.md updated
+- [ ] HUMAN_EQUIVALENCE.md updated
+- [ ] LOG_CHECKLIST.md updated
+- [ ] QUESTION_LOG.md updated
+- [ ] SYSTEM_NOTES.md updated
+- [ ] LOGBOOK.md updated
+- [ ] TICKET_MODULE_MAP.md synced with TICKETS.md
+- [ ] SIGNING_OFF.md updated
+

@@ -1,0 +1,111 @@
+{
+  "required": [
+    "timestamp",
+    "session_id",
+    "client",
+    "roi",
+    "ui",
+    "ocr",
+    "cues",
+    "derived",
+    "account"
+  ],
+  "types": {
+    "timestamp": "string",
+    "session_id": "string",
+    "client": "object",
+    "roi": "object",
+    "ui": "object",
+    "ocr": "array",
+    "cues": "object",
+    "derived": "object",
+    "account": "object"
+  },
+  "objects": {
+    "client": {
+      "required": [
+        "window_title",
+        "bounds",
+        "focused",
+        "scale"
+      ],
+      "types": {
+        "window_title": "string",
+        "bounds": "object",
+        "focused": "boolean",
+        "scale": "number",
+        "fps": "number",
+        "capture_latency_ms": "number"
+      }
+    },
+    "ui": {
+      "required": [
+        "open_interface",
+        "selected_tab",
+        "cursor_state",
+        "hover_text",
+        "elements",
+        "dialogue_options"
+      ],
+      "types": {
+        "open_interface": "string",
+        "selected_tab": "string",
+        "cursor_state": "string",
+        "hover_text": "string",
+        "elements": "array",
+        "dialogue_options": "array"
+      },
+      "arrays": {
+        "elements": "object",
+        "dialogue_options": "string"
+      }
+    },
+    "cues": {
+      "required": [
+        "animation_state",
+        "highlight_state",
+        "modal_state",
+        "hover_text"
+      ],
+      "types": {
+        "animation_state": "string",
+        "highlight_state": "string",
+        "modal_state": "string",
+        "hover_text": "string"
+      }
+    },
+    "derived": {
+      "required": [
+        "location",
+        "activity",
+        "combat"
+      ],
+      "types": {
+        "location": "object",
+        "activity": "object",
+        "combat": "object"
+      }
+    },
+    "account": {
+      "required": [
+        "name",
+        "membership_status",
+        "skills",
+        "inventory",
+        "equipment",
+        "resources"
+      ],
+      "types": {
+        "name": "string",
+        "membership_status": "string",
+        "skills": "object",
+        "inventory": "array",
+        "equipment": "object",
+        "resources": "object"
+      },
+      "arrays": {
+        "inventory": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": [
+    "timestamp",
+    "source",
+    "message",
+    "payload"
+  ],
+  "types": {
+    "timestamp": "string",
+    "source": "string",
+    "message": "string",
+    "payload": "object"
+  }
+}

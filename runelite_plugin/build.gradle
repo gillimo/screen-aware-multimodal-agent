@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.osrscoach'
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.runelite.net' }
+}
+
+dependencies {
+    compileOnly group: 'net.runelite', name: 'client', version: 'latest.release'
+    compileOnly group: 'net.runelite', name: 'runelite-api', version: 'latest.release'
+    compileOnly group: 'net.runelite', name: 'runelite-client', version: 'latest.release'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}

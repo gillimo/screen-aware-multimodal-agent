@@ -1,0 +1,108 @@
+﻿# Logbook
+
+Handles:
+- Codex
+- Codex-HandsEyes
+- MimicryModel
+- Kya
+
+Entries (newest first):
+- 2026-01-06: Codex-HandsEyes: added inter-action pauses, confirmation delay, reaction-time mapping, and click cadence presets.
+- 2026-01-06: MimicryModel: audited remaining tasks, added tickets, and updated bug log.
+- 2026-01-06: Codex-HandsEyes: added typing cadence, overlap, modifier variance, input noise, and handoff timing.
+- 2026-01-06: MimicryModel: added Mimicry and Model status tracker.
+- 2026-01-06: Codex-HandsEyes: added chaining variability, rhythm, and pacing helpers.
+- 2026-01-06: MimicryModel: finalized remaining Mimicry/Model log entries.
+- 2026-01-06: Codex-HandsEyes: added hover-check, irreversible double-check, think pause, and target bias helpers.
+- 2026-01-06: Codex-HandsEyes: added edge avoidance helper.
+- 2026-01-06: Codex-HandsEyes: added speed ramp, tremor, and start jitter helpers.
+- 2026-01-06: Codex-HandsEyes: added attention drift helper.
+- 2026-01-06: Codex-HandsEyes: wired random-event chat suppression into model CLI.
+- 2026-01-06: MimicryModel: added KPI log schema/logging and profile tagging in action logs.
+- 2026-01-06: MimicryModel: added commit message conventions.
+- 2026-01-06: MimicryModel: added git workflow guidance to docs.
+- 2026-01-06: MimicryModel: audited documentation and logging checklists for gaps.
+- 2026-01-06: Codex-HandsEyes: added random-event chat detection helper.
+- 2026-01-06: Codex-HandsEyes: set unique handle for hands/eyes work.
+- 2026-01-06: MimicryModel: verified logbook sync after latest mimicry/model updates.
+- 2026-01-06: Codex: added UI scan pattern helper.
+- 2026-01-06: MimicryModel: added decision export/tail, KPI validation, and profile enforcement hook.
+- 2026-01-06: Codex: added action abort check for UI changes.
+- 2026-01-06: Codex: added retry backoff hooks for action execution.
+- 2026-01-06: Codex: added cursor settle timing sampling.
+- 2026-01-06: Codex: added target acquisition aim-point helper.
+- 2026-01-06: MimicryModel: added KPI schema validation, decision summary export, and decision trace schema data.
+- 2026-01-06: Codex: added mouse acceleration profile presets.
+- 2026-01-06: Codex: added misclick/near-miss targeting helper.
+- 2026-01-06: MimicryModel: added decision trace schema data, KPI writer, and strict JSON default.
+- 2026-01-06: Codex: added scroll speed variance and pause sampling.
+- 2026-01-06: Codex: added click down/up and long-press timing variance.
+- 2026-01-06: Codex: added hover dwell timing sampling.
+- 2026-01-06: MimicryModel: added decision trace schema, KPI format, and retention purge.
+- 2026-01-06: Codex: completed round 3 (drag jitter, capture/annotate, replay viewer, context logging, seed control).
+- 2026-01-06: MimicryModel: added decision trace validation, replay stub, and profile selection.
+- 2026-01-06: MimicryModel: added model output validation, profile validation, and human-likeness scorer stub.
+- 2026-01-06: Codex: added timing variance sampling utilities.
+- 2026-01-06: Codex: added mouse pathing curve/easing generator.
+- 2026-01-06: Codex: added display refresh rate detection and input latency stub.
+- 2026-01-06: MimicryModel: added model-default planning flag and humanization profile CLI.
+- 2026-01-06: Codex: added device-level input profile scaffolding.
+- 2026-01-06: Codex: added hardware input device enumeration (Windows raw input).
+- 2026-01-06: Codex: added human-in-the-loop approval policy scaffold.
+- 2026-01-06: Codex: added model output schema for action intents.
+- 2026-01-06: MimicryModel: added model-driven planning option in CLI.
+- 2026-01-06: MimicryModel: added focus recovery helpers for input execution.
+- 2026-01-06: MimicryModel: added minimap region inference stub.
+- 2026-01-06: MimicryModel: added cursor state and hover text extraction helpers.
+- 2026-01-06: MimicryModel: added model-decision CLI and output schema validation.
+- 2026-01-06: MimicryModel: added UI element detector scaffold.
+- 2026-01-06: MimicryModel: added action gating, dry-run logging, and OCR provider scaffold.
+- 2026-01-06: MimicryModel: wired local model via Ollama and added model CLI command.
+- 2026-01-06: MimicryModel: added focus sampling to capture sessions.
+- 2026-01-06: MimicryModel: aligned snapshot stub with schema defaults and validated.
+- 2026-01-06: MimicryModel: added capture latency metrics to session reporting.
+- 2026-01-06: MimicryModel: added capture loop (FPS/ROI) and updated CLI docs.
+- 2026-01-06: MimicryModel: documented capture/validate CLI usage.
+- 2026-01-06: MimicryModel: added action intent API and dry-run executor scaffold.
+- 2026-01-06: MimicryModel: added capture CLI command for snapshot stub output.
+- 2026-01-06: MimicryModel: added schema validation code and CLI validate command.
+- 2026-01-06: MimicryModel: added perception window discovery/capture scaffolding.
+- 2026-01-06: MimicryModel: started mimicry/model dependency implementation (schema validation).
+- 2026-01-06: MimicryModel: prioritized hands/eyes queue and tagged model/mimicry dependencies.
+- 2026-01-06: MimicryModel: added Mimicry and Model overview doc and synced tickets.
+- 2026-01-06: MimicryModel: added Mimicry and Model acceptance checklist and synced docs.
+- 2026-01-06: MimicryModel: added end-state gap tickets and decision schema fields.
+- 2026-01-06: MimicryModel: added concrete human-equivalence thresholds and dataset manifest template.
+- 2026-01-06: MimicryModel: added human-equivalence requirements and tickets.
+- 2026-01-06: MimicryModel: audited docs checklist for missing entries.
+- 2026-01-06: MimicryModel: added ticket for expected model output schema.
+- 2026-01-06: MimicryModel: added schema tickets and synced module map.
+- 2026-01-06: MimicryModel: added schema docs for state and snapshots, plus schema index.
+- 2026-01-06: MimicryModel: expanded hands/eyes tickets to full backlog.
+- 2026-01-06: MimicryModel: added hardware-facing hands/eyes requirements and tickets.
+- 2026-01-06: MimicryModel: mapped toolchain plan to tickets and added schema doc.
+- 2026-01-06: MimicryModel: synced hands/eyes backlog into tickets and ops doc.
+- 2026-01-06: MimicryModel: added human-like toolchain plan and indexed it.
+- 2026-01-06: MimicryModel: started hands/eyes requirements and ticketing doc.
+- 2026-01-06: MimicryModel: updated automation concepts to reflect opt-in action execution.
+- 2026-01-06: MimicryModel: aligned capabilities with optional action execution.
+- 2026-01-06: MimicryModel: audited docs for project alignment and synced updates.
+- 2026-01-06: MimicryModel: mapped stimulus parity tickets to modules.
+- 2026-01-06: MimicryModel: added end-state stimulus parity notes and tickets.
+- 2026-01-06: MimicryModel: added end-state mimicry tickets.
+- 2026-01-06: MimicryModel: recorded human mimicry as a lofty long-term target in goals.
+- 2026-01-06: MimicryModel: added human-like behavior catalog and clarified goals.
+- 2026-01-06: MimicryModel: added explicit goal for perfect human mimicry.
+- 2026-01-06: MimicryModel: adjusted human-like goals to target perfect mimicry.
+- 2026-01-06: MimicryModel: expanded human-like tickets, goals, and module mapping.
+- 2026-01-06: MimicryModel: mapped tickets to modules in docs.
+- 2026-01-06: MimicryModel: added additional human-like behavior tickets per request.
+- 2026-01-06: MimicryModel: added human-like behavior tickets and goals doc.
+- 2026-01-06: MimicryModel: added ticket for chat via local model when player name is detected.
+- 2026-01-06: MimicryModel: added human-like interaction tickets (timing, movement, rhythm, corrections).
+- 2026-01-06: MimicryModel: adding tickets for variable click timing and non-linear mouse pathing.
+- 2026-01-06: MimicryModel: initialized agentosrs project scaffold.
+
+
+- 2026-01-06: <handle>: initialized project from template.
+

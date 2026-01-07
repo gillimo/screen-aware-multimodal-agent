@@ -1,0 +1,113 @@
+{
+  "required": [
+    "version",
+    "account",
+    "skills",
+    "quests",
+    "diaries",
+    "gear",
+    "unlocks",
+    "goals"
+  ],
+  "types": {
+    "version": "number",
+    "account": "object",
+    "skills": "object",
+    "quests": "object",
+    "diaries": "object",
+    "gear": "object",
+    "unlocks": "object",
+    "goals": "object"
+  },
+  "objects": {
+    "account": {
+      "required": [
+        "name",
+        "mode",
+        "combat_level",
+        "gp",
+        "playstyle",
+        "members"
+      ],
+      "types": {
+        "name": "string",
+        "mode": "string",
+        "combat_level": "number",
+        "gp": "number",
+        "playstyle": "string",
+        "members": "boolean"
+      }
+    },
+    "quests": {
+      "required": [
+        "completed",
+        "in_progress",
+        "not_started"
+      ],
+      "types": {
+        "completed": "array",
+        "in_progress": "array",
+        "not_started": "array"
+      },
+      "arrays": {
+        "completed": "string",
+        "in_progress": "string",
+        "not_started": "string"
+      }
+    },
+    "gear": {
+      "required": [
+        "melee",
+        "ranged",
+        "magic",
+        "utility"
+      ],
+      "types": {
+        "melee": "array",
+        "ranged": "array",
+        "magic": "array",
+        "utility": "array"
+      },
+      "arrays": {
+        "melee": "string",
+        "ranged": "string",
+        "magic": "string",
+        "utility": "string"
+      }
+    },
+    "unlocks": {
+      "required": [
+        "spellbooks",
+        "teleports",
+        "minigames"
+      ],
+      "types": {
+        "spellbooks": "array",
+        "teleports": "array",
+        "minigames": "array"
+      },
+      "arrays": {
+        "spellbooks": "string",
+        "teleports": "string",
+        "minigames": "string"
+      }
+    },
+    "goals": {
+      "required": [
+        "short",
+        "mid",
+        "long"
+      ],
+      "types": {
+        "short": "array",
+        "mid": "array",
+        "long": "array"
+      },
+      "arrays": {
+        "short": "string",
+        "mid": "string",
+        "long": "string"
+      }
+    }
+  }
+}

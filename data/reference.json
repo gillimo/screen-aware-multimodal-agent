@@ -1,0 +1,95 @@
+{
+  "quests": [
+    {
+      "name": "Druidic Ritual",
+      "skill_reqs": {"herblore": 3},
+      "quest_reqs": [],
+      "item_reqs": ["raw chicken", "raw beef", "raw rat meat", "raw bear meat"],
+      "unlocks": ["herblore"]
+    },
+    {
+      "name": "Recipe for Disaster",
+      "skill_reqs": {"cooking": 70, "thieving": 53, "agility": 48},
+      "quest_reqs": ["Goblin Diplomacy", "Big Chompy Bird Hunting"],
+      "item_reqs": [],
+      "unlocks": ["barrows gloves"]
+    }
+  ],
+  "beginner_quest_bundle": [
+    {
+      "name": "Cook's Assistant",
+      "why": "early xp and easy start",
+      "unlocks": ["basic cooking"]
+    },
+    {
+      "name": "Sheep Shearer",
+      "why": "fast crafting xp",
+      "unlocks": ["crafting levels"]
+    },
+    {
+      "name": "Romeo & Juliet",
+      "why": "early quest points",
+      "unlocks": ["quest points"]
+    },
+    {
+      "name": "Druidic Ritual",
+      "why": "unlock herblore",
+      "unlocks": ["herblore"]
+    }
+  ],
+  "diaries": [
+    {"region": "lumbridge", "tiers": ["easy", "medium", "hard", "elite"]},
+    {"region": "varrock", "tiers": ["easy", "medium", "hard", "elite"]},
+    {"region": "ardougne", "tiers": ["easy", "medium", "hard", "elite"]}
+  ],
+  "gear_tiers": {
+    "melee": ["rune", "dragon", "barrows", "bandos"],
+    "ranged": ["rune", "black d'hide", "karil", "armadyl"],
+    "magic": ["mystic", "ahrim", "ancestral"]
+  },
+  "food_tiers": [
+    {"min_level": 1, "food": "shrimp"},
+    {"min_level": 15, "food": "trout"},
+    {"min_level": 30, "food": "lobster"},
+    {"min_level": 50, "food": "monkfish"},
+    {"min_level": 70, "food": "shark"}
+  ],
+  "money_methods": [
+    {"min_level": 1, "method": "collect cowhides", "risk": "low", "gp_hr": 50000},
+    {"min_level": 30, "method": "cut willow logs", "risk": "low", "gp_hr": 120000},
+    {"min_level": 50, "method": "blast furnace bars", "risk": "low", "gp_hr": 300000},
+    {"min_level": 70, "method": "barrows runs", "risk": "medium", "gp_hr": 700000}
+  ],
+  "teleport_checklist": {
+    "early": ["games necklace", "dueling ring", "chronicle"],
+    "mid": ["fairy rings", "spirit trees", "ardougne cloak"],
+    "late": ["poh portal nexus", "quest cape", "achievement diary cape"]
+  },
+  "glossary": [
+    {"term": "overheads", "def": "protection prayers that reduce damage"},
+    {"term": "safe spot", "def": "positioning that prevents enemy attacks"},
+    {"term": "tick", "def": "0.6s game cycle used for timing"}
+  ],
+  "boss_readiness": [
+    {"name": "barrows", "reqs": ["priest in peril"], "stats": {"magic": 50}},
+    {"name": "jad", "reqs": ["fire cape"], "stats": {"ranged": 70, "prayer": 43}},
+    {"name": "zulrah", "reqs": ["regicide"], "stats": {"magic": 75, "ranged": 75}}
+  ],
+  "efficiency_benchmarks": [
+    {"skill": "agility", "method": "rooftop courses", "xp_hr": 45000},
+    {"skill": "fishing", "method": "barbarian fishing", "xp_hr": 60000}
+  ],
+  "gear_upgrades": [
+    {"style": "melee", "from": "rune", "to": "dragon", "gp": 200000, "impact": "medium"},
+    {"style": "magic", "from": "mystic", "to": "ahrim", "gp": 3000000, "impact": "high"}
+  ],
+  "scheduler": {
+    "daily": ["farm run", "birdhouse run"],
+    "weekly": ["tears of guthix"]
+  },
+  "path_options": [
+    {"path": "fast", "tradeoff": "higher cost", "notes": "buy supplies"},
+    {"path": "cheap", "tradeoff": "slower", "notes": "self gather"},
+    {"path": "safe", "tradeoff": "lower gp/hr", "notes": "low risk methods"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "profiles": {
+    "subtle": {
+      "timing_ms": { "reaction_mean": 180, "reaction_stdev": 40, "click_dwell": 55 },
+      "motion": { "curve_strength": 0.35, "overshoot_rate": 0.02, "micro_jitter_px": 0.3 },
+      "errors": { "misclick_rate": 0.002, "correction_rate": 0.05 },
+      "session": { "burst_mean_actions": 12, "rest_mean_ms": 1800, "fatigue_drift_rate": 0.01 },
+      "device": { "polling_jitter_ms": 1.5, "dpi_profile": "default" }
+    },
+    "normal": {
+      "timing_ms": { "reaction_mean": 220, "reaction_stdev": 60, "click_dwell": 70 },
+      "motion": { "curve_strength": 0.55, "overshoot_rate": 0.04, "micro_jitter_px": 0.6 },
+      "errors": { "misclick_rate": 0.004, "correction_rate": 0.08 },
+      "session": { "burst_mean_actions": 10, "rest_mean_ms": 2400, "fatigue_drift_rate": 0.02 },
+      "device": { "polling_jitter_ms": 2.0, "dpi_profile": "default" }
+    },
+    "heavy": {
+      "timing_ms": { "reaction_mean": 280, "reaction_stdev": 90, "click_dwell": 85 },
+      "motion": { "curve_strength": 0.7, "overshoot_rate": 0.06, "micro_jitter_px": 0.9 },
+      "errors": { "misclick_rate": 0.008, "correction_rate": 0.12 },
+      "session": { "burst_mean_actions": 8, "rest_mean_ms": 3200, "fatigue_drift_rate": 0.03 },
+      "device": { "polling_jitter_ms": 2.5, "dpi_profile": "default" }
+    }
+  }
+}

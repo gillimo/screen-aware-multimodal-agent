@@ -1,0 +1,14 @@
+{
+  "required": [
+    "total_events",
+    "unique_action_types",
+    "reaction_ms_avg",
+    "notes"
+  ],
+  "types": {
+    "total_events": "number",
+    "unique_action_types": "number",
+    "reaction_ms_avg": "number",
+    "notes": "string"
+  }
+}

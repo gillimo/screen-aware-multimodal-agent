@@ -1,0 +1,10 @@
+{
+  "provider": "ollama",
+  "host": "http://localhost:11434",
+  "model": "phi3:mini",
+  "timeout_s": 20,
+  "temperature": 0.2,
+  "plan_default": "model",
+  "strict_json": true,
+  "active_profile": "normal"
+}

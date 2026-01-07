@@ -1,0 +1,10 @@
+{
+  "required": [
+    "version",
+    "profiles"
+  ],
+  "types": {
+    "version": "number",
+    "profiles": "object"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "account": {
+    "name": "gillimo",
+    "mode": "main",
+    "combat_level": 80,
+    "gp": 1500000,
+    "playstyle": "balanced",
+    "members": true
+  },
+  "skills": {
+    "attack": 70,
+    "strength": 70,
+    "defence": 70,
+    "ranged": 65,
+    "magic": 70,
+    "prayer": 43,
+    "hitpoints": 72,
+    "agility": 45,
+    "herblore": 38,
+    "thieving": 50,
+    "crafting": 55,
+    "fletching": 50,
+    "slayer": 50,
+    "mining": 55,
+    "smithing": 50,
+    "fishing": 55,
+    "cooking": 55,
+    "woodcutting": 55,
+    "firemaking": 50,
+    "runecraft": 1,
+    "construction": 30,
+    "farming": 30,
+    "hunter": 20
+  },
+  "quests": {
+    "completed": ["Cook's Assistant", "Druidic Ritual"],
+    "in_progress": [],
+    "not_started": ["Recipe for Disaster", "Desert Treasure"]
+  },
+  "diaries": {
+    "lumbridge": "easy",
+    "varrock": "none",
+    "ardougne": "none"
+  },
+  "gear": {
+    "melee": ["dragon scimitar", "rune armor"],
+    "ranged": ["rune crossbow"],
+    "magic": ["mystic robe"],
+    "utility": ["games necklace", "dueling ring"]
+  },
+  "unlocks": {
+    "spellbooks": ["standard"],
+    "teleports": ["games necklace", "dueling ring"],
+    "minigames": []
+  },
+  "goals": {
+    "short": ["get 43 prayer", "unlock fairy rings"],
+    "mid": ["barrows gloves", "fire cape"],
+    "long": ["quest cape"]
+  }
+}

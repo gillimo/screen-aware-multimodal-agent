@@ -1,0 +1,10 @@
+{
+  "required": [
+    "timestamp",
+    "kpi"
+  ],
+  "types": {
+    "timestamp": "string",
+    "kpi": "object"
+  }
+}

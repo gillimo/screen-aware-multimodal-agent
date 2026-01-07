@@ -1,0 +1,20 @@
+# Bug Log
+
+- 2026-01-06: None logged.
+- 2026-01-06: No issues found in round 3 (drag jitter, capture/annotate, replay viewer, context logging, seed control).
+- 2026-01-06: replay_viewer accepted non-report input and printed None fields; added required-field guard.
+- 2026-01-06: Reviewed open issues before round 4; none pending.
+- 2026-01-06: No issues found in round 4 (hover dwell, click dwell, scroll variance, misclicks, accel profiles).
+- 2026-01-06: Reviewed open issues before round 5; none pending.
+- 2026-01-06: No issues found in round 5 (target acquisition, settle, retry backoff, abort checks, UI scan).
+- 2026-01-06: No issues found in random-event suppression integration.
+- 2026-01-06: Reviewed open issues before round 7; none pending.
+- 2026-01-06: No issues found in round 7 (attention drift, speed ramps, tremor, edge avoid, start jitter).
+- 2026-01-06: Reviewed open issues before round 8; none pending.
+- 2026-01-06: Cursor settle integration is sampling-only; execution wiring still needed.
+- 2026-01-06: Reviewed open issues before round 9; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 9 (chaining variability, rhythm, pacing, spacing).
+- 2026-01-06: Reviewed open issues before round 10; cursor settle wiring still pending.
+- 2026-01-06: MimicryModel audit: no new bugs found in mimicry/model updates.
+- 2026-01-06: No issues found in round 10 (typing cadence, overlap, modifiers, noise, handoff).
+- 2026-01-06: Reviewed open issues before round 11; cursor settle wiring still pending.
