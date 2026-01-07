@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_b598b0dd171043c3a99550d998d32935",
-  "timestamp": "2026-01-07T17:21:47.845814+00:00",
+  "capture_id": "cap_4acd266f903846b392eb5c63b7f3f76a",
+  "timestamp": "2026-01-07T17:21:04.577218+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 95
+    "capture_latency_ms": 115
   },
   "roi": {
     "fullscreen": {
