@@ -11,7 +11,11 @@
   "safety_gates_enabled": false,
   "approval_policy": {
     "require_approval": false,
-    "unsafe_actions": ["drag", "type", "camera"],
+    "unsafe_actions": [
+      "drag",
+      "type",
+      "camera"
+    ],
     "auto_approve_actions": []
   }
 }

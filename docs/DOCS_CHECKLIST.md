@@ -39,6 +39,7 @@
 - [ ] local_model.json updated
 - [ ] human_equivalence_thresholds.json updated
 - [ ] roi.json updated
+- [ ] ocr_config.json updated
 - [ ] DECISION_TRACE_SCHEMA.md updated
 - [ ] HUMAN_LIKENESS_KPI.md updated
 - [ ] decision_trace_schema.json updated

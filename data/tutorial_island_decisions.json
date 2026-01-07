@@ -51,6 +51,7 @@
             "action_type": "type",
             "target": { "x": 0, "y": 0 },
             "confidence": 0.6,
+            "gating": {},
             "payload": { "text": " " }
           }
         ]

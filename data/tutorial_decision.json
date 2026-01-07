@@ -1,0 +1,41 @@
+{
+  "decision_id": "ti_welcome_001",
+  "intent": "talk_to_guide",
+  "confidence": 0.6,
+  "rationale": [
+    "tutorial start",
+    "guide visible"
+  ],
+  "required_cues": [
+    "guide_visible",
+    "dialogue_ready"
+  ],
+  "risks": [
+    "misclick_near_npc"
+  ],
+  "actions": [
+    {
+      "action_id": "ti_welcome_click",
+      "action_type": "click",
+      "target": {
+        "x": 0,
+        "y": 0,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        }
+      },
+      "confidence": 0.6,
+      "gating": {
+        "verification_steps": [
+          "hover_text=RuneScape Guide"
+        ],
+        "abort_conditions": [
+          "modal_open"
+        ]
+      }
+    }
+  ]
+}

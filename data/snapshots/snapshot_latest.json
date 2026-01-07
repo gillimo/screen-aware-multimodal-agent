@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "capture_id": "cap_e710d0eed48f4efb93f1a2e31b4c3a2b",
+  "timestamp": "2026-01-07T16:00:04.544660+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "Old School RuneScape",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": false,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 225
+  },
+  "roi": {
+    "fullscreen": {
+      "chat_box": {
+        "x": 23,
+        "y": 450,
+        "width": 520,
+        "height": 240
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "fixed": {
+      "chat_box": {
+        "x": 23,
+        "y": 450,
+        "width": 520,
+        "height": 240
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "resizable": {
+      "chat_box": {
+        "x": 23,
+        "y": 450,
+        "width": 520,
+        "height": 240
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "version": 1
+  },
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "interact",
+    "hover_text": "BY Windows PowerShell",
+    "elements": [],
+    "dialogue_options": [
+      "~~ ee Ee",
+      "\"x\": 23,",
+      "ny\": 484,",
+      "\"width\": 472,",
+      "\"height\": 190",
+      "_"
+    ]
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "++ Hi\n\n. t\n\"width\": 472,\n\"height\": 190\n\nBn\n\"Chat_box\": {\n\"x\": 23,\n\n\"y\": 450,",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "BY Windows PowerShell",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "~~ ee Ee\n\n\"x\": 23,\nny\": 484,\n\n\"width\": 472,\n\"height\": 190\n\n_",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [
+    "++ Hi",
+    ". t",
+    "\"width\": 472,",
+    "\"height\": 190",
+    "Bn",
+    "\"Chat_box\": {",
+    "\"x\": 23,",
+    "\"y\": 450,"
+  ],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [],
+    "tooltips": []
+  }
+}

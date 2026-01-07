@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "capture_id": "cap_18a7d492a3504effadbc2bd28bac1fc2",
+  "timestamp": "2026-01-07T15:53:17.114734+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "Old School RuneScape",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": false,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 76
+  },
+  "roi": {
+    "fullscreen": {
+      "chat_box": {
+        "x": 15,
+        "y": 480,
+        "width": 479,
+        "height": 200
+      },
+      "minimap": {
+        "x": 905,
+        "y": 28,
+        "width": 205,
+        "height": 172
+      },
+      "inventory": {
+        "x": 814,
+        "y": 308,
+        "width": 296,
+        "height": 372
+      }
+    },
+    "fixed": {
+      "chat_box": {
+        "x": 15,
+        "y": 480,
+        "width": 479,
+        "height": 200
+      },
+      "minimap": {
+        "x": 905,
+        "y": 28,
+        "width": 205,
+        "height": 172
+      },
+      "inventory": {
+        "x": 814,
+        "y": 308,
+        "width": 296,
+        "height": 372
+      }
+    },
+    "resizable": {
+      "chat_box": {
+        "x": 15,
+        "y": 480,
+        "width": 479,
+        "height": 200
+      },
+      "minimap": {
+        "x": 905,
+        "y": 28,
+        "width": 205,
+        "height": 172
+      },
+      "inventory": {
+        "x": 814,
+        "y": 308,
+        "width": 296,
+        "height": 372
+      }
+    },
+    "version": 1
+  },
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "interact",
+    "hover_text": "BJ) Windows PowerShell",
+    "elements": [],
+    "dialogue_options": [
+      "AC LOND STILE LUPCEU T~ Lee CHE MOU WHA",
+      "Ly. Something went wrong? Hit \u2018/feedbac",
+      "2 issue."
+    ]
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "Pepore ne 155Ue.\n\n> its reading the window\nswapping to game now",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "BJ) Windows PowerShell",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "AC LOND STILE LUPCEU T~ Lee CHE MOU WHA\nLy. Something went wrong? Hit \u2018/feedbac\n2 issue.",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "lL what to do\needback* to\n\nw is open.",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "oO emit a session report",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [
+    "Pepore ne 155Ue.",
+    "> its reading the window",
+    "swapping to game now"
+  ],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [
+      "lL what to do",
+      "eedback* to",
+      "w is open."
+    ],
+    "tooltips": [
+      "oO emit a session report"
+    ]
+  }
+}

@@ -26,6 +26,7 @@ This project provides planning and analysis for OSRS, with optional action execu
 - `python run_app.py gui` to open the GUI.
 - `python run_app.py capture --title "Old School RuneScape"` to emit a snapshot stub.
 - `python run_app.py capture --fps 2 --seconds 5 --roi data/roi.json` to emit a session report with ROI presets.
+- If `--roi` is omitted and `data/roi.json` exists, it is used by default.
 - `python run_app.py validate --snapshot data/snapshots/example.json` to validate a snapshot file.
 - `python run_app.py validate` to validate schemas (optional `--snapshot path`).
 - `python run_app.py validate-snapshot --snapshot path` to validate a snapshot only.
@@ -62,6 +63,7 @@ This project provides planning and analysis for OSRS, with optional action execu
 - `python run_app.py go --out data/tutorial_decision.json --trace-path logs/model_decisions.jsonl` to log decisions to a specific trace file.
 - `python run_app.py purge-decisions --days 30` to prune old decision logs.
 - `python scripts/score_mimicry.py --run-id test --scenario tutorial` to score the mimicry rubric from logs.
+- `python scripts/calibrate_ocr_regions.py --title "Old School RuneScape"` to write initial OCR/ROI bounds from the active window.
 
 ## OSRS Client Overlay (Planned)
 - Primary UI surface is a silent overlay attached to the OSRS original client.
@@ -76,7 +78,7 @@ This project provides planning and analysis for OSRS, with optional action execu
 - Retry/backoff can be configured per intent (`payload.retry`) or profile (`retry`).
 - Action policy config lives at `data/action_policy.json` (allowed/denied actions, rate limits).
 - Execution will pause if snapshot chat lines indicate a random event.
-- Press `Esc` in the console to abort a running execution loop.
+- Press `Esc` in the console to abort a running execution loop (also interrupts waiting sleeps).
 
 ## Human-Like Execution Notes
 - Live clicks apply a short settle delay and click dwell based on the active humanization profile.

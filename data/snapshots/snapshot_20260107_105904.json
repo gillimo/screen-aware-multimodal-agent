@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "capture_id": "cap_a430dd6b1f7740879656063bd955e8eb",
+  "timestamp": "2026-01-07T15:59:02.705195+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "Old School RuneScape",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": true,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 185
+  },
+  "roi": {
+    "fullscreen": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "fixed": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "resizable": {
+      "chat_box": {
+        "x": 23,
+        "y": 484,
+        "width": 472,
+        "height": 190
+      },
+      "minimap": {
+        "x": 901,
+        "y": 56,
+        "width": 202,
+        "height": 162
+      },
+      "inventory": {
+        "x": 811,
+        "y": 321,
+        "width": 292,
+        "height": 353
+      }
+    },
+    "version": 1
+  },
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "default",
+    "hover_text": "",
+    "elements": [],
+    "dialogue_options": []
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [],
+    "tooltips": []
+  }
+}

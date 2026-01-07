@@ -9,6 +9,21 @@
   ],
   "required_cues": [],
   "notes": "",
-  "last_decision_id": "",
-  "last_execution": {}
+  "last_decision_id": "ti_welcome_001",
+  "last_execution": {
+    "timestamp": "2026-01-07T15:54:33.827002Z",
+    "decision_id": "ti_welcome_001",
+    "count": 1,
+    "success_count": 1,
+    "failure_count": 0,
+    "results": [
+      {
+        "intent_id": "ti_welcome_click",
+        "success": true,
+        "failure_reason": ""
+      }
+    ]
+  },
+  "repeat_count": 0,
+  "decision_index": 0
 }

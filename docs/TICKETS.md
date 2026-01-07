@@ -5,6 +5,7 @@
 - [ ] Implement screen capture with FPS and ROI configuration.
 - [ ] Track capture latency and dropped-frame metrics per session.
 - [ ] Add OCR backend with pluggable providers and per-region confidence scoring.
+- [x] Add OCR config file and provider hook (noop/tesseract) with basic calibration helper.
 - [ ] Create UI element detector for core panels and tabs.
 - [ ] Implement minimap parsing for region inference.
 - [ ] Add cursor state and hover text extraction.

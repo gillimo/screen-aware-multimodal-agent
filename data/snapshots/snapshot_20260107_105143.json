@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "capture_id": "cap_79a9907bf8744a988f6b041e97ef5e14",
+  "timestamp": "2026-01-07T15:51:38.386908+00:00",
+  "session_id": "local_capture",
+  "stale": false,
+  "client": {
+    "window_title": "Old School RuneScape",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": false,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 124
+  },
+  "roi": {},
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "interact",
+    "hover_text": "BJ) Windows PowerShell",
+    "elements": [],
+    "dialogue_options": [
+      "J",
+      "return prepared",
+      "lef _center_point(bounds):"
+    ]
+  },
+  "ocr": [
+    {
+      "region": "chat_box",
+      "text": "oii rT\n278 +\n279 def _center_poin\n\n\u00b0 Edited\nOneNrive\\Neckton\\nroivects",
+      "confidence": 0.5
+    },
+    {
+      "region": "hover_text",
+      "text": "BJ) Windows PowerShell",
+      "confidence": 0.5
+    },
+    {
+      "region": "dialogue",
+      "text": "J\nreturn prepared\n\nlef _center_point(bounds):",
+      "confidence": 0.5
+    },
+    {
+      "region": "inventory",
+      "text": "ee\n\npn cli.nv (41",
+      "confidence": 0.5
+    },
+    {
+      "region": "tooltips",
+      "text": "AIAN not Wyn\n\nayy)\n\nnlte",
+      "confidence": 0.5
+    }
+  ],
+  "chat": [
+    "oii rT",
+    "278 +",
+    "279 def _center_poin",
+    "\u00b0 Edited",
+    "OneNrive\\Neckton\\nroivects"
+  ],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {
+    "provider": "tesseract",
+    "inventory_lines": [
+      "ee",
+      "pn cli.nv (41"
+    ],
+    "tooltips": [
+      "AIAN not Wyn",
+      "ayy)",
+      "nlte"
+    ]
+  }
+}

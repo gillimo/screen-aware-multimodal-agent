@@ -169,8 +169,14 @@ def _capture_stuck_artifacts(snapshot, intent_id: str, failure_reason: str) -> N
 
 
 def _sleep_ms(delay_ms):
-    if delay_ms and delay_ms > 0:
-        time.sleep(delay_ms / 1000.0)
+    if not delay_ms or delay_ms <= 0:
+        return
+    end_time = time.time() + (delay_ms / 1000.0)
+    while time.time() < end_time:
+        if _escape_pressed():
+            print("Escape pressed. Aborting execution.")
+            raise SystemExit(1)
+        time.sleep(min(0.05, end_time - time.time()))
 
 
 def _maybe_seed_session(profile, seed_arg):
@@ -233,6 +239,41 @@ def _snapshot_stale(snapshot) -> bool:
     if not isinstance(snapshot, dict):
         return True
     return bool(snapshot.get("stale", False))
+
+
+def _prepare_ocr_regions(ocr_regions, frame):
+    if not isinstance(ocr_regions, dict) or not isinstance(frame, dict):
+        return ocr_regions
+    image = frame.get("image")
+    if image is None:
+        return ocr_regions
+    pil_image = None
+    if hasattr(image, "save"):
+        pil_image = image
+    elif hasattr(image, "rgb") and hasattr(image, "size"):
+        try:
+            from PIL import Image
+        except Exception:
+            pil_image = None
+        else:
+            pil_image = Image.frombytes("RGB", image.size, image.rgb)
+    if pil_image is None:
+        return ocr_regions
+    bounds = frame.get("bounds", {})
+    offset_x = int(bounds.get("x", 0) or 0)
+    offset_y = int(bounds.get("y", 0) or 0)
+    prepared = {}
+    for name, region in ocr_regions.items():
+        if not isinstance(region, dict):
+            continue
+        prepared[name] = {
+            "x": int(region.get("x", 0)) - offset_x,
+            "y": int(region.get("y", 0)) - offset_y,
+            "width": int(region.get("width", 0)),
+            "height": int(region.get("height", 0)),
+            "_image": pil_image,
+        }
+    return prepared
 
 
 def _center_point(bounds):
@@ -1006,7 +1047,14 @@ def cmd_capture(title_contains, fps, duration_s, roi_path):
     ocr_regions = load_json(DATA_DIR / "ocr_regions.json", {})
     if not ocr_regions:
         snapshot["stale"] = True
-    ocr_entries = run_ocr(ocr_regions)
+    ocr_config = load_json(DATA_DIR / "ocr_config.json", {})
+    ocr_provider = "noop"
+    if isinstance(ocr_config, dict):
+        ocr_provider = str(ocr_config.get("provider", "noop") or "noop")
+    ocr_regions = _prepare_ocr_regions(ocr_regions, frame)
+    ocr_entries = run_ocr(ocr_regions, provider_name=ocr_provider, provider_config=ocr_config)
+    if ocr_provider == "noop":
+        snapshot["stale"] = True
     if isinstance(ocr_regions, dict) and ocr_regions:
         has_bounds = False
         for region in ocr_regions.values():
@@ -1017,10 +1065,13 @@ def cmd_capture(title_contains, fps, duration_s, roi_path):
                 break
         if not has_bounds:
             snapshot["stale"] = True
+    if not ocr_entries and ocr_provider != "noop":
+        snapshot["stale"] = True
     snapshot["ocr"] = [
         {"region": entry.region, "text": entry.text, "confidence": entry.confidence}
         for entry in ocr_entries
     ]
+    snapshot["ocr_metadata"]["provider"] = ocr_provider
     for entry in ocr_entries:
         if entry.region == "hover_text":
             snapshot["ui"]["hover_text"] = entry.text
@@ -2233,6 +2284,10 @@ def main():
     parser.add_argument("--tutorial-state", default=str(DATA_DIR / "tutorial_island_state.json"))
     parser.add_argument("--tutorial-decisions", default=str(DATA_DIR / "tutorial_island_decisions.json"))
     args = parser.parse_args()
+    if not args.roi:
+        default_roi = DATA_DIR / "roi.json"
+        if default_roi.exists():
+            args.roi = str(default_roi)
 
     cmd = args.command.lower()
     if cmd == "tutorial-loop":

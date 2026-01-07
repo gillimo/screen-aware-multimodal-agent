@@ -6,8 +6,13 @@ Handles:
 - Codex-Aster
 - MimicryModel
 - Kya
+- Opus
 
 Entries (newest first):
+- 2026-01-07: Opus: signed in; reviewed project structure and committed current state.
+- 2026-01-07: MimicryModel: Esc abort now interrupts sleep delays for quicker control recovery.
+- 2026-01-07: MimicryModel: added OCR config file and calibration helper to set ROI/OCR bounds from the live window.
+- 2026-01-07: MimicryModel: added OCR config (noop/tesseract), calibration helper, and snapshot staleness handling for OCR status.
 - 2026-01-07: Codex-Aster: changed edge/offscreen idle behaviors to rest in place (no corner jumps).
 - 2026-01-07: MimicryModel: fixed tutorial decision schema error by adding gating to space-continue action.
 - 2026-01-07: MimicryModel: skipped hover_text match in LiveExecutor when snapshot is stale to avoid blocking clicks.

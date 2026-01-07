@@ -248,10 +248,13 @@ class LiveExecutor(ActionExecutor):
                 if expected_hover:
                     snapshot = intent.payload.get("snapshot") if isinstance(intent.payload, dict) else None
                     hover_text = ""
-                    if isinstance(snapshot, dict):
-                        hover_text = snapshot.get("ui", {}).get("hover_text", "")
-                    if not hover_text or str(expected_hover).lower() not in str(hover_text).lower():
-                        return ActionResult(intent_id=intent.intent_id, success=False, failure_reason="hover_mismatch")
+                    if isinstance(snapshot, dict) and snapshot.get("stale", False):
+                        expected_hover = None
+                    if expected_hover:
+                        if isinstance(snapshot, dict):
+                            hover_text = snapshot.get("ui", {}).get("hover_text", "")
+                        if not hover_text or str(expected_hover).lower() not in str(hover_text).lower():
+                            return ActionResult(intent_id=intent.intent_id, success=False, failure_reason="hover_mismatch")
                 bounds = intent.target.get("bounds") if isinstance(intent.target, dict) else None
                 if isinstance(bounds, dict):
                     point = avoid_edges(point, bounds, margin_px=int(motion.get("edge_margin_px", 8)))

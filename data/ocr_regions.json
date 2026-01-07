@@ -1,7 +1,32 @@
 {
-  "chat_box": { "x": 0, "y": 0, "width": 0, "height": 0 },
-  "hover_text": { "x": 0, "y": 0, "width": 0, "height": 0 },
-  "dialogue": { "x": 0, "y": 0, "width": 0, "height": 0 },
-  "inventory": { "x": 0, "y": 0, "width": 0, "height": 0 },
-  "tooltips": { "x": 0, "y": 0, "width": 0, "height": 0 }
+  "chat_box": {
+    "x": 23,
+    "y": 450,
+    "width": 520,
+    "height": 240
+  },
+  "hover_text": {
+    "x": 23,
+    "y": 36,
+    "width": 562,
+    "height": 54
+  },
+  "dialogue": {
+    "x": 203,
+    "y": 380,
+    "width": 760,
+    "height": 210
+  },
+  "inventory": {
+    "x": 811,
+    "y": 321,
+    "width": 292,
+    "height": 353
+  },
+  "tooltips": {
+    "x": 619,
+    "y": 56,
+    "width": 450,
+    "height": 122
+  }
 }

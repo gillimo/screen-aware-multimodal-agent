@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "capture_id": "cap_d9bc2f0d52a14773b18c2aec67d383c3",
+  "timestamp": "2026-01-07T15:25:40.044731+00:00",
+  "session_id": "local_capture",
+  "stale": true,
+  "client": {
+    "window_title": "Old School RuneScape",
+    "bounds": {
+      "x": -7,
+      "y": -7,
+      "width": 1141,
+      "height": 717
+    },
+    "focused": true,
+    "scale": 1.0,
+    "fps": 0,
+    "capture_latency_ms": 130
+  },
+  "roi": {},
+  "ui": {
+    "open_interface": "none",
+    "selected_tab": "unknown",
+    "cursor_state": "default",
+    "hover_text": "",
+    "elements": [],
+    "dialogue_options": []
+  },
+  "ocr": [],
+  "chat": [],
+  "cues": {
+    "animation_state": "unknown",
+    "highlight_state": "none",
+    "modal_state": "none",
+    "hover_text": ""
+  },
+  "derived": {
+    "location": {
+      "region": "unknown",
+      "subarea": "",
+      "confidence": 0.0
+    },
+    "activity": {},
+    "combat": {}
+  },
+  "account": {
+    "name": "",
+    "membership_status": "unknown",
+    "skills": {},
+    "inventory": [],
+    "equipment": {},
+    "resources": {}
+  },
+  "ocr_metadata": {}
+}

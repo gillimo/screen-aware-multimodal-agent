@@ -33,6 +33,7 @@ Start here: `HOW_TO_OPERATE.md`
 - ROI presets: `data/roi.json`
 - Humanization profiles schema: `data/humanization_profiles_schema.json`
 - OCR region map: `data/ocr_regions.json`
+- OCR config: `data/ocr_config.json`
 - UI detector regions: `data/ui_detector_regions.json`
 - Human equivalence thresholds: `data/human_equivalence_thresholds.json`
 - Perception region maps: `PERCEPTION_REGION_MAPS.md`
@@ -57,6 +58,7 @@ Start here: `HOW_TO_OPERATE.md`
 - Automation concepts: `AUTOMATION_CONCEPTS.md`
 - Docs checklist: `DOCS_CHECKLIST.md`
 - Mimicry scoring tool: `scripts/score_mimicry.py`
+- OCR/ROI calibration helper: `scripts/calibrate_ocr_regions.py`
 - State awareness spec: `STATE_AWARENESS_REQUIREMENTS.md`
 - Tutorial Island milestone: `TUTORIAL_ISLAND.md`
 - Tutorial Island loop contract: `TUTORIAL_ISLAND_LOOP_CONTRACT.md`

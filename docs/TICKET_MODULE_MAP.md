@@ -15,6 +15,7 @@ Note: some tickets span modules; listed under the module that owns the main impl
 ## Perception Pipeline
 - Build screen capture pipeline with configurable FPS and region-of-interest support.
 - Add an OCR layer with a pluggable backend (local model or external provider).
+- Add OCR config file and provider hook (noop/tesseract) with basic calibration helper.
 - Add a UI element detector pipeline for buttons, minimap, chat, and inventory slots.
 - Implement state extraction into a normalized UI snapshot schema with timestamps.
 - Add a capture and annotate tool for labeling screens to improve UI detection.

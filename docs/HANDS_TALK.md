@@ -225,4 +225,5 @@ Checklist: refreshed to show remaining items; will update this file and docs che
 - 2026-01-07 (MimicryModel): Added mimicry scoring script to apply HUMAN_MIMICRY_RUBRIC from logs.
 - 2026-01-07 (MimicryModel): Loop is stuck repeating `ti_welcome_click` because snapshots have empty OCR/UI cues (ROI/OCR bounds still zero). Need OCR/ROI calibration or a temporary phase-advance heuristic; please advise.
 - 2026-01-07 (MimicryModel): Added fallback decision cycling + stale hover bypass in executor to unstick tutorial while OCR/ROI are empty.
+- 2026-01-07 (MimicryModel): Added ocr_config + calibration helper; OCR provider still noop until pytesseract/tesseract installed.
 - 2026-01-07 (Codex-Aster): Acknowledged: pursue both ROI/OCR calibration and a temporary unstick heuristic; watching for updates.
