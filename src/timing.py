@@ -31,6 +31,10 @@ class TimingProfile:
     confirmation_ms: Tuple[float, float, float, float] = (140, 40, 50, 320)
     click_cadence_banking_ms: Tuple[float, float, float, float] = (110, 30, 40, 220)
     click_cadence_skilling_ms: Tuple[float, float, float, float] = (160, 45, 60, 320)
+    double_click_gap_ms: Tuple[float, float, float, float] = (120, 35, 50, 260)
+    click_pressure_click_ms: Tuple[float, float, float, float] = (90, 25, 30, 220)
+    click_pressure_drag_ms: Tuple[float, float, float, float] = (160, 45, 60, 320)
+    drag_start_hesitation_ms: Tuple[float, float, float, float] = (80, 25, 20, 200)
 
 
 def sample_reaction_ms(profile: TimingProfile) -> float:
@@ -109,4 +113,22 @@ def sample_click_cadence_ms(profile: TimingProfile, context: str = "default") ->
         mean, stdev, min_val, max_val = profile.click_cadence_skilling_ms
     else:
         mean, stdev, min_val, max_val = profile.dwell_ms
+    return sample_gaussian(mean, stdev, (min_val, max_val))
+
+
+def sample_double_click_gap_ms(profile: TimingProfile) -> float:
+    mean, stdev, min_val, max_val = profile.double_click_gap_ms
+    return sample_gaussian(mean, stdev, (min_val, max_val))
+
+
+def sample_click_pressure_ms(profile: TimingProfile, action_type: str = "click") -> float:
+    if action_type == "drag":
+        mean, stdev, min_val, max_val = profile.click_pressure_drag_ms
+    else:
+        mean, stdev, min_val, max_val = profile.click_pressure_click_ms
+    return sample_gaussian(mean, stdev, (min_val, max_val))
+
+
+def sample_drag_start_hesitation_ms(profile: TimingProfile) -> float:
+    mean, stdev, min_val, max_val = profile.drag_start_hesitation_ms
     return sample_gaussian(mean, stdev, (min_val, max_val))

@@ -177,6 +177,23 @@ def vary_action_order(actions: List[Any], variability_rate: float = 0.2) -> List
     return list(actions)
 
 
+def requires_confidence_gate(intent: ActionIntent, threshold: float = 0.6) -> bool:
+    return intent.confidence < threshold
+
+
+def maybe_settle_before_click(
+    intent: ActionIntent,
+    settle_ms: float,
+    sleep_fn=None,
+) -> None:
+    if intent.action_type != "click":
+        return
+    if sleep_fn is None:
+        return
+    if settle_ms > 0:
+        sleep_fn(settle_ms / 1000.0)
+
+
 def execute_with_retry(
     executor: ActionExecutor,
     intent: ActionIntent,

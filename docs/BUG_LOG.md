@@ -18,3 +18,6 @@
 - 2026-01-06: MimicryModel audit: no new bugs found in mimicry/model updates.
 - 2026-01-06: No issues found in round 10 (typing cadence, overlap, modifiers, noise, handoff).
 - 2026-01-06: Reviewed open issues before round 11; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 11 (micro-pauses, confirmation delay, reaction mapping, cadence presets).
+- 2026-01-06: Reviewed open issues before round 12; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 12 (double-click variance, click pressure, drag hesitation, confidence gate, settle wiring).

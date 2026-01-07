@@ -7,6 +7,7 @@ Handles:
 - Kya
 
 Entries (newest first):
+- 2026-01-06: Codex-HandsEyes: added double-click variance, click pressure, drag hesitation, confidence gating, and settle wiring.
 - 2026-01-06: Codex-HandsEyes: added inter-action pauses, confirmation delay, reaction-time mapping, and click cadence presets.
 - 2026-01-06: MimicryModel: audited remaining tasks, added tickets, and updated bug log.
 - 2026-01-06: Codex-HandsEyes: added typing cadence, overlap, modifier variance, input noise, and handoff timing.

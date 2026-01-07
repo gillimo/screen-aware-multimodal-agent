@@ -202,6 +202,13 @@ Notes:
 60) Add context-specific click cadence presets (banking vs. skilling). (P2, dep:mimicry) [done]
 61) Add session rhythm modeling (breaks, fatigue, time-based drift) integration. (P2, dep:mimicry) [done]
 
+## Active Queue (Next 5, Round 12)
+62) Add double-click variance for UI actions that use multi-click patterns. (P2, dep:mimicry) [done]
+63) Add click pressure simulation (down/up cadence by action type). (P2, dep:mimicry) [done]
+64) Add drag start hesitation and end jitter (human-like drag endpoints). (P2, dep:mimicry) [done]
+65) Add per-action confidence gating (extra checks when uncertainty is high). (P2, dep:mimicry) [done]
+66) Add cursor settle behavior wiring into action execution path. (P2, dep:mimicry) [done]
+
 ## Hands and Eyes Ticket Backlog
 
 ### Eyes
