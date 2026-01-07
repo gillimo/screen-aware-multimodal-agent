@@ -58,6 +58,17 @@ def build_prompt(state, user_message):
     return f"You are an OSRS coach. Account: {name}. User says: {user_message}"
 
 
+DECISION_SCHEMA = """
+{
+  "action": "click|right_click|wait|camera_rotate|walk|interact|talk",
+  "target": {"x": int, "y": int, "name": "string", "type": "npc|object|ground|interface"},
+  "confidence": 0.0-1.0,
+  "reasoning": "why this action",
+  "expected_result": "what should happen",
+  "verify_by": "hover_change|location_change|interface_open|dialogue_appears|none"
+}
+"""
+
 def build_decision_prompt(state, user_message, snapshot=None):
     account = state.get("account", {})
     name = account.get("name", "Unknown")
@@ -68,7 +79,10 @@ def build_decision_prompt(state, user_message, snapshot=None):
     guide_block = _build_quest_guide_context(state, user_message)
     snapshot_block = _build_snapshot_context(snapshot)
     return (
-        "Return ONLY valid JSON for the model output schema.\n"
+        "You are an OSRS agent. Output ONLY this JSON format:
+" + DECISION_SCHEMA + "
+
+"\n"
         f"Account: {name}\n"
         f"Goals short: {short}\n"
         f"Goals mid: {mid}\n"

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_af2527861bcb4be7be70a8d839e35041",
-  "timestamp": "2026-01-07T17:41:06.091134+00:00",
+  "capture_id": "cap_e378fa62b3334822b75063c162801882",
+  "timestamp": "2026-01-07T17:32:22.189252+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -12,10 +12,10 @@
       "width": 1141,
       "height": 717
     },
-    "focused": true,
+    "focused": false,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 146
+    "capture_latency_ms": 242
   },
   "roi": {
     "fullscreen": {
@@ -83,44 +83,54 @@
   "ui": {
     "open_interface": "none",
     "selected_tab": "unknown",
-    "cursor_state": "interact",
-    "hover_text": "Jalk here \u00ab.. ;",
+    "cursor_state": "default",
+    "hover_text": "",
     "elements": [],
-    "dialogue_options": []
+    "dialogue_options": [
+      "image (647.2KB)",
+      "\"C: /Users/gilli/OneDrive/Desktop/proje",
+      "| PIL import Image...)",
+      "ee ee re ee a, a \u00a9"
+    ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "",
+      "text": "\u00bb Bash(cd \"C:/Users/gilli\nfrom PIL import Ima\nL Arrow detection: {'f\n\n\u00bb No arrow visible in thi",
       "confidence": 0.5
     },
     {
       "region": "hover_text",
-      "text": "Jalk here \u00ab.. ;",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "dialogue",
-      "text": "",
+      "text": "image (647.2KB)\n\n\"C: /Users/gilli/OneDrive/Desktop/proje\n| PIL import Image...)\n\nee ee re ee a, a \u00a9",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "",
+      "text": "\\data\\snapshots\n\n/projects/agent\n\nes). Running th",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "\u2018ction on the current sc:\n\nRoC NOW",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "Exit through the n\n\ni oe 2 +\u201d Ae",
+      "text": "Want me to test the\n\n> ok lets run it. sway",
       "confidence": 0.5
     }
   ],
-  "chat": [],
+  "chat": [
+    "\u00bb Bash(cd \"C:/Users/gilli",
+    "from PIL import Ima",
+    "L Arrow detection: {'f",
+    "\u00bb No arrow visible in thi"
+  ],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -146,7 +156,14 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [],
-    "tooltips": []
+    "inventory_lines": [
+      "\\data\\snapshots",
+      "/projects/agent",
+      "es). Running th"
+    ],
+    "tooltips": [
+      "\u2018ction on the current sc:",
+      "RoC NOW"
+    ]
   }
 }

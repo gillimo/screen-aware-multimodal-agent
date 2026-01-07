@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_af2527861bcb4be7be70a8d839e35041",
-  "timestamp": "2026-01-07T17:41:06.091134+00:00",
+  "capture_id": "cap_8ede674178dd4883813e7a1183e68ac1",
+  "timestamp": "2026-01-07T17:33:45.434783+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 146
+    "capture_latency_ms": 109
   },
   "roi": {
     "fullscreen": {
@@ -84,7 +84,7 @@
     "open_interface": "none",
     "selected_tab": "unknown",
     "cursor_state": "interact",
-    "hover_text": "Jalk here \u00ab.. ;",
+    "hover_text": "Jalk here",
     "elements": [],
     "dialogue_options": []
   },
@@ -96,7 +96,7 @@
     },
     {
       "region": "hover_text",
-      "text": "Jalk here \u00ab.. ;",
+      "text": "Jalk here",
       "confidence": 0.5
     },
     {
@@ -116,7 +116,7 @@
     },
     {
       "region": "tutorial_hint",
-      "text": "Exit through the n\n\ni oe 2 +\u201d Ae",
+      "text": "Exit through the n\n\n. Fae. ES",
       "confidence": 0.5
     }
   ],

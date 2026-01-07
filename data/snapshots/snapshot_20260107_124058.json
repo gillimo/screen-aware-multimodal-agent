@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_af2527861bcb4be7be70a8d839e35041",
-  "timestamp": "2026-01-07T17:41:06.091134+00:00",
+  "capture_id": "cap_8ccdbd20ce41435d9158f4b1915deb01",
+  "timestamp": "2026-01-07T17:40:55.289477+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -12,10 +12,10 @@
       "width": 1141,
       "height": 717
     },
-    "focused": true,
+    "focused": false,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 146
+    "capture_latency_ms": 161
   },
   "roi": {
     "fullscreen": {
@@ -83,44 +83,55 @@
   "ui": {
     "open_interface": "none",
     "selected_tab": "unknown",
-    "cursor_state": "interact",
-    "hover_text": "Jalk here \u00ab.. ;",
+    "cursor_state": "default",
+    "hover_text": "",
     "elements": [],
-    "dialogue_options": []
+    "dialogue_options": [
+      "e NPC near the pond and a building in",
+      "\"C: /Users/gilli/OneDrive/Desktop/proje",
+      "rt time...)",
+      "i a ,"
+    ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "",
+      "text": "\u00bb Bash(cd \"C:/Users/gilli\nimport time...)\n\nL Scanning lower scree\n\n(300,450): @hoo down\n\n(350,440): @hoo down",
       "confidence": 0.5
     },
     {
       "region": "hover_text",
-      "text": "Jalk here \u00ab.. ;",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "dialogue",
-      "text": "",
+      "text": "e NPC near the pond and a building in\n\n\"C: /Users/gilli/OneDrive/Desktop/proje\nrt time...)\n\ni a ,",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "",
+      "text": "AMOAROE \\OTepeotiVee\n\nng in bottom-le\n\n/projects/agent",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "need to focus properly.\n\nya /Nacbltnn/nroaszactc/anar",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "Exit through the n\n\ni oe 2 +\u201d Ae",
+      "text": "\u00bb GOT terminal insteat\n\n\u00bb Bash(cd \"C:/Users/g:\n\nsan anantkt \u00a3timnrn YY",
       "confidence": 0.5
     }
   ],
-  "chat": [],
+  "chat": [
+    "\u00bb Bash(cd \"C:/Users/gilli",
+    "import time...)",
+    "L Scanning lower scree",
+    "(300,450): @hoo down",
+    "(350,440): @hoo down"
+  ],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -146,7 +157,14 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [],
-    "tooltips": []
+    "inventory_lines": [
+      "AMOAROE \\OTepeotiVee",
+      "ng in bottom-le",
+      "/projects/agent"
+    ],
+    "tooltips": [
+      "need to focus properly.",
+      "ya /Nacbltnn/nroaszactc/anar"
+    ]
   }
 }

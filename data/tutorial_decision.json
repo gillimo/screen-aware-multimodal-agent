@@ -1,52 +1,34 @@
 {
-  "decision_id": "ti_open_door",
-  "intent": "open_and_walk_through_door",
-  "confidence": 0.7,
+  "decision_id": "ti_camera_rotate",
+  "intent": "practice_camera_rotation",
+  "confidence": 0.6,
   "rationale": [
-    "door found, need to open and walk through"
+    "tutorial asks to learn camera"
   ],
   "required_cues": [],
-  "risks": [
-    "misclick"
-  ],
+  "risks": [],
   "actions": [
     {
-      "action_id": "ti_door_click",
-      "action_type": "click",
+      "action_id": "ti_camera_drag",
+      "action_type": "camera",
       "target": {
-        "x": 230,
-        "y": 320,
-        "bounds": {
-          "x": 200,
-          "y": 290,
-          "width": 80,
-          "height": 80
-        }
+        "x": 400,
+        "y": 300
       },
-      "confidence": 0.7,
+      "confidence": 0.6,
       "gating": {},
       "payload": {
-        "click_type": "left"
-      }
-    },
-    {
-      "action_id": "ti_door_walkthrough",
-      "action_type": "click",
-      "target": {
-        "x": 230,
-        "y": 320,
-        "bounds": {
-          "x": 200,
-          "y": 290,
-          "width": 80,
-          "height": 80
+        "drag": {
+          "start": [
+            400,
+            300
+          ],
+          "end": [
+            500,
+            300
+          ],
+          "hold_ms": 200
         }
-      },
-      "confidence": 0.7,
-      "gating": {},
-      "payload": {
-        "click_type": "left",
-        "delay_before_ms": 600
       }
     }
   ]

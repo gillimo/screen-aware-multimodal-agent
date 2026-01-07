@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_af2527861bcb4be7be70a8d839e35041",
-  "timestamp": "2026-01-07T17:41:06.091134+00:00",
+  "capture_id": "cap_113fc20f172e42ea9a3c529fbbc5368a",
+  "timestamp": "2026-01-07T17:38:27.004627+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 146
+    "capture_latency_ms": 155
   },
   "roi": {
     "fullscreen": {
@@ -84,7 +84,7 @@
     "open_interface": "none",
     "selected_tab": "unknown",
     "cursor_state": "interact",
-    "hover_text": "Jalk here \u00ab.. ;",
+    "hover_text": "Jalk here.*4 Imoreloptions",
     "elements": [],
     "dialogue_options": []
   },
@@ -96,7 +96,7 @@
     },
     {
       "region": "hover_text",
-      "text": "Jalk here \u00ab.. ;",
+      "text": "Jalk here.*4 Imoreloptions",
       "confidence": 0.5
     },
     {

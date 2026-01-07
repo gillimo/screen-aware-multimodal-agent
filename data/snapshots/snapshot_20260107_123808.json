@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_af2527861bcb4be7be70a8d839e35041",
-  "timestamp": "2026-01-07T17:41:06.091134+00:00",
+  "capture_id": "cap_a944a5768e544931b875f75a8727d22a",
+  "timestamp": "2026-01-07T17:38:06.927504+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 146
+    "capture_latency_ms": 135
   },
   "roi": {
     "fullscreen": {
@@ -111,7 +111,7 @@
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "e",
       "confidence": 0.5
     },
     {
@@ -147,6 +147,8 @@
   "ocr_metadata": {
     "provider": "tesseract",
     "inventory_lines": [],
-    "tooltips": []
+    "tooltips": [
+      "e"
+    ]
   }
 }

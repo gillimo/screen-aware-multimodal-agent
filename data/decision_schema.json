@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GameDecision",
+  "description": "Generic decision output for OSRS navigation and interaction",
+  "type": "object",
+  "required": ["action", "confidence"],
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": ["click", "right_click", "wait", "camera_rotate", "walk", "interact", "use_item", "talk"],
+      "description": "Primary action type"
+    },
+    "target": {
+      "type": "object",
+      "description": "Where to perform the action",
+      "properties": {
+        "x": {"type": "integer", "description": "Screen x coordinate"},
+        "y": {"type": "integer", "description": "Screen y coordinate"},
+        "name": {"type": "string", "description": "Name of target (NPC, object, item)"},
+        "type": {"type": "string", "enum": ["npc", "object", "ground", "interface", "minimap", "inventory"]}
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "How confident 0-1. Below 0.5 triggers librarian escalation"
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "Brief explanation of why this action"
+    },
+    "context_used": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "What info was used: hover_text, tutorial_hint, minimap, etc"
+    },
+    "expected_result": {
+      "type": "string",
+      "description": "What should happen after this action"
+    },
+    "verify_by": {
+      "type": "string",
+      "enum": ["hover_change", "location_change", "interface_open", "dialogue_appears", "none"],
+      "description": "How to verify action succeeded"
+    },
+    "fallback": {
+      "type": "object",
+      "description": "What to do if primary action fails",
+      "properties": {
+        "action": {"type": "string"},
+        "target": {"type": "object"}
+      }
+    }
+  }
+}

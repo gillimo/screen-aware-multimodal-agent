@@ -1,7 +1,7 @@
 {
   "version": 1,
   "milestone": "tutorial_island",
-  "phase": "camera",
+  "phase": "movement",
   "step": 1,
   "completed": [],
   "current_objectives": [
@@ -10,26 +10,21 @@
   ],
   "required_cues": [],
   "notes": "",
-  "last_decision_id": "ti_open_door",
+  "last_decision_id": "ti_camera_rotate",
   "last_execution": {
-    "timestamp": "2026-01-07T17:17:51.313989Z",
-    "decision_id": "ti_open_door",
-    "count": 2,
-    "success_count": 2,
+    "timestamp": "2026-01-07T17:32:26.639530Z",
+    "decision_id": "ti_camera_rotate",
+    "count": 1,
+    "success_count": 1,
     "failure_count": 0,
     "results": [
       {
-        "intent_id": "ti_door_click",
-        "success": true,
-        "failure_reason": ""
-      },
-      {
-        "intent_id": "ti_door_walkthrough",
+        "intent_id": "ti_camera_drag",
         "success": true,
         "failure_reason": ""
       }
     ]
   },
   "repeat_count": 0,
-  "decision_index": 0
+  "decision_index": 1
 }
