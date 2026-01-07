@@ -7,16 +7,40 @@
         "decision_id": "ti_welcome_001",
         "intent": "talk_to_guide",
         "confidence": 0.6,
-        "rationale": ["tutorial start", "guide visible"],
-        "required_cues": ["guide_visible", "dialogue_ready"],
-        "risks": ["misclick_near_npc"],
+        "rationale": [
+          "tutorial start",
+          "guide visible"
+        ],
+        "required_cues": [
+          "guide_visible",
+          "dialogue_ready"
+        ],
+        "risks": [
+          "misclick_near_npc"
+        ],
         "actions": [
           {
             "action_id": "ti_welcome_click",
             "action_type": "click",
-            "target": { "x": 0, "y": 0, "bounds": { "x": 0, "y": 0, "width": 0, "height": 0 } },
+            "target": {
+              "x": 0,
+              "y": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
             "confidence": 0.6,
-            "gating": { "verification_steps": ["hover_text=RuneScape Guide"], "abort_conditions": ["modal_open"] }
+            "gating": {
+              "verification_steps": [
+                "hover_text=RuneScape Guide"
+              ],
+              "abort_conditions": [
+                "modal_open"
+              ]
+            }
           }
         ]
       },
@@ -24,17 +48,41 @@
         "decision_id": "ti_welcome_002",
         "intent": "continue_dialogue",
         "confidence": 0.6,
-        "rationale": ["dialogue prompt active"],
-        "required_cues": ["dialogue_ready"],
-        "risks": ["misclick_dialogue"],
+        "rationale": [
+          "dialogue prompt active"
+        ],
+        "required_cues": [
+          "dialogue_ready"
+        ],
+        "risks": [
+          "misclick_dialogue"
+        ],
         "actions": [
           {
             "action_id": "ti_welcome_continue",
             "action_type": "click",
-            "target": { "x": 0, "y": 0, "bounds": { "x": 0, "y": 0, "width": 0, "height": 0 } },
+            "target": {
+              "x": 0,
+              "y": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
             "confidence": 0.6,
-            "gating": { "verification_steps": ["hover_text=Click here to continue"], "abort_conditions": ["modal_open"] },
-            "payload": { "expected_hover_text": "Click here to continue" }
+            "gating": {
+              "verification_steps": [
+                "hover_text=Click here to continue"
+              ],
+              "abort_conditions": [
+                "modal_open"
+              ]
+            },
+            "payload": {
+              "expected_hover_text": "Click here to continue"
+            }
           }
         ]
       },
@@ -42,36 +90,114 @@
         "decision_id": "ti_welcome_003",
         "intent": "continue_with_space",
         "confidence": 0.6,
-        "rationale": ["chat prompt indicates space continue"],
-        "required_cues": ["chat_prompt"],
-        "risks": ["space_misaligned"],
+        "rationale": [
+          "chat prompt indicates space continue"
+        ],
+        "required_cues": [
+          "chat_prompt"
+        ],
+        "risks": [
+          "space_misaligned"
+        ],
         "actions": [
           {
             "action_id": "ti_space_continue",
             "action_type": "type",
-            "target": { "x": 0, "y": 0 },
+            "target": {
+              "x": 0,
+              "y": 0
+            },
             "confidence": 0.6,
             "gating": {},
-            "payload": { "text": " " }
+            "payload": {
+              "text": " "
+            }
           }
         ]
       }
     ],
     "movement": [
       {
-        "decision_id": "ti_move_001",
-        "intent": "walk_to_marker",
-        "confidence": 0.6,
-        "rationale": ["movement step active"],
-        "required_cues": ["minimap_marker", "path_clear"],
-        "risks": ["misclick_ground"],
+        "decision_id": "ti_move_to_door",
+        "intent": "walk_to_door",
+        "confidence": 0.7,
+        "rationale": [
+          "need to reach the door first"
+        ],
+        "required_cues": [],
+        "risks": [
+          "misclick"
+        ],
         "actions": [
           {
-            "action_id": "ti_move_click",
+            "action_id": "ti_walk_to_door",
             "action_type": "click",
-            "target": { "x": 0, "y": 0, "bounds": { "x": 0, "y": 0, "width": 0, "height": 0 } },
-            "confidence": 0.6,
-            "gating": { "verification_steps": ["cursor_state=walk_here"], "abort_conditions": ["modal_open"] }
+            "target": {
+              "x": 230,
+              "y": 320,
+              "bounds": {
+                "x": 200,
+                "y": 290,
+                "width": 80,
+                "height": 80
+              }
+            },
+            "confidence": 0.7,
+            "gating": {},
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "decision_id": "ti_open_door",
+        "intent": "open_and_walk_through_door",
+        "confidence": 0.7,
+        "rationale": [
+          "door found, need to open and walk through"
+        ],
+        "required_cues": [],
+        "risks": [
+          "misclick"
+        ],
+        "actions": [
+          {
+            "action_id": "ti_door_click",
+            "action_type": "click",
+            "target": {
+              "x": 230,
+              "y": 320,
+              "bounds": {
+                "x": 200,
+                "y": 290,
+                "width": 80,
+                "height": 80
+              }
+            },
+            "confidence": 0.7,
+            "gating": {},
+            "payload": {
+              "click_type": "left"
+            }
+          },
+          {
+            "action_id": "ti_door_walkthrough",
+            "action_type": "click",
+            "target": {
+              "x": 230,
+              "y": 320,
+              "bounds": {
+                "x": 200,
+                "y": 290,
+                "width": 80,
+                "height": 80
+              }
+            },
+            "confidence": 0.7,
+            "gating": {},
+            "payload": {
+              "click_type": "left",
+              "delay_before_ms": 600
+            }
           }
         ]
       }
@@ -81,17 +207,36 @@
         "decision_id": "ti_first_room_chat",
         "intent": "chat_with_guide",
         "confidence": 0.5,
-        "rationale": ["example chat interaction"],
-        "required_cues": ["guide_visible"],
-        "risks": ["misclick_near_npc"],
+        "rationale": [
+          "example chat interaction"
+        ],
+        "required_cues": [
+          "guide_visible"
+        ],
+        "risks": [
+          "misclick_near_npc"
+        ],
         "actions": [
           {
             "action_id": "ti_first_room_chat_click",
             "action_type": "click",
-            "target": { "x": 0, "y": 0, "bounds": { "x": 0, "y": 0, "width": 0, "height": 0 } },
+            "target": {
+              "x": 0,
+              "y": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
             "confidence": 0.5,
-            "gating": { "require_hover_text": "RuneScape Guide" },
-            "payload": { "expected_hover_text": "RuneScape Guide" }
+            "gating": {
+              "require_hover_text": "RuneScape Guide"
+            },
+            "payload": {
+              "expected_hover_text": "RuneScape Guide"
+            }
           }
         ]
       },
@@ -99,17 +244,36 @@
         "decision_id": "ti_first_room_move",
         "intent": "walk_to_marker_example",
         "confidence": 0.5,
-        "rationale": ["example walk action"],
-        "required_cues": ["minimap_marker"],
-        "risks": ["misclick_ground"],
+        "rationale": [
+          "example walk action"
+        ],
+        "required_cues": [
+          "minimap_marker"
+        ],
+        "risks": [
+          "misclick_ground"
+        ],
         "actions": [
           {
             "action_id": "ti_first_room_move_click",
             "action_type": "click",
-            "target": { "x": 0, "y": 0, "bounds": { "x": 0, "y": 0, "width": 0, "height": 0 } },
+            "target": {
+              "x": 0,
+              "y": 0,
+              "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              }
+            },
             "confidence": 0.5,
-            "gating": { "require_hover_text": "Walk here" },
-            "payload": { "expected_hover_text": "Walk here" }
+            "gating": {
+              "require_hover_text": "Walk here"
+            },
+            "payload": {
+              "expected_hover_text": "Walk here"
+            }
           }
         ]
       }
@@ -119,23 +283,47 @@
         "decision_id": "ti_camera_rotate_zoom",
         "intent": "adjust_camera_example",
         "confidence": 0.5,
-        "rationale": ["example camera rotate/zoom"],
+        "rationale": [
+          "example camera rotate/zoom"
+        ],
         "required_cues": [],
-        "risks": ["misdrag_camera"],
+        "risks": [
+          "misdrag_camera"
+        ],
         "actions": [
           {
             "action_id": "ti_camera_drag",
             "action_type": "camera",
-            "target": { "x": 0, "y": 0 },
+            "target": {
+              "x": 0,
+              "y": 0
+            },
             "confidence": 0.5,
-            "payload": { "drag": { "start": [0, 0], "end": [0, 0], "hold_ms": 80 } }
+            "payload": {
+              "drag": {
+                "start": [
+                  0,
+                  0
+                ],
+                "end": [
+                  0,
+                  0
+                ],
+                "hold_ms": 80
+              }
+            }
           },
           {
             "action_id": "ti_camera_zoom",
             "action_type": "camera",
-            "target": { "x": 0, "y": 0 },
+            "target": {
+              "x": 0,
+              "y": 0
+            },
             "confidence": 0.5,
-            "payload": { "amount": -1 }
+            "payload": {
+              "amount": -1
+            }
           }
         ]
       }

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_d0bb5a624d3f4c8d9eb65203db31a2ae",
-  "timestamp": "2026-01-07T17:18:29.729167+00:00",
+  "capture_id": "cap_74140abe131448fa9fa06eaa6a3ba4c9",
+  "timestamp": "2026-01-07T17:17:46.193519+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": false,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 160
+    "capture_latency_ms": 128
   },
   "roi": {
     "fullscreen": {
@@ -111,12 +111,12 @@
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "Wa\\_",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "a\nExit through the n\n\na oe",
+      "text": "a\nExit through the n\n\nee en",
       "confidence": 0.5
     }
   ],
@@ -147,6 +147,8 @@
   "ocr_metadata": {
     "provider": "tesseract",
     "inventory_lines": [],
-    "tooltips": []
+    "tooltips": [
+      "Wa\\_"
+    ]
   }
 }

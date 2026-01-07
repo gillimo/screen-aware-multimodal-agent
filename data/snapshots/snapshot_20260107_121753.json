@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_d0bb5a624d3f4c8d9eb65203db31a2ae",
-  "timestamp": "2026-01-07T17:18:29.729167+00:00",
+  "capture_id": "cap_3285be2cf81240819cfe0eb6de5319a2",
+  "timestamp": "2026-01-07T17:17:51.589715+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -12,10 +12,10 @@
       "width": 1141,
       "height": 717
     },
-    "focused": false,
+    "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 160
+    "capture_latency_ms": 72
   },
   "roi": {
     "fullscreen": {
@@ -84,7 +84,7 @@
     "open_interface": "none",
     "selected_tab": "unknown",
     "cursor_state": "interact",
-    "hover_text": "Jalk here",
+    "hover_text": "\u2018hop down #2? more options",
     "elements": [],
     "dialogue_options": []
   },
@@ -96,7 +96,7 @@
     },
     {
       "region": "hover_text",
-      "text": "Jalk here",
+      "text": "\u2018hop down #2? more options",
       "confidence": 0.5
     },
     {
@@ -111,12 +111,12 @@
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "Wa\\_",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "a\nExit through the n\n\na oe",
+      "text": "a\nExit through the n\n\nee en",
       "confidence": 0.5
     }
   ],
@@ -147,6 +147,8 @@
   "ocr_metadata": {
     "provider": "tesseract",
     "inventory_lines": [],
-    "tooltips": []
+    "tooltips": [
+      "Wa\\_"
+    ]
   }
 }

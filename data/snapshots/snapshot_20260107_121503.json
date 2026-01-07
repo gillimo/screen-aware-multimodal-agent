@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_d0bb5a624d3f4c8d9eb65203db31a2ae",
-  "timestamp": "2026-01-07T17:18:29.729167+00:00",
+  "capture_id": "cap_a4ab176b3ae8468ba233a40b5fe21997",
+  "timestamp": "2026-01-07T17:15:01.016332+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -12,10 +12,10 @@
       "width": 1141,
       "height": 717
     },
-    "focused": false,
+    "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 160
+    "capture_latency_ms": 101
   },
   "roi": {
     "fullscreen": {
@@ -111,12 +111,12 @@
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "= a a",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "a\nExit through the n\n\na oe",
+      "text": "Exit througfl then",
       "confidence": 0.5
     }
   ],
@@ -147,6 +147,8 @@
   "ocr_metadata": {
     "provider": "tesseract",
     "inventory_lines": [],
-    "tooltips": []
+    "tooltips": [
+      "= a a"
+    ]
   }
 }

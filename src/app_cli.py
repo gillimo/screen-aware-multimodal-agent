@@ -40,7 +40,7 @@ from src.schema_validation import (
     validate_tutorial_decisions_schema,
 )
 from src.chat_filter import should_respond_to_chat
-from src.perception import find_window, capture_frame, capture_session, save_frame
+from src.perception import find_window, capture_frame, capture_session, save_frame, focus_window
 from src.local_model import build_prompt, build_decision_prompt, run_local_model, load_config
 from src.model_output import extract_json, validate_planner_output, log_decision, validate_decision_trace, purge_decisions
 from src.decision_consume import latest_payload, build_action_intents, validate_intents, load_decision_file
@@ -974,6 +974,9 @@ def cmd_capture(title_contains, fps, duration_s, roi_path):
     if not window:
         print(f"No window found matching: {title_contains}")
         return
+
+    # Focus OSRS window before capture
+    focus_window(window.handle, wait_ms=200)
 
     roi = _load_roi_config(roi_path)
     if fps > 0 and duration_s > 0:

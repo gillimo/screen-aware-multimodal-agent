@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_d0bb5a624d3f4c8d9eb65203db31a2ae",
-  "timestamp": "2026-01-07T17:18:29.729167+00:00",
+  "capture_id": "cap_d267333b644a4f7a842ffbce8e3491ae",
+  "timestamp": "2026-01-07T17:03:30.504685+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": false,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 160
+    "capture_latency_ms": 203
   },
   "roi": {
     "fullscreen": {
@@ -83,44 +83,54 @@
   "ui": {
     "open_interface": "none",
     "selected_tab": "unknown",
-    "cursor_state": "interact",
-    "hover_text": "Jalk here",
+    "cursor_state": "default",
+    "hover_text": "",
     "elements": [],
-    "dialogue_options": []
+    "dialogue_options": [
+      "\"C:/Users/gilli/OneDrive/Desktop/proje",
+      "rt json...)",
+      "ent phase has 1 decisions:",
+      "i_move_001: walk_to_marker"
+    ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "",
+      "text": "L Movement phase has 1\n- ti_move_001: wal\n\n\u00bb The movement phase has\nne run go to see what hap",
       "confidence": 0.5
     },
     {
       "region": "hover_text",
-      "text": "Jalk here",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "dialogue",
-      "text": "",
+      "text": "\"C:/Users/gilli/OneDrive/Desktop/proje\nrt json...)\n\nent phase has 1 decisions:\n\ni_move_001: walk_to_marker",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "",
+      "text": "Lief tft ot st VV!\n\n/projects/agent\n\n_to_marker but",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "ve/Desktop/projects/ager",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "a\nExit through the n\n\na oe",
+      "text": "\u00bb bBasSnN(ca \u201cC\u20ac./USers/g-\n\nimport json...)\nL Updated phase to",
       "confidence": 0.5
     }
   ],
-  "chat": [],
+  "chat": [
+    "L Movement phase has 1",
+    "- ti_move_001: wal",
+    "\u00bb The movement phase has",
+    "ne run go to see what hap"
+  ],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -146,7 +156,13 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [],
-    "tooltips": []
+    "inventory_lines": [
+      "Lief tft ot st VV!",
+      "/projects/agent",
+      "_to_marker but"
+    ],
+    "tooltips": [
+      "ve/Desktop/projects/ager"
+    ]
   }
 }

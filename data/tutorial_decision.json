@@ -1,40 +1,52 @@
 {
-  "decision_id": "ti_welcome_001",
-  "intent": "talk_to_guide",
-  "confidence": 0.6,
+  "decision_id": "ti_open_door",
+  "intent": "open_and_walk_through_door",
+  "confidence": 0.7,
   "rationale": [
-    "tutorial start",
-    "guide visible"
+    "door found, need to open and walk through"
   ],
-  "required_cues": [
-    "guide_visible",
-    "dialogue_ready"
-  ],
+  "required_cues": [],
   "risks": [
-    "misclick_near_npc"
+    "misclick"
   ],
   "actions": [
     {
-      "action_id": "ti_welcome_click",
+      "action_id": "ti_door_click",
       "action_type": "click",
       "target": {
-        "x": 0,
-        "y": 0,
+        "x": 230,
+        "y": 320,
         "bounds": {
-          "x": 0,
-          "y": 0,
-          "width": 0,
-          "height": 0
+          "x": 200,
+          "y": 290,
+          "width": 80,
+          "height": 80
         }
       },
-      "confidence": 0.6,
-      "gating": {
-        "verification_steps": [
-          "hover_text=RuneScape Guide"
-        ],
-        "abort_conditions": [
-          "modal_open"
-        ]
+      "confidence": 0.7,
+      "gating": {},
+      "payload": {
+        "click_type": "left"
+      }
+    },
+    {
+      "action_id": "ti_door_walkthrough",
+      "action_type": "click",
+      "target": {
+        "x": 230,
+        "y": 320,
+        "bounds": {
+          "x": 200,
+          "y": 290,
+          "width": 80,
+          "height": 80
+        }
+      },
+      "confidence": 0.7,
+      "gating": {},
+      "payload": {
+        "click_type": "left",
+        "delay_before_ms": 600
       }
     }
   ]

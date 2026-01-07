@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_d0bb5a624d3f4c8d9eb65203db31a2ae",
-  "timestamp": "2026-01-07T17:18:29.729167+00:00",
+  "capture_id": "cap_28d45fd35a79446da72afb0adf971444",
+  "timestamp": "2026-01-07T17:10:48.948072+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -12,10 +12,10 @@
       "width": 1141,
       "height": 717
     },
-    "focused": false,
+    "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 160
+    "capture_latency_ms": 101
   },
   "roi": {
     "fullscreen": {
@@ -116,7 +116,7 @@
     },
     {
       "region": "tutorial_hint",
-      "text": "a\nExit through the n\n\na oe",
+      "text": "a\nExit Ehrough the n\n\noe geen oP oe. LL.",
       "confidence": 0.5
     }
   ],

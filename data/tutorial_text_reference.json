@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "source": "tutorial_island",
+  "phases": {
+    "welcome": {
+      "hints": [
+        "Getting started",
+        "To start the tutorial use your left mouse button to click on the RuneScape Guide",
+        "Click here to continue"
+      ],
+      "npc_dialogue": [
+        "Greetings! I see you are a new arrival to this land.",
+        "My job is to welcome all new visitors."
+      ]
+    },
+    "moving": {
+      "hints": [
+        "Exit through the nearby door to continue the tutorial.",
+        "This box will remind you of what you need to do in future steps."
+      ]
+    },
+    "camera": {
+      "hints": [
+        "Moving around",
+        "Follow the path to find the next instructor.",
+        "Use your arrow keys to rotate the camera.",
+        "Hold down the middle mouse button to rotate the camera."
+      ]
+    },
+    "quest_guide": {
+      "hints": [
+        "Talk to the Quest Guide",
+        "Click on the flashing icon to open the Quest Journal"
+      ]
+    },
+    "mining": {
+      "hints": [
+        "Mining and Smithing",
+        "Talk to the Mining Instructor",
+        "Click on the rock to mine some ore",
+        "Now smelt your ore at the furnace"
+      ]
+    },
+    "combat": {
+      "hints": [
+        "Combat",
+        "Talk to the Combat Instructor",
+        "Click on the flashing icon to open the Equipment tab",
+        "Attack the giant rat"
+      ]
+    },
+    "banking": {
+      "hints": [
+        "Banking",
+        "Open the bank booth",
+        "Deposit your items"
+      ]
+    },
+    "prayer": {
+      "hints": [
+        "Prayer",
+        "Talk to the Prayer Instructor"
+      ]
+    },
+    "magic": {
+      "hints": [
+        "Magic",
+        "Talk to the Magic Instructor",
+        "Cast Wind Strike on the chicken"
+      ]
+    },
+    "final": {
+      "hints": [
+        "You're nearly finished!",
+        "Use the portal to leave Tutorial Island"
+      ]
+    }
+  },
+  "common_buttons": [
+    "Click here to continue",
+    "Yes",
+    "No",
+    "Ok"
+  ]
+}

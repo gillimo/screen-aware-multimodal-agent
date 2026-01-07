@@ -1,7 +1,7 @@
 {
   "version": 1,
   "milestone": "tutorial_island",
-  "phase": "welcome",
+  "phase": "movement",
   "step": 1,
   "completed": [],
   "current_objectives": [
@@ -9,21 +9,26 @@
   ],
   "required_cues": [],
   "notes": "",
-  "last_decision_id": "ti_welcome_001",
+  "last_decision_id": "ti_open_door",
   "last_execution": {
-    "timestamp": "2026-01-07T15:54:33.827002Z",
-    "decision_id": "ti_welcome_001",
-    "count": 1,
-    "success_count": 1,
+    "timestamp": "2026-01-07T17:17:51.313989Z",
+    "decision_id": "ti_open_door",
+    "count": 2,
+    "success_count": 2,
     "failure_count": 0,
     "results": [
       {
-        "intent_id": "ti_welcome_click",
+        "intent_id": "ti_door_click",
+        "success": true,
+        "failure_reason": ""
+      },
+      {
+        "intent_id": "ti_door_walkthrough",
         "success": true,
         "failure_reason": ""
       }
     ]
   },
   "repeat_count": 0,
-  "decision_index": 0
+  "decision_index": 1
 }

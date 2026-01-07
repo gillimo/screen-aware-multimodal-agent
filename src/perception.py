@@ -39,6 +39,20 @@ def is_window_focused(handle: int) -> bool:
     return int(foreground) == int(handle)
 
 
+
+
+def focus_window(handle: int, wait_ms: int = 100) -> bool:
+    """Bring window to foreground and wait for it to gain focus."""
+    if sys.platform != "win32":
+        return False
+    try:
+        ctypes.windll.user32.SetForegroundWindow(handle)
+        if wait_ms > 0:
+            time.sleep(wait_ms / 1000.0)
+        return is_window_focused(handle)
+    except Exception:
+        return False
+
 def find_windows(title_contains: str) -> List[WindowInfo]:
     if sys.platform != "win32":
         return []

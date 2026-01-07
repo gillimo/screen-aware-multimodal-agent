@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_d0bb5a624d3f4c8d9eb65203db31a2ae",
-  "timestamp": "2026-01-07T17:18:29.729167+00:00",
+  "capture_id": "cap_14d55e706a0c4c2394015baa8167562c",
+  "timestamp": "2026-01-07T17:15:45.720218+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": false,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 160
+    "capture_latency_ms": 196
   },
   "roi": {
     "fullscreen": {
@@ -83,44 +83,53 @@
   "ui": {
     "open_interface": "none",
     "selected_tab": "unknown",
-    "cursor_state": "interact",
-    "hover_text": "Jalk here",
+    "cursor_state": "default",
+    "hover_text": "",
     "elements": [],
-    "dialogue_options": []
+    "dialogue_options": [
+      "\"C: /Users/gilli/OneDrive/Desktop/proje",
+      "rt time, ctypes..)",
+      "> Jalk here"
+    ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "",
+      "text": "import time, ctypes.\nL Hover: Jalk here\nTutorial: Exit throu\n\n\u00bb Read(OneDrive\\Desktop\\p",
       "confidence": 0.5
     },
     {
       "region": "hover_text",
-      "text": "Jalk here",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "dialogue",
-      "text": "",
+      "text": "\"C: /Users/gilli/OneDrive/Desktop/proje\nrt time, ctypes..)\n> Jalk here",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "",
+      "text": "/projects/agent\n\n\\data\\snapshots",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "",
+      "text": "ya /Nacbltnn/nroaszactc/anar",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "a\nExit through the n\n\na oe",
+      "text": "1oorWay. Let me CLicK\n\n\u00bb Bash(cd \"C:/Users/g:\n\nean nantkt aearn",
       "confidence": 0.5
     }
   ],
-  "chat": [],
+  "chat": [
+    "import time, ctypes.",
+    "L Hover: Jalk here",
+    "Tutorial: Exit throu",
+    "\u00bb Read(OneDrive\\Desktop\\p"
+  ],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -146,7 +155,12 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [],
-    "tooltips": []
+    "inventory_lines": [
+      "/projects/agent",
+      "\\data\\snapshots"
+    ],
+    "tooltips": [
+      "ya /Nacbltnn/nroaszactc/anar"
+    ]
   }
 }
