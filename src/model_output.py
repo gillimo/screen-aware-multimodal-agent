@@ -73,14 +73,16 @@ def validate_planner_output(payload):
     return errors
 
 
-def log_decision(payload, source, message):
+def log_decision(payload, source, message, path: Path | None = None):
     entry = {
         "timestamp": datetime.utcnow().isoformat() + "Z",
         "source": source,
         "message": message,
         "payload": payload,
     }
-    path = LOG_DIR / "model_decisions.jsonl"
+    if path is None:
+        path = LOG_DIR / "model_decisions.jsonl"
+    path.parent.mkdir(exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(entry))
         handle.write("\n")

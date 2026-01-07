@@ -1,0 +1,12 @@
+{
+  "required": [
+    "version",
+    "milestone",
+    "phases"
+  ],
+  "types": {
+    "version": "number",
+    "milestone": "string",
+    "phases": "object"
+  }
+}

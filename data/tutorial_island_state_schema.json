@@ -1,0 +1,23 @@
+{
+  "required": [
+    "version",
+    "milestone",
+    "phase",
+    "step",
+    "completed",
+    "current_objectives",
+    "required_cues"
+  ],
+  "types": {
+    "version": "number",
+    "milestone": "string",
+    "phase": "string",
+    "step": "number",
+    "completed": "array",
+    "current_objectives": "array",
+    "required_cues": "array",
+    "notes": "string",
+    "last_decision_id": "string",
+    "last_execution": "object"
+  }
+}

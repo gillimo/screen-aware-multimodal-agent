@@ -12,6 +12,7 @@ Purpose: define the perception ("eyes") and action ("hands") needs for a screen-
 ### Capture
 - Detect the OSRS client window, bounds, focus, and scale.
 - Capture frames at configurable FPS with ROI support.
+- ROI presets live in `data/roi.json` (fixed, resizable, fullscreen).
 - Record capture latency and dropped-frame counts.
 
 ### UI Parsing
@@ -84,7 +85,7 @@ P0
 - [ ] Unified action API (move, click, drag, key, scroll). (dep:none)
 - [ ] Pre-action UI validation gates and abort rules. (dep:none)
 - [ ] Post-action verification with bounded retry and failure classification. (dep:none)
-- [ ] Dry-run mode with action logging only. (dep:none)
+- [x] Dry-run mode with action logging only. (dep:none)
 
 P1
 - [ ] OCR backend with pluggable providers and per-region confidence. (dep:none)
@@ -209,6 +210,59 @@ Notes:
 65) Add per-action confidence gating (extra checks when uncertainty is high). (P2, dep:mimicry) [done]
 66) Add cursor settle behavior wiring into action execution path. (P2, dep:mimicry) [done]
 
+## Active Queue (Next 5, Round 13)
+67) Add stochastic idle behaviors (hover, camera glance, inventory check) within safe bounds. (P2, dep:mimicry) [done]
+68) Add screen edge pauses (cursor leaves client briefly, returns). (P2, dep:mimicry) [done]
+69) Add long idle recovery behavior (re-orient UI, re-check state). (P2, dep:mimicry) [done]
+70) Add periodic UI tab toggles (inventory, skills, quests) when idle. (P2, dep:mimicry) [done]
+71) Add camera nudge variability instead of always perfect positioning. (P2, dep:mimicry) [done]
+
+## Active Queue (Next 5, Round 14)
+72) Add safe interrupt handling (pause on unexpected UI, resume with re-check). (P2, dep:mimicry) [done]
+73) Add reaction to interruptions (randomized delay or abort on new modal). (P2, dep:mimicry) [done]
+74) Add panic pause on unexpected chat or trade window. (P2, dep:mimicry) [done]
+75) Add viewport scanning before interacting with new UI panels. (P2, dep:mimicry) [done]
+76) Add off-screen cursor travel patterns for modal dismissal or refocus. (P2, dep:mimicry) [done]
+
+## Active Queue (Next 5, Round 15)
+77) Add human-like camera movement (short nudges, occasional over-rotation). (P2, dep:mimicry) [done]
+78) Add user-like camera zoom variation with pauses. (P2, dep:mimicry) [done]
+79) Add action spacing based on in-game animations or cooldown cues integration. (P2, dep:mimicry) [done]
+80) Add safe interrupt handling integration into action flow. (P2, dep:mimicry) [done]
+81) Add focus checks (re-hover or re-read UI state) before committing actions. (P2, dep:mimicry) [done]
+
+## Active Queue (Next 5, Round 16)
+82) Add action context logger integration into action flow. (P2, dep:mimicry) [done]
+83) Add policy layer for allowed action types, rate limits, cooldowns (hands safety). (P2, dep:none) [done]
+84) Add structured logging for every decision and action with timestamps. (P2, dep:none) [done]
+85) Add action spacing based on in-game animations or cooldown cues wiring. (P2, dep:mimicry) [done]
+86) Add safe interrupt handling wiring in action flow (pause/resume). (P2, dep:mimicry) [done]
+
+## Active Queue (Next 5, Round 17 - Dependencies)
+87) Define pass/fail acceptance criteria for perception parity. (P3, dep:mimicry) [done]
+88) Define pass/fail acceptance criteria for timing/motion parity. (P3, dep:mimicry) [done]
+89) Define pass/fail acceptance criteria for error and recovery parity. (P3, dep:mimicry) [done]
+90) Build a human session capture + annotation pipeline. (P3, dep:mimicry) [done]
+91) Build a replay-to-comparison harness (agent vs. human). (P3, dep:mimicry) [done]
+
+## Active Queue (Round 18 - Dependencies)
+92) Add calibration tooling to fit timing/motion distributions to human baselines. (P3, dep:mimicry) [done]
+93) Add reporting pipeline for parity results and regressions. (P3, dep:mimicry) [done]
+
+## Active Queue (Round 19)
+94) Wire cursor settle timing into action execution flow. (P2, dep:mimicry) [done]
+95) Add target re-aim when hitbox shifts (moving entities). (P2, dep:mimicry) [done]
+96) Add element occlusion handling (wait/reposition if obstructed). (P2, dep:mimicry) [done]
+97) Add alternate pathing for camera rotation (different drag directions). (P2, dep:mimicry) [done]
+98) Add human slips in camera drag (slight vertical drift). (P2, dep:mimicry) [done]
+
+## Active Queue (Round 20 - Model Dependency)
+99) Consume decision trace JSONL from Mimicry/Model and build action intents. (P2, dep:model) [done]
+100) Add CLI command to load latest decision and run dry-run execution. (P2, dep:model) [done]
+
+## Active Queue (Round 21 - Execution)
+101) Add live input execution for model intents (mouse/keyboard). (P2, dep:model) [done]
+
 ## Hands and Eyes Ticket Backlog
 
 ### Eyes
@@ -230,7 +284,7 @@ Notes:
 - [ ] Implement drag actions with human-like start and end jitter.
 - [ ] Add focus recovery before any input execution.
 - [ ] Add action gating with UI pre-checks and abort rules.
-- [ ] Implement dry-run mode with action logging only.
+- [x] Implement dry-run mode with action logging only.
 - [ ] Add post-action verification and bounded retry logic.
 - [ ] Add human-in-the-loop approval toggle for unsafe actions.
 

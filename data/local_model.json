@@ -6,5 +6,12 @@
   "temperature": 0.2,
   "plan_default": "model",
   "strict_json": true,
-  "active_profile": "normal"
+  "strict_json_retries": 2,
+  "active_profile": "normal",
+  "safety_gates_enabled": false,
+  "approval_policy": {
+    "require_approval": false,
+    "unsafe_actions": ["drag", "type", "camera"],
+    "auto_approve_actions": []
+  }
 }

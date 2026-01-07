@@ -1,0 +1,6 @@
+{
+  "allowed_actions": ["move", "click", "drag", "type", "scroll", "camera"],
+  "deny_actions": [],
+  "cooldown_ms": 0,
+  "rate_limit_per_min": 0
+}

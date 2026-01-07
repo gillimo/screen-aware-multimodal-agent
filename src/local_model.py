@@ -21,6 +21,13 @@ def load_config():
             "temperature": 0.2,
             "plan_default": "heuristic",
             "strict_json": False,
+            "strict_json_retries": 2,
+            "safety_gates_enabled": False,
+            "approval_policy": {
+                "require_approval": False,
+                "unsafe_actions": ["drag", "type", "camera"],
+                "auto_approve_actions": [],
+            },
         }
     try:
         return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
@@ -33,6 +40,13 @@ def load_config():
             "temperature": 0.2,
             "plan_default": "heuristic",
             "strict_json": False,
+            "strict_json_retries": 2,
+            "safety_gates_enabled": False,
+            "approval_policy": {
+                "require_approval": False,
+                "unsafe_actions": ["drag", "type", "camera"],
+                "auto_approve_actions": [],
+            },
         }
 
 

@@ -3,7 +3,10 @@
 Purpose: define the normalized JSON snapshot emitted by perception.
 
 ## Required Top-Level Fields
+- capture_id: string
 - timestamp: string (ISO-8601)
+- version: number
+- stale: boolean
 - session_id: string
 - client: object
 - roi: object
@@ -53,6 +56,10 @@ Purpose: define the normalized JSON snapshot emitted by perception.
 - inventory: array
 - equipment: object
 - resources: object
+
+## ocr_metadata
+- inventory_lines: array
+- tooltips: array
 
 ## Example
 ```json

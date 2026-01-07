@@ -1,0 +1,8 @@
+{
+  "p3": {
+    "human_likeness_kpi_min": 0.8,
+    "latency_ms_max": 250,
+    "misclick_rate_max": 0.015,
+    "hover_check_rate_min": 0.4
+  }
+}

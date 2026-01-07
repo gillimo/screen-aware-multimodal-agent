@@ -33,3 +33,23 @@ def avoid_edges(point: Tuple[int, int], bounds: Dict[str, int], margin_px: int =
     x = max(left, min(right, x))
     y = max(top, min(bottom, y))
     return x, y
+
+
+def reaim_if_shifted(
+    previous_bounds: Dict[str, int],
+    current_bounds: Dict[str, int],
+    target_point: Tuple[int, int],
+    threshold_px: int = 4,
+) -> Tuple[Tuple[int, int], bool]:
+    prev_center = (
+        previous_bounds.get("x", 0) + previous_bounds.get("width", 0) // 2,
+        previous_bounds.get("y", 0) + previous_bounds.get("height", 0) // 2,
+    )
+    cur_center = (
+        current_bounds.get("x", 0) + current_bounds.get("width", 0) // 2,
+        current_bounds.get("y", 0) + current_bounds.get("height", 0) // 2,
+    )
+    shift = abs(cur_center[0] - prev_center[0]) + abs(cur_center[1] - prev_center[1])
+    if shift >= threshold_px:
+        return cur_center, True
+    return target_point, False

@@ -3,10 +3,65 @@
 Handles:
 - Codex
 - Codex-HandsEyes
+- Codex-Aster
 - MimicryModel
 - Kya
 
 Entries (newest first):
+- 2026-01-07: Codex-Aster: aligned tutorial decision targets with executor (coords vs ui ids).
+- 2026-01-07: Codex-Aster: enhanced minimap region inference parsing and checked off minimap TODO.
+- 2026-01-07: MimicryModel: clarified BUG_LOG resolution notes; pending cursor-settle items marked historical.
+- 2026-01-07: MimicryModel: audited BUG_LOG; confirmed no open bugs and marked pending notes as resolved history.
+- 2026-01-07: Codex-Aster: wired approval policy enforcement in execution loops and updated local model docs/tickets.
+- 2026-01-07: Codex-Aster: resumed hands/eyes work and registered handle for new changes.
+- 2026-01-06: Codex-HandsEyes: added stale snapshot handling, inventory/tooltips OCR metadata, and region map docs.
+- 2026-01-06: MimicryModel: wired idle behaviors (edge/offscreen/viewport scan/idle recovery/tab toggles), focus recovery, per-session seed control, and camera alt pathing; updated docs/tickets.
+- 2026-01-06: Codex-HandsEyes: integrated OCR/UI/minimap wiring into snapshot capture and updated schemas/docs.
+- 2026-01-06: Codex-HandsEyes: added OCR/UI region map stubs and evaluator thresholds config, indexed in docs.
+- 2026-01-06: Codex-HandsEyes: added ROI presets, tutorial validation notes, and marked execution enhancements complete.
+- 2026-01-06: Codex-HandsEyes: added low-confidence hover checks, abort details, and tutorial decision examples.
+- 2026-01-06: Codex-HandsEyes: added hover_dwell_ms profile defaults for click execution.
+- 2026-01-06: Codex-HandsEyes: updated LOG_CHECKLIST with schema references for action/execution logs.
+- 2026-01-06: Codex-HandsEyes: added random-event chat guard in execution loop.
+- 2026-01-06: Codex-HandsEyes: added interrupt handling toggle in execution loops.
+- 2026-01-06: Codex-HandsEyes: added safety_gates_enabled toggle for action policy enforcement.
+- 2026-01-06: Codex-HandsEyes: added action policy config and enforcement for allowed/denied actions.
+- 2026-01-06: Codex-HandsEyes: added hover_text gating check using snapshot payload in click execution.
+- 2026-01-06: Codex-HandsEyes: added require_focus gate defaults and enforcement in move/click.
+- 2026-01-06: Codex-HandsEyes: added settle_ms profile jitter handling for click execution.
+- 2026-01-06: Codex-HandsEyes: added click pressure variance support in click execution.
+- 2026-01-06: Codex-HandsEyes: added attention drift and edge avoidance for move/click targeting.
+- 2026-01-06: Codex-HandsEyes: added input noise frame variance in move/click timing.
+- 2026-01-06: Codex-HandsEyes: added drag hesitation and end jitter in action execution.
+- 2026-01-06: Codex-HandsEyes: added typing cadence support with profile defaults.
+- 2026-01-06: Codex-HandsEyes: added camera action handling and scroll easing via scroll profile.
+- 2026-01-06: Codex-HandsEyes: added session cooldown_ms support for action execution pacing.
+- 2026-01-06: Codex-HandsEyes: added multi-agent workflow doc and indexed it.
+- 2026-01-06: Codex-HandsEyes: added tutorial state write-back docs and schema updates.
+- 2026-01-06: Codex-HandsEyes: added retry/backoff hooks for decision execution using payload/profile config.
+- 2026-01-06: Codex-HandsEyes: added go orchestration flags and trace-path support with max-actions limits.
+- 2026-01-06: Codex-HandsEyes: added action/context/execution summary schema docs and execution summary helper.
+- 2026-01-06: Codex-HandsEyes: resumed hands/eyes execution work in agentosrs workspace.
+- 2026-01-06: Codex-HandsEyes: added consolidated hands/eyes TODO list.
+- 2026-01-06: Codex-HandsEyes: added decision-execute-file for tutorial decision JSON consumption.
+- 2026-01-06: Codex-HandsEyes: added action/context logging and delays in decision execution.
+- 2026-01-06: Codex-HandsEyes: added snapshot_latest.json write in capture.
+- 2026-01-06: Codex-HandsEyes: wired live input execution for decision intents.
+- 2026-01-06: Codex-HandsEyes: added decision-consume CLI for Mimicry decision traces.
+- 2026-01-06: Codex-HandsEyes: wired settle timing, re-aim, occlusion checks, and camera drag variants.
+- 2026-01-06: MimicryModel: noted fullscreen assumption for tutorial loop.
+- 2026-01-06: MimicryModel: added tutorial loop schemas, CLI entry, and audit log spec updates.
+- 2026-01-06: Codex-HandsEyes: added timing calibration and human-equivalence report scripts.
+- 2026-01-06: Codex-HandsEyes: completed P3 criteria definitions and added human session/replay comparison scaffolding.
+- 2026-01-06: MimicryModel: added Tutorial Island JSON loop contract and templates.
+- 2026-01-06: Codex-HandsEyes: added action policy, context logging, spacing, and interrupt wiring helpers.
+- 2026-01-06: MimicryModel: closed Mimicry/Model tickets, added audit log spec, and updated status.
+- 2026-01-06: Codex-HandsEyes: added camera movement/zoom, spacing integration, interrupt delay, and focus checks.
+- 2026-01-06: Codex-HandsEyes: added interrupt handling, panic checks, viewport scan, and offscreen travel helpers.
+- 2026-01-06: Codex-HandsEyes: added idle behaviors, edge pauses, tab toggles, and camera nudges.
+- 2026-01-06: MimicryModel: added Tutorial Island milestone doc.
+- 2026-01-06: MimicryModel: added strict JSON retries, decision view/rotate, and KPI ingestion into ratings.
+- 2026-01-06: Codex-HandsEyes: synced Mimicry/Model status with recent hands/eyes progress.
 - 2026-01-06: Codex-HandsEyes: added double-click variance, click pressure, drag hesitation, confidence gating, and settle wiring.
 - 2026-01-06: Codex-HandsEyes: added inter-action pauses, confirmation delay, reaction-time mapping, and click cadence presets.
 - 2026-01-06: MimicryModel: audited remaining tasks, added tickets, and updated bug log.
@@ -103,6 +158,50 @@ Entries (newest first):
 - 2026-01-06: MimicryModel: added human-like interaction tickets (timing, movement, rhythm, corrections).
 - 2026-01-06: MimicryModel: adding tickets for variable click timing and non-linear mouse pathing.
 - 2026-01-06: MimicryModel: initialized agentosrs project scaffold.
+- 2026-01-06: MimicryModel: adding go command docs and tutorial loop usage updates.
+- 2026-01-06: MimicryModel: added hands-and-talk coordination doc and indexed it.
+- 2026-01-06: MimicryModel: left coordination request in hands/talk log.
+- 2026-01-06: MimicryModel: added hands/talk doc to docs checklist.
+- 2026-01-06: MimicryModel: wired go to log decisions, execute them, and capture snapshots; updated docs.
+- 2026-01-06: MimicryModel: resolved cursor settle wiring by adding settle+dwell in LiveExecutor and updated hands chat.
+- 2026-01-06: MimicryModel: closed remaining open bug notes after settle wiring update.
+- 2026-01-06: MimicryModel: queued remaining mimicry/model TODOs in hands/talk.
+- 2026-01-06: MimicryModel: added human-like execution notes to HOW_TO_OPERATE and checked off in hands/talk.
+- 2026-01-06: MimicryModel: integrated non-linear mouse pathing into live execution and updated tickets.
+- 2026-01-06: MimicryModel: added misclick correction logic in live execution and updated docs/tickets.
+- 2026-01-06: MimicryModel: added inter-action pacing delays and updated docs/tickets.
+- 2026-01-06: MimicryModel: added pre-action focus/hover gating and updated tickets.
+- 2026-01-06: MimicryModel: tied action context logs to decision_id and updated docs/tickets.
+- 2026-01-06: MimicryModel: synced ticket module map after mimicry/model logging updates.
+- 2026-01-06: MimicryModel: queued new remaining-work TODO block in hands/talk.
+- 2026-01-06: MimicryModel: added multi-agent workflow doc and requested hands/eyes input.
+- 2026-01-06: MimicryModel: added hover-dwell before click and updated docs/tickets.
+- 2026-01-06: MimicryModel: added click/drag dwell variance and updated docs/tickets.
+- 2026-01-06: MimicryModel: added multi-agent workflow doc to the new project template and indexed it.
+- 2026-01-06: MimicryModel: added scroll variance with pauses and updated docs/tickets.
+- 2026-01-06: MimicryModel: added mouse overshoot corrections and updated docs/tickets.
+- 2026-01-06: MimicryModel: added edge avoidance/start jitter for mouse paths and updated docs/tickets.
+- 2026-01-06: MimicryModel: added speed ramps for mouse paths and updated docs/tickets.
+- 2026-01-06: MimicryModel: added git strategy doc and requested hands/eyes confirmation.
+- 2026-01-06: MimicryModel: added UI-change aborts in execution loop and updated docs/tickets.
+- 2026-01-06: MimicryModel: added confidence gating checks and updated docs/tickets.
+- 2026-01-06: MimicryModel: asked hands/eyes to confirm unexpected edits in app_cli.
+- 2026-01-06: MimicryModel: added UI-change thinking pauses and updated docs/tickets.
+- 2026-01-06: MimicryModel: added double-check loop for irreversible actions and updated docs/tickets.
+- 2026-01-06: MimicryModel: added interrupt pauses for unexpected UI states and updated docs/tickets.
+- 2026-01-06: MimicryModel: added camera movement quirks and updated docs/tickets.
+- 2026-01-06: MimicryModel: added fatigue drift session delays and updated docs/tickets.
+- 2026-01-06: MimicryModel: added burst/rest pacing and updated docs/tickets.
+- 2026-01-06: MimicryModel: added action order variability and updated docs/tickets.
+- 2026-01-06: MimicryModel: synced tickets/module map after recent mimicry updates.
+- 2026-01-06: MimicryModel: added probabilistic hover-text rechecks and updated docs/tickets.
+- 2026-01-06: MimicryModel: added attention drift offsets and updated docs/tickets.
+- 2026-01-06: MimicryModel: added target re-aim adjustments and updated docs/tickets.
+- 2026-01-06: MimicryModel: added occlusion wait/skip handling and updated docs/tickets.
+- 2026-01-06: MimicryModel: added context-specific click cadence presets and updated docs/tickets.
+- 2026-01-06: MimicryModel: added target bias selection and updated docs/tickets.
+- 2026-01-06: MimicryModel: added retry re-aim offsets and updated docs/tickets.
+- 2026-01-06: MimicryModel: added panic pause handling and updated docs/tickets.
 
 
 - 2026-01-06: <handle>: initialized project from template.

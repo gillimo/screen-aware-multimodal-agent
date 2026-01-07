@@ -12,13 +12,13 @@
 - [ ] Build a "capture and annotate" dataset tool.
 - [ ] Add a replay viewer for frame sequences and UI overlays.
 - [ ] Define a unified action API (move, click, drag, key, scroll).
-- [ ] Define the expected model output schema for action intents and constraints.
-- [ ] Add mouse pathing with curve/easing presets.
+- [x] Define the expected model output schema for action intents and constraints.
+- [x] Add mouse pathing with curve/easing presets.
 - [ ] Add timing variance (dwell, jitter, reaction delay).
 - [ ] Implement drag actions with human-like start and end jitter.
-- [ ] Add focus recovery before any input execution.
-- [ ] Add action gating with UI pre-checks and abort rules.
-- [ ] Implement dry-run mode with action logging only.
+- [x] Add focus recovery before any input execution.
+- [x] Add action gating with UI pre-checks and abort rules.
+- [x] Implement dry-run mode with action logging only.
 - [ ] Add post-action verification with bounded retry and failure classification.
 - [ ] Add human-in-the-loop approval toggle for unsafe actions.
 - [ ] Add hardware device enumeration for mouse/keyboard with metadata capture.
@@ -34,7 +34,7 @@
 
 - [ ] Add project-specific datasets in data/reference.json.
 - [ ] Expand dependency graph for key workflows.
-- [ ] Implement model integration in src/local_model.py.
+- [x] Implement model integration in src/local_model.py.
 - [ ] Define end-to-end architecture for a screen-aware agent (modules, data flow, storage, failure modes).
 - [ ] Build screen capture pipeline with configurable FPS and region-of-interest support.
 - [ ] Add an OCR layer with a pluggable backend (local model or external provider).
@@ -47,24 +47,24 @@
 - [ ] Add a skill/ability model that maps account stats, gear, and unlocks to action viability.
 - [ ] Implement action executor interfaces (mouse move/click, keyboard input, camera control).
 - [ ] Add variable click timing (jitter and configurable distributions) for input actions.
-- [ ] Add non-linear mouse pathing (curves and easing) for mouse move actions.
+- [x] Add non-linear mouse pathing (curves and easing) for mouse move actions.
 - [ ] Add a reaction-time model (stimulus-to-action delay) with per-action distributions.
-- [ ] Add hover dwell before click to simulate target acquisition.
-- [ ] Add occasional mouse overshoot with corrective micro-moves.
-- [ ] Add click down/up dwell variance and long-press support for drag actions.
-- [ ] Add misclick/near-miss modeling with corrective behavior (configurable rate).
-- [ ] Add scroll wheel speed variance and pause patterns for scroll actions.
+- [x] Add hover dwell before click to simulate target acquisition.
+- [x] Add occasional mouse overshoot with corrective micro-moves.
+- [x] Add click down/up dwell variance and long-press support for drag actions.
+- [x] Add misclick/near-miss modeling with corrective behavior (configurable rate).
+- [x] Add scroll wheel speed variance and pause patterns for scroll actions.
 - [ ] Add mouse acceleration profiles (DPI, OS speed, accel curve) with presets.
 - [ ] Add inter-action micro-pauses based on task complexity and recent activity.
 - [ ] Add handoff latency between mouse and keyboard actions.
-- [ ] Add session rhythm modeling (breaks, fatigue, time-based drift).
+- [x] Add session rhythm modeling (breaks, fatigue, time-based drift).
 - [ ] Add repetition breakers to vary timing/pathing across repeated actions.
-- [ ] Add camera nudge variability instead of always perfect positioning.
-- [ ] Add focus checks (re-hover or re-read UI state) before committing actions.
+- [x] Add camera nudge variability instead of always perfect positioning.
+- [x] Add focus checks (re-hover or re-read UI state) before committing actions.
 - [ ] Add local-model chat responses when a player name is detected (opt-in, rate-limited, context-aware).
 - [ ] Add per-user behavior profiles (timing, movement, mistakes) to avoid a single signature.
-- [ ] Add stochastic idle behaviors (hover, camera glance, inventory check) within safe bounds.
-- [ ] Add UI scan patterns before actions (mouse sweep or hover checks).
+- [x] Add stochastic idle behaviors (hover, camera glance, inventory check) within safe bounds.
+- [x] Add UI scan patterns before actions (mouse sweep or hover checks).
 - [ ] Add “hesitation” mechanics before high-impact actions (bank, trade, drop).
 - [ ] Add corrective camera adjustments after minor overshoot or misclick.
 - [ ] Add target acquisition model (aim point selection within UI bounds).
@@ -72,54 +72,55 @@
 - [ ] Add typing cadence modeling (key delays, bursts, corrections, backspace).
 - [ ] Add chat cooldown rules (per player, per session, per channel).
 - [ ] Add input device noise model (USB polling jitter, frame-time variance).
-- [ ] Add action chaining variability (different orderings for equivalent steps).
-- [ ] Add “attention drift” model that slightly biases cursor paths over time.
-- [ ] Add safe interrupt handling (pause on unexpected UI, resume with re-check).
+- [x] Add action chaining variability (different orderings for equivalent steps).
+- [x] Add “attention drift” model that slightly biases cursor paths over time.
+- [x] Add safe interrupt handling (pause on unexpected UI, resume with re-check).
 - [ ] Add reaction to interruptions (randomized delay or abort on new modal).
-- [ ] Add human-like camera movement (short nudges, occasional over-rotation).
-- [ ] Add UI focus recovery (click back into client if focus lost).
+- [x] Add human-like camera movement (short nudges, occasional over-rotation).
+- [x] Add UI focus recovery (click back into client if focus lost).
 - [ ] Add gesture variability for drag actions (speed, curvature, end jitter).
 - [ ] Add context-based pacing (slow down in complex scenes, speed up in simple ones).
-- [ ] Add per-action confidence gating (extra checks when uncertainty is high).
+- [x] Add per-action confidence gating (extra checks when uncertainty is high).
 - [ ] Add cursor settle behavior (brief stillness before final click).
-- [ ] Add edge avoidance for mouse paths (avoid perfectly straight to corners).
-- [ ] Add double-click variance for UI actions that use multi-click patterns.
+- [x] Add edge avoidance for mouse paths (avoid perfectly straight to corners).
+- [x] Add double-click variance for UI actions that use multi-click patterns.
 - [ ] Add drag start hesitation and end jitter (human-like drag endpoints).
-- [ ] Add click targeting bias toward text center or icon center with drift.
-- [ ] Add long idle recovery behavior (re-orient UI, re-check state).
-- [ ] Add screen edge pauses (cursor leaves client briefly, returns).
-- [ ] Add off-screen cursor travel patterns for modal dismissal or refocus.
-- [ ] Add viewport scanning before interacting with new UI panels.
-- [ ] Add user-like camera zoom variation with pauses.
-- [ ] Add retry strategy for failed interactions (back off, re-aim, re-try).
+- [x] Add click targeting bias toward text center or icon center with drift.
+- [x] Add long idle recovery behavior (re-orient UI, re-check state).
+- [x] Add screen edge pauses (cursor leaves client briefly, returns).
+- [x] Add off-screen cursor travel patterns for modal dismissal or refocus.
+- [x] Add viewport scanning before interacting with new UI panels.
+- [x] Add user-like camera zoom variation with pauses.
+- [x] Add retry strategy for failed interactions (back off, re-aim, re-try).
 - [ ] Add stochastic delay after action completion (human confirmation pause).
 - [ ] Add keypress overlap modeling (shift+click timing variance).
 - [ ] Add modifier key usage variance (shift, ctrl) where applicable.
-- [ ] Add action abort behavior when UI changes mid-action.
-- [ ] Add input burst modeling (short spurts followed by rest).
-- [ ] Add action spacing based on in-game animations or cooldown cues.
-- [ ] Add cursor speed ramps (accelerate/decay rather than constant velocity).
+- [x] Add action abort behavior when UI changes mid-action.
+- [x] Add input burst modeling (short spurts followed by rest).
+- [x] Add action spacing based on in-game animations or cooldown cues.
+- [x] Add cursor speed ramps (accelerate/decay rather than constant velocity).
 - [ ] Add micro-tremor noise in slow cursor movements (sub-pixel jitter).
-- [ ] Add target re-aim when hitbox shifts (moving entities).
-- [ ] Add element occlusion handling (wait or reposition when obstructed).
-- [ ] Add context-specific click cadence presets (banking vs. skilling).
-- [ ] Add probabilistic check of hover text before click.
-- [ ] Add “human slips” in camera drag (slight vertical drift).
-- [ ] Add randomized start point for mouse moves (from last idle position).
+- [x] Add target re-aim when hitbox shifts (moving entities).
+- [x] Add element occlusion handling (wait or reposition when obstructed).
+- [x] Add context-specific click cadence presets (banking vs. skilling).
+- [x] Add probabilistic check of hover text before click.
+- [x] Add “human slips” in camera drag (slight vertical drift).
+- [x] Add randomized start point for mouse moves (from last idle position).
 - [ ] Add edge-of-screen bounce avoidance for cursor travel.
-- [ ] Add short “thinking” pauses after UI state changes.
-- [ ] Add “double-check” loop for irreversible actions (drop, alch, trade).
-- [ ] Add alternate pathing for camera rotation (different drag directions).
-- [ ] Add periodic UI tab toggles (inventory, skills, quests) when idle.
-- [ ] Add panic pause on unexpected chat or trade window.
+- [x] Add short “thinking” pauses after UI state changes.
+- [x] Add “double-check” loop for irreversible actions (drop, alch, trade).
+- [x] Add alternate pathing for camera rotation (different drag directions).
+- [x] Add periodic UI tab toggles (inventory, skills, quests) when idle.
+- [x] Add panic pause on unexpected chat or trade window.
 - [ ] Add shift-queue timing variance for repeated actions.
-- [ ] Add per-session seed control for reproducible randomness in testing.
-- [ ] Add configurable humanization presets (subtle, normal, heavy).
-- [ ] Add action context logger for timing/motion features to enable tuning.
-- [ ] Define end-state human mimicry benchmarks (timing, motion, error rates, session rhythm).
+- [x] Add per-session seed control for reproducible randomness in testing.
+- [x] Add configurable humanization presets (subtle, normal, heavy).
+- [x] Add action context logger for timing/motion features to enable tuning.
+- [x] Add decision_id to action context logs for run correlation.
+- [x] Define end-state human mimicry benchmarks (timing, motion, error rates, session rhythm).
 - [ ] Build a human-likeness scoring harness using recorded sessions as reference.
 - [ ] Add replay-to-comparison tooling (compare agent traces vs. human traces).
-- [ ] Add acceptance criteria for “human-like” in docs (thresholds and examples).
+- [x] Add acceptance criteria for “human-like” in docs (thresholds and examples).
 - [ ] Add calibration tooling to fit timing/motion distributions to human baselines.
 - [ ] Add evaluation datasets for input traces (mouse, click, camera) from real sessions.
 - [ ] Add per-module KPI tracking for human-likeness (input, camera, response).
@@ -129,19 +130,19 @@
 - [ ] Add structured-state augmentation pipeline (merge JSON state with visual cues).
 - [ ] Add evaluation comparing structured-only vs. visual-augmented behavior.
 - [ ] Add human-like pacing model tied to animation and UI feedback cues.
-- [ ] Add a sandbox action mode for dry runs that logs actions without executing them.
-- [ ] Define `SCHEMAS.md` as the source of truth for all schema docs.
+- [x] Add a sandbox action mode for dry runs that logs actions without executing them.
+- [x] Define `SCHEMAS.md` as the source of truth for all schema docs.
 - [ ] Add and maintain `STATE_SCHEMA.md` for `data/state.json`.
 - [ ] Add and maintain `SNAPSHOT_SCHEMA.md` for screen-aware snapshots.
-- [ ] Add schema validation checks for `data/state.json` in the CLI.
-- [ ] Add schema validation for snapshot payloads in perception pipeline.
-- [ ] Create an end-state acceptance checklist tying END_STATE goals to ticket completion.
-- [ ] Add configuration storage for humanization presets and per-user profiles.
-- [ ] Define calibration workflow for human-like baselines (data capture, fitting, review).
-- [ ] Define data retention/privacy policy for action traces and screenshots.
-- [ ] Define model output/decision schema for planner and action intents.
-- [ ] Create Mimicry and Model acceptance checklist tied to END_STATE goals.
-- [ ] Create a Mimicry and Model overview doc that consolidates scope, schemas, tickets, and dependencies.
+- [x] Add schema validation checks for `data/state.json` in the CLI.
+- [x] Add schema validation for snapshot payloads in perception pipeline.
+- [x] Create an end-state acceptance checklist tying END_STATE goals to ticket completion.
+- [x] Add configuration storage for humanization presets and per-user profiles.
+- [x] Define calibration workflow for human-like baselines (data capture, fitting, review).
+- [x] Define data retention/privacy policy for action traces and screenshots.
+- [x] Define model output/decision schema for planner and action intents.
+- [x] Create Mimicry and Model acceptance checklist tied to END_STATE goals.
+- [x] Create a Mimicry and Model overview doc that consolidates scope, schemas, tickets, and dependencies.
 - [ ] Implement a feedback loop: action result → updated state → plan adjustment.
 - [ ] Build a task scheduler to prioritize near-term actions while respecting long-term goals.
 - [ ] Add a policy layer for allowed action types, rate limits, and cooldowns.
@@ -149,19 +150,19 @@
 - [ ] Build a silent, click-through overlay for the OSRS original client (no RuneLite dependency).
 - [ ] Ensure overlay can attach to the OSRS client window and track resize/move.
 - [ ] Add a “capture & annotate” tool for labeling screens to improve UI detection.
-- [ ] Add structured logging for every decision and action with timestamps.
-- [ ] Add decision trace viewer UI (minimal CLI/TUI) for log inspection.
-- [ ] Add scheduled compression/rotation for decision logs.
-- [ ] Add strict JSON retry policy config (max attempts) for model outputs.
-- [ ] Enforce active humanization profile in live executor (non-dry-run).
-- [ ] Ingest human-likeness KPI output into metrics reporting.
+- [x] Add structured logging for every decision and action with timestamps.
+- [x] Add decision trace viewer UI (minimal CLI/TUI) for log inspection.
+- [x] Add scheduled compression/rotation for decision logs.
+- [x] Add strict JSON retry policy config (max attempts) for model outputs.
+- [x] Enforce active humanization profile in live executor (non-dry-run).
+- [x] Ingest human-likeness KPI output into metrics reporting.
 - [ ] Build replay tooling to review sessions from logs and screenshots.
 - [ ] Implement performance profiling for capture, OCR, and planning loops.
 - [ ] Add unit tests for planner logic and state parsing.
 - [ ] Add integration tests with recorded screen sessions.
 - [ ] Extend docs for vision, scope, and operational workflow of the agent.
 - [ ] Add a compliance review section in docs covering acceptable use, user consent, and risk boundaries.
-- [ ] Add a monitoring/audit log spec that records inputs, decisions, and actions for post-run review.
+- [x] Add a monitoring/audit log spec that records inputs, decisions, and actions for post-run review.
 - [ ] Add a safety checklist for any deployment or live testing (manual review steps, rollback plan).
 - [ ] Design a GUI control panel with presets (e.g., “Make best money”, “Train for best money”, “Quest unlock path”).
 - [ ] Implement GUI presets mapping to planner goals and constraints.

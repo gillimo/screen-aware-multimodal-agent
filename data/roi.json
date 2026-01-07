@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "fixed": {
+    "chat_box": { "x": 0, "y": 0, "width": 0, "height": 0 },
+    "minimap": { "x": 0, "y": 0, "width": 0, "height": 0 },
+    "inventory": { "x": 0, "y": 0, "width": 0, "height": 0 }
+  },
+  "resizable": {
+    "chat_box": { "x": 0, "y": 0, "width": 0, "height": 0 },
+    "minimap": { "x": 0, "y": 0, "width": 0, "height": 0 },
+    "inventory": { "x": 0, "y": 0, "width": 0, "height": 0 }
+  },
+  "fullscreen": {
+    "chat_box": { "x": 0, "y": 0, "width": 0, "height": 0 },
+    "minimap": { "x": 0, "y": 0, "width": 0, "height": 0 },
+    "inventory": { "x": 0, "y": 0, "width": 0, "height": 0 }
+  }
+}

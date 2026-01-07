@@ -17,6 +17,7 @@ Purpose: enumerate the interaction behaviors (big and small) required to mimic a
 - Occasional overshoot and micro-corrections.
 - Slight hand jitter in slow movements.
 - Edge avoidance and non-linear paths to corners.
+- Brief edge pauses or off-screen excursions before returning to the client.
 - Naturalized drag gestures (start hesitation, end jitter).
 
 ## Clicking

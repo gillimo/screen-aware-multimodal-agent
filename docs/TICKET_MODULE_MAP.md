@@ -103,6 +103,7 @@ Note: some tickets span modules; listed under the module that owns the main impl
 - Add per-session seed control for reproducible randomness in testing.
 - Add configurable humanization presets (subtle, normal, heavy).
 - Add action context logger for timing/motion features to enable tuning.
+- Add decision_id to action context logs for run correlation.
 
 ### Input: Decision Friction
 - Add click pressure simulation (down/up cadence by action type).

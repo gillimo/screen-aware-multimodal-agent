@@ -1,5 +1,10 @@
 # Bug Log
 
+- Resolution notes:
+  - All entries that say "cursor settle wiring still pending" are historical; the wiring was resolved on 2026-01-06.
+  - No open bugs remain as of 2026-01-07.
+
+- 2026-01-07: Status audit: no open bugs; prior "pending" notes are historical and already resolved.
 - 2026-01-06: None logged.
 - 2026-01-06: No issues found in round 3 (drag jitter, capture/annotate, replay viewer, context logging, seed control).
 - 2026-01-06: replay_viewer accepted non-report input and printed None fields; added required-field guard.
@@ -16,8 +21,59 @@
 - 2026-01-06: No issues found in round 9 (chaining variability, rhythm, pacing, spacing).
 - 2026-01-06: Reviewed open issues before round 10; cursor settle wiring still pending.
 - 2026-01-06: MimicryModel audit: no new bugs found in mimicry/model updates.
+- 2026-01-06: MimicryModel: no new bugs found while closing Mimicry/Model tickets.
 - 2026-01-06: No issues found in round 10 (typing cadence, overlap, modifiers, noise, handoff).
 - 2026-01-06: Reviewed open issues before round 11; cursor settle wiring still pending.
 - 2026-01-06: No issues found in round 11 (micro-pauses, confirmation delay, reaction mapping, cadence presets).
 - 2026-01-06: Reviewed open issues before round 12; cursor settle wiring still pending.
 - 2026-01-06: No issues found in round 12 (double-click variance, click pressure, drag hesitation, confidence gate, settle wiring).
+- 2026-01-06: Cursor settle wiring still pending in executor integration.
+- 2026-01-06: Reviewed open issues before round 13; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 13 (idle behaviors, edge pauses, tab toggles, camera nudges).
+- 2026-01-06: Reviewed open issues before round 14; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 14 (interrupt handling, panic checks, viewport scan, offscreen travel).
+- 2026-01-06: Reviewed open issues before round 15; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 15 (camera movement/zoom, spacing integration, interrupt delay, focus checks).
+- 2026-01-06: Reviewed open issues before round 16; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 16 (policy, context logging, spacing wiring, interrupt wiring).
+- 2026-01-06: Reviewed open issues before round 17; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 17 (parity criteria, session scaffold, trace comparison).
+- 2026-01-06: Reviewed open issues before round 18; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 18 (calibration tooling, reporting pipeline).
+- 2026-01-06: Reviewed open issues before round 19; cursor settle wiring still pending.
+- 2026-01-06: No issues found in round 19 (settle wiring, re-aim, occlusion, camera drag variants).
+- 2026-01-06: Reviewed open issues before round 20; none pending.
+- 2026-01-06: No issues found in round 20 (decision trace consume, CLI wiring).
+- 2026-01-06: No issues found in decision file execution wiring.
+- 2026-01-06: No issues found in live execution wiring (input_exec and decision-execute).
+- 2026-01-06: Cursor settle wiring resolved: LiveExecutor now applies humanization-based settle + click dwell before execution.
+- 2026-01-06: Reviewed open issues; none pending.
+- 2026-01-06: Reviewed open issues after mouse pathing integration; none pending.
+- 2026-01-06: Reviewed open issues after misclick correction integration; none pending.
+- 2026-01-06: Reviewed open issues after pacing integration; none pending.
+- 2026-01-06: Reviewed open issues after focus/hover gating integration; none pending.
+- 2026-01-06: Reviewed open issues after action context correlation update; none pending.
+- 2026-01-06: Reviewed open issues after hover-dwell integration; none pending.
+- 2026-01-06: Reviewed open issues after click/drag variance integration; none pending.
+- 2026-01-06: Reviewed open issues after scroll variance integration; none pending.
+- 2026-01-06: Reviewed open issues after overshoot integration; none pending.
+- 2026-01-06: Reviewed open issues after edge avoidance/start jitter integration; none pending.
+- 2026-01-06: Reviewed open issues after speed ramp integration; none pending.
+- 2026-01-06: Reviewed open issues after UI-change abort integration; none pending.
+- 2026-01-06: Reviewed open issues after confidence gating integration; none pending.
+- 2026-01-06: Reviewed open issues after UI-change thinking pause integration; none pending.
+- 2026-01-06: Reviewed open issues after double-check loop integration; none pending.
+- 2026-01-06: Reviewed open issues after interrupt pause integration; none pending.
+- 2026-01-06: Reviewed open issues after camera movement integration; none pending.
+- 2026-01-06: Reviewed open issues after fatigue drift integration; none pending.
+- 2026-01-06: Reviewed open issues after burst/rest integration; none pending.
+- 2026-01-06: Reviewed open issues after action order variability integration; none pending.
+- 2026-01-06: Reviewed open issues after hover-text recheck integration; none pending.
+- 2026-01-06: Reviewed open issues after attention drift integration; none pending.
+- 2026-01-06: Reviewed open issues after target re-aim integration; none pending.
+- 2026-01-06: Reviewed open issues after occlusion handling integration; none pending.
+- 2026-01-06: Reviewed open issues after click cadence integration; none pending.
+- 2026-01-06: Reviewed open issues after target bias integration; none pending.
+- 2026-01-06: Reviewed open issues after retry re-aim integration; none pending.
+- 2026-01-06: Reviewed open issues after panic pause integration; none pending.
+- 2026-01-06: Resolved historical pending notes (cursor settle wiring and idle/scan helpers now wired); no open bugs.

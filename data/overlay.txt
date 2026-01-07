@@ -1,0 +1,10 @@
+Plan:
+- Progress Fairy Tale II
+Ratings:
+- combat readiness 78
+- quest readiness 4
+- skilling readiness 54
+- money pathing 15
+Blockers:
+- agility 50 for shortcuts and quests
+- fairy rings not unlocked

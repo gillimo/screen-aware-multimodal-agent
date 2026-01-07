@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "milestone": "tutorial_island",
+  "phase": "welcome",
+  "step": 1,
+  "completed": [],
+  "current_objectives": [
+    "Follow the guide instructions"
+  ],
+  "required_cues": [],
+  "notes": "",
+  "last_decision_id": "",
+  "last_execution": {}
+}

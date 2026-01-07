@@ -16,3 +16,18 @@ def build_scan_points(bounds: Dict[str, int], steps: int = 5) -> List[Tuple[int,
         py = y + int(height * (0.5 if idx % 2 == 0 else 0.25))
         points.append((px, py))
     return points
+
+
+def scan_panel(bounds: Dict[str, int], rows: int = 2, cols: int = 3) -> List[Tuple[int, int]]:
+    x = bounds.get("x", 0)
+    y = bounds.get("y", 0)
+    width = max(1, bounds.get("width", 1))
+    height = max(1, bounds.get("height", 1))
+
+    points: List[Tuple[int, int]] = []
+    for r in range(rows):
+        for c in range(cols):
+            px = x + int(width * (c + 1) / (cols + 1))
+            py = y + int(height * (r + 1) / (rows + 1))
+            points.append((px, py))
+    return points

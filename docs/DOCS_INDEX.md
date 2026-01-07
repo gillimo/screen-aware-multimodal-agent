@@ -18,6 +18,9 @@ Start here: `HOW_TO_OPERATE.md`
 - Snapshot schema: `SNAPSHOT_SCHEMA.md`
 - Model output schema: `MODEL_OUTPUT_SCHEMA.md`
 - Hands and eyes requirements: `HANDS_AND_EYES.md`
+- Hands/eyes remaining TODO: `HANDS_EYES_TODO.md`
+- Hands + talk coordination: `HANDS_TALK.md`
+- Multi-agent workflow: `MULTI_AGENT_WORKFLOW.md`
 - Mimicry and model acceptance: `MIMICRY_AND_MODEL_ACCEPTANCE.md`
 - Mimicry and model overview: `MIMICRY_AND_MODEL_OVERVIEW.md`
 - Mimicry and model status: `MIMICRY_AND_MODEL_STATUS.md`
@@ -26,8 +29,16 @@ Start here: `HOW_TO_OPERATE.md`
 - Data retention policy: `DATA_RETENTION_POLICY.md`
 - Local model config: `data/local_model.json`
 - Humanization profiles data: `data/humanization_profiles.json`
+- ROI presets: `data/roi.json`
 - Humanization profiles schema: `data/humanization_profiles_schema.json`
+- OCR region map: `data/ocr_regions.json`
+- UI detector regions: `data/ui_detector_regions.json`
+- Human equivalence thresholds: `data/human_equivalence_thresholds.json`
+- Perception region maps: `PERCEPTION_REGION_MAPS.md`
 - Decision trace schema: `DECISION_TRACE_SCHEMA.md`
+- Action trace schema: `ACTION_TRACE_SCHEMA.md`
+- Action context schema: `ACTION_CONTEXT_SCHEMA.md`
+- Execution summary schema: `EXECUTION_SUMMARY_SCHEMA.md`
 - Human-likeness KPI format: `HUMAN_LIKENESS_KPI.md`
 - Decision trace schema data: `data/decision_trace_schema.json`
 - Human-likeness KPI schema: `data/human_likeness_kpi_schema.json`
@@ -41,10 +52,17 @@ Start here: `HOW_TO_OPERATE.md`
 - Logs and sign-off: `LOGBOOK.md`, `LOG_CHECKLIST.md`, `SIGNING_OFF.md`
 - System notes and demo mode: `SYSTEM_NOTES.md`, `DEMO.md`
 - Local model: `LOCAL_MODEL.md`
+- Git strategy: `GIT_STRATEGY.md`
 - Automation concepts: `AUTOMATION_CONCEPTS.md`
 - Docs checklist: `DOCS_CHECKLIST.md`
 - State awareness spec: `STATE_AWARENESS_REQUIREMENTS.md`
+- Tutorial Island milestone: `TUTORIAL_ISLAND.md`
+- Tutorial Island loop contract: `TUTORIAL_ISLAND_LOOP_CONTRACT.md`
+- Audit log spec: `AUDIT_LOG_SPEC.md`
+- Tutorial Island state schema: `data/tutorial_island_state_schema.json`
+- Tutorial Island decisions schema: `data/tutorial_island_decisions_schema.json`
 - Git workflow: `HOW_TO_OPERATE.md`, `SIGNING_OFF.md`
+- Multi-agent workflow: `MULTI_AGENT_WORKFLOW.md`
 
 
 

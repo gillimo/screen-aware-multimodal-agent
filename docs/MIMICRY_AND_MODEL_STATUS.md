@@ -10,25 +10,30 @@ Legend: done, partial, todo.
 - (done) Snapshot schema is validated and versioned.
 
 ## Response Modeling
-- (todo) Reaction-time distributions are configurable per action type.
-- (todo) Attention checks and confidence gates are enforced on uncertain actions.
-- (todo) Context pacing aligns with animation/cooldown cues.
+- (partial) Reaction-time distributions are configurable per action type.
+- (partial) Attention checks and confidence gates are enforced on uncertain actions.
+- (partial) Context pacing aligns with animation/cooldown cues.
 
 ## Input Mimicry
-- (todo) Mouse motion shows curvature, acceleration, overshoot, and correction.
-- (todo) Click timing and dwell variance are within human-like ranges.
-- (todo) Keyboard cadence includes burst/pauses and correction behavior.
+- (partial) Mouse motion shows curvature, acceleration, overshoot, and correction.
+- (partial) Click timing and dwell variance are within human-like ranges.
+- (partial) Keyboard cadence includes burst/pauses and correction behavior.
 - (todo) Camera movement includes nudges, over-rotation, and micro-adjustments.
 
 ## Session Rhythm
-- (todo) Micro-pauses and burst/rest cycles are observable in traces.
-- (todo) Long sessions show fatigue drift and pacing variation.
+- (partial) Micro-pauses and burst/rest cycles are observable in traces.
+- (partial) Long sessions show fatigue drift and pacing variation.
 
 ## Calibration and Evaluation
 - (partial) Human-likeness scores compare agent traces to human baselines.
 - (partial) Calibration workflow exists for fitting timing/motion distributions.
-- (todo) Acceptance thresholds are defined and tracked over time.
+- (partial) Acceptance thresholds are defined and tracked over time.
 
 ## Safety and Auditability
 - (partial) Every action has an intent, trace, and outcome record.
 - (partial) Policy gates and interrupt handling are enforced.
+
+## JSON Loop (Tutorial Island Prep)
+- (done) Tutorial Island loop contract defined.
+- (done) Tutorial state and decision templates created.
+- (done) Loop validator stub emits MODEL_OUTPUT_SCHEMA decisions.

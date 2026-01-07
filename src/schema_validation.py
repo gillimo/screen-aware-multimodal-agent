@@ -8,6 +8,8 @@ SNAPSHOT_SCHEMA_PATH = DATA_DIR / "snapshot_schema.json"
 HUMANIZATION_SCHEMA_PATH = DATA_DIR / "humanization_profiles_schema.json"
 DECISION_TRACE_SCHEMA_PATH = DATA_DIR / "decision_trace_schema.json"
 HUMAN_KPI_LOG_SCHEMA_PATH = DATA_DIR / "human_kpi_log_schema.json"
+TUTORIAL_STATE_SCHEMA_PATH = DATA_DIR / "tutorial_island_state_schema.json"
+TUTORIAL_DECISIONS_SCHEMA_PATH = DATA_DIR / "tutorial_island_decisions_schema.json"
 
 TYPE_MAP = {
     "string": str,
@@ -104,4 +106,22 @@ def validate_human_kpi_log_schema(entry):
         return []
     errors = []
     _validate_object(entry, schema, "", errors)
+    return errors
+
+
+def validate_tutorial_state_schema(state):
+    schema = _load_schema(TUTORIAL_STATE_SCHEMA_PATH)
+    if schema is None:
+        return []
+    errors = []
+    _validate_object(state, schema, "", errors)
+    return errors
+
+
+def validate_tutorial_decisions_schema(decisions):
+    schema = _load_schema(TUTORIAL_DECISIONS_SCHEMA_PATH)
+    if schema is None:
+        return []
+    errors = []
+    _validate_object(decisions, schema, "", errors)
     return errors

@@ -1,0 +1,7 @@
+{
+  "chat_box": { "x": 0, "y": 0, "width": 0, "height": 0 },
+  "hover_text": { "x": 0, "y": 0, "width": 0, "height": 0 },
+  "dialogue": { "x": 0, "y": 0, "width": 0, "height": 0 },
+  "inventory": { "x": 0, "y": 0, "width": 0, "height": 0 },
+  "tooltips": { "x": 0, "y": 0, "width": 0, "height": 0 }
+}

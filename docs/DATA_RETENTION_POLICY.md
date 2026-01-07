@@ -12,6 +12,7 @@ Purpose: define how long to keep traces, screenshots, and logs.
 - Keep raw traces and screenshots for a limited window (default 30 days).
 - Keep aggregated metrics and summaries long-term.
 - Allow manual purge for any session.
+- Rotate decision logs using the CLI `decision-rotate` command.
 
 ## Storage Rules
 - Store data locally by default.

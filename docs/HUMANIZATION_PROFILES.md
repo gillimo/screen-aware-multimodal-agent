@@ -7,10 +7,18 @@ Purpose: define where human-like input presets live and how they are selected.
 - Custom overrides: `data/humanization_profiles.local.json` (optional)
 
 ## Profile Fields
-- timing: reaction, click dwell, inter-action delays.
-- motion: curvature, acceleration, overshoot, micro-jitter.
+- timing: reaction, hover dwell, click dwell, pressure, settle jitter, inter-action delays.
+- motion: curvature, acceleration, overshoot, micro-jitter, camera drag path alternates.
 - errors: misclick and correction rates.
-- session: burst/rest and fatigue drift.
+- session: burst/rest, fatigue drift, optional cooldown, and optional per-session seed.
+- idle: idle rates, scan/pause timing, edge/offscreen travel, and tab toggle keys.
+- scroll: tick count and pause timing for scroll bursts.
+- typing: per-key delay range for variable typing cadence.
+- input_noise: frame-time variance adjustments layered onto step delays.
+- attention: micro drift and bias offsets applied to targets.
+- gates: default safety gates (e.g., require focus) applied during execution.
+- hover gating: optionally enforce hover text match before click when expected hover is provided.
+- interrupts: enable pause behavior on unexpected UI/modals during execution.
 - device: DPI and polling jitter.
 
 ## Selection
