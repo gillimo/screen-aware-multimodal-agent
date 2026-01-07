@@ -14,6 +14,8 @@ Edit `data/local_model.json`:
 - active_profile: humanization profile name (e.g., `normal`)
 - safety_gates_enabled: enables policy gating (rate limits/deny lists) for action execution
 - approval_policy: controls which actions require explicit approval before execution
+- quest_guides.json: optional quest guide snippets injected into decision prompts
+- When `--snapshot` is provided to `plan` or `model-decision`, chat/dialogue/hover text cues are appended to the prompt.
 - Decision logs are stored in `logs/model_decisions.jsonl`.
 - Decision summaries can be exported from logs via CLI.
 - Decision logs can be exported and pruned via CLI.

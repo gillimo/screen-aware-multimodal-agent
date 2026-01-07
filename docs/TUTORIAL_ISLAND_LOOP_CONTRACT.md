@@ -27,3 +27,4 @@ CLI shortcut: `python run_app.py go --snapshot data/snapshots/snapshot_latest.js
 - Update `phase` and `step` when objectives are met.
 - Append completed step IDs to `completed`.
 - Add required cues to `required_cues` before advancing.
+- Track `repeat_count` and `decision_index` to avoid repeating a stuck decision when cues are missing or snapshots are stale.

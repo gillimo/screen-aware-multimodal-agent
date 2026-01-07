@@ -1,0 +1,23 @@
+{
+  "source": "stub_guides_replace_with_curated",
+  "guides": [
+    {
+      "quest": "Cook's Assistant",
+      "summary": "Bring the cook an egg, flour, and milk.",
+      "steps": [
+        "Talk to the cook in Lumbridge Castle kitchen.",
+        "Collect an egg, a pot of flour, and a bucket of milk.",
+        "Return to the cook to finish the quest."
+      ]
+    },
+    {
+      "quest": "Sheep Shearer",
+      "summary": "Bring Fred 20 balls of wool.",
+      "steps": [
+        "Talk to Fred the Farmer in Lumbridge.",
+        "Shear sheep with shears and spin wool into balls.",
+        "Return 20 balls of wool to Fred."
+      ]
+    }
+  ]
+}

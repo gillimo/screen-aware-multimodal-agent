@@ -3,6 +3,7 @@ import json
 import gzip
 import time
 import random
+import sys
 import uuid
 from pathlib import Path
 from datetime import datetime
@@ -39,7 +40,7 @@ from src.schema_validation import (
     validate_tutorial_decisions_schema,
 )
 from src.chat_filter import should_respond_to_chat
-from src.perception import find_window, capture_frame, capture_session
+from src.perception import find_window, capture_frame, capture_session, save_frame
 from src.local_model import build_prompt, build_decision_prompt, run_local_model, load_config
 from src.model_output import extract_json, validate_planner_output, log_decision, validate_decision_trace, purge_decisions
 from src.decision_consume import latest_payload, build_action_intents, validate_intents, load_decision_file
@@ -117,6 +118,58 @@ def _write_execution_summary(results):
     )
 
 
+def _client_bounds_tuple(snapshot):
+    if not isinstance(snapshot, dict):
+        return None
+    client = snapshot.get("client", {})
+    if not isinstance(client, dict):
+        return None
+    bounds = client.get("bounds", {})
+    if not isinstance(bounds, dict):
+        return None
+    try:
+        x = int(bounds.get("x", 0))
+        y = int(bounds.get("y", 0))
+        w = int(bounds.get("width", 0))
+        h = int(bounds.get("height", 0))
+    except Exception:
+        return None
+    if w <= 0 or h <= 0:
+        return None
+    return (x, y, x + w, y + h)
+
+
+def _log_bug_ticket(message: str) -> None:
+    bug_path = ROOT / "docs" / "BUG_LOG.md"
+    stamp = datetime.utcnow().date().isoformat()
+    line = f"- {stamp}: {message}"
+    try:
+        existing = bug_path.read_text(encoding="utf-8") if bug_path.exists() else "# Bug Log\n\n"
+        with bug_path.open("w", encoding="utf-8") as handle:
+            handle.write(existing.rstrip() + "\n" + line + "\n")
+    except Exception:
+        return
+
+
+def _capture_stuck_artifacts(snapshot, intent_id: str, failure_reason: str) -> None:
+    log_dir = ROOT / "logs"
+    log_dir.mkdir(exist_ok=True)
+    stamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    snapshot_path = log_dir / f"stuck_snapshot_{stamp}.json"
+    if isinstance(snapshot, dict):
+        snapshot_path.write_text(json.dumps(snapshot, indent=2), encoding="utf-8")
+    bounds = _client_bounds_tuple(snapshot)
+    screenshot_path = ""
+    if bounds:
+        image_path = log_dir / f"stuck_screen_{stamp}.png"
+        if save_frame(bounds, str(image_path)):
+            screenshot_path = str(image_path)
+    note = f"stuck after {intent_id} ({failure_reason}); snapshot={snapshot_path}"
+    if screenshot_path:
+        note += f"; screenshot={screenshot_path}"
+    _log_bug_ticket(note)
+
+
 def _sleep_ms(delay_ms):
     if delay_ms and delay_ms > 0:
         time.sleep(delay_ms / 1000.0)
@@ -137,6 +190,19 @@ def _maybe_seed_session(profile, seed_arg):
     except Exception:
         return None
     return seed_session(seed_value)
+
+
+def _escape_pressed() -> bool:
+    if sys.platform != "win32":
+        return False
+    try:
+        import msvcrt
+    except ImportError:
+        return False
+    if msvcrt.kbhit():
+        key = msvcrt.getch()
+        return key == b"\x1b"
+    return False
 
 
 def _sample_reaction_delay(profile, action_type: str) -> float:
@@ -163,6 +229,12 @@ def _get_client_bounds(snapshot):
         return {}
     bounds = client.get("bounds", {})
     return bounds if isinstance(bounds, dict) else {}
+
+
+def _snapshot_stale(snapshot) -> bool:
+    if not isinstance(snapshot, dict):
+        return True
+    return bool(snapshot.get("stale", False))
 
 
 def _center_point(bounds):
@@ -437,7 +509,14 @@ def _update_tutorial_state(state_path, decision_id, results):
         state = {}
     success_count = sum(1 for item in results if item.get("success"))
     failure_count = len(results) - success_count
+    previous_id = state.get("last_decision_id", "")
     state["last_decision_id"] = decision_id or ""
+    repeat_count = int(state.get("repeat_count", 0) or 0)
+    if previous_id and previous_id == decision_id:
+        repeat_count += 1
+    else:
+        repeat_count = 0
+    state["repeat_count"] = repeat_count
     state["last_execution"] = {
         "timestamp": datetime.utcnow().isoformat() + "Z",
         "decision_id": decision_id or "",
@@ -600,12 +679,13 @@ def cmd_ratings(state):
             print(f"- {key}: {val}")
 
 
-def cmd_plan(state, model_message=None, prefer_model=False):
+def cmd_plan(state, model_message=None, prefer_model=False, snapshot_path=""):
     if model_message or prefer_model:
         if not model_message:
             model_message = "plan next step"
         cfg = load_config()
-        prompt = build_decision_prompt(state, model_message)
+        snapshot = load_json(Path(snapshot_path), {}) if snapshot_path else None
+        prompt = build_decision_prompt(state, model_message, snapshot=snapshot)
         payload, reply = _request_model_json(prompt, cfg)
         if payload is None:
             if cfg.get("strict_json", False):
@@ -927,6 +1007,16 @@ def cmd_capture(title_contains, fps, duration_s, roi_path):
     if not ocr_regions:
         snapshot["stale"] = True
     ocr_entries = run_ocr(ocr_regions)
+    if isinstance(ocr_regions, dict) and ocr_regions:
+        has_bounds = False
+        for region in ocr_regions.values():
+            if not isinstance(region, dict):
+                continue
+            if region.get("width", 0) or region.get("height", 0):
+                has_bounds = True
+                break
+        if not has_bounds:
+            snapshot["stale"] = True
     snapshot["ocr"] = [
         {"region": entry.region, "text": entry.text, "confidence": entry.confidence}
         for entry in ocr_entries
@@ -945,6 +1035,9 @@ def cmd_capture(title_contains, fps, duration_s, roi_path):
             snapshot["ocr_metadata"]["tooltips"] = [line.strip() for line in entry.text.splitlines() if line.strip()]
     if snapshot["ui"]["hover_text"]:
         snapshot["ui"]["cursor_state"] = "interact"
+    chat_prompt = _chat_prompt_from_lines(snapshot.get("chat", []))
+    if chat_prompt:
+        snapshot["cues"]["chat_prompt"] = chat_prompt
     ui_regions = load_json(DATA_DIR / "ui_detector_regions.json", {})
     ui_elements = detect_ui(ui_regions)
     snapshot["ui"]["elements"] = [
@@ -984,6 +1077,17 @@ def _load_chat_lines(path):
     return [line.strip() for line in chat_path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def _chat_prompt_from_lines(lines):
+    if not lines:
+        return ""
+    markers = ("click here to continue", "press space", "press space to continue", "space to continue")
+    for line in lines:
+        text = str(line).lower()
+        if any(marker in text for marker in markers):
+            return "continue"
+    return ""
+
+
 def cmd_model(state, message, chat_log):
     if not message:
         print("Message required. Use --message \"...\".")
@@ -1011,11 +1115,12 @@ def _request_model_json(prompt, cfg):
     return None, last_reply
 
 
-def cmd_model_decision(state, message):
+def cmd_model_decision(state, message, snapshot_path=""):
     if not message:
         print("Message required. Use --message \"...\".")
         return
-    prompt = build_decision_prompt(state, message)
+    snapshot = load_json(Path(snapshot_path), {}) if snapshot_path else None
+    prompt = build_decision_prompt(state, message, snapshot=snapshot)
     cfg = load_config()
     payload, reply = _request_model_json(prompt, cfg)
     if payload is None:
@@ -1366,9 +1471,14 @@ def cmd_decision_consume(trace_path, execute=False, snapshot_path="", max_action
         burst_count = 0
         results = []
         last_action_ts = time.time()
+        consecutive_failures = 0
+        periodic_every = 5
         variability = float(session_cfg.get("action_order_variability", 0.2))
         intents = vary_action_order(intents, variability_rate=variability)
         for idx, intent in enumerate(intents):
+            if _escape_pressed():
+                print("Escape pressed. Aborting execution.")
+                break
             if isinstance(intent.payload, dict) and isinstance(snap, dict):
                 intent.payload.setdefault("snapshot", snap)
             snap_before = snap
@@ -1450,11 +1560,11 @@ def cmd_decision_consume(trace_path, execute=False, snapshot_path="", max_action
                         timing_payload = {}
                         intent.payload["timing"] = timing_payload
                     timing_payload.setdefault("confidence_pause_ms", float(pause_ms))
-                if snapshot_path:
-                    snap_check = load_json(Path(snapshot_path), {})
-                    if isinstance(snap_check, dict):
-                        hover_text = snap_check.get("ui", {}).get("hover_text", "")
-                    if intent.action_type == "click" and not hover_text:
+            if snapshot_path:
+                snap_check = load_json(Path(snapshot_path), {})
+                if isinstance(snap_check, dict):
+                    hover_text = snap_check.get("ui", {}).get("hover_text", "")
+                    if intent.action_type == "click" and not hover_text and not _snapshot_stale(snap_check):
                         result = ActionResult(
                             intent_id=intent.intent_id,
                             success=False,
@@ -1488,7 +1598,7 @@ def cmd_decision_consume(trace_path, execute=False, snapshot_path="", max_action
                             timing_payload = {}
                             intent.payload["timing"] = timing_payload
                         timing_payload.setdefault("hover_check_pause_ms", float(hover_pause_ms))
-                    if not hover_text:
+                    if not hover_text and not _snapshot_stale(snap_check):
                         result = ActionResult(
                             intent_id=intent.intent_id,
                             success=False,
@@ -1644,6 +1754,21 @@ def cmd_decision_consume(trace_path, execute=False, snapshot_path="", max_action
             results.append(
                 {"intent_id": intent.intent_id, "success": result.success, "failure_reason": result.failure_reason}
             )
+            if not is_dry_run and snapshot_path and isinstance(snap, dict) and periodic_every > 0:
+                if (idx + 1) % periodic_every == 0:
+                    bounds = _client_bounds_tuple(snap)
+                    if bounds:
+                        stamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+                        log_dir = ROOT / "logs"
+                        log_dir.mkdir(exist_ok=True)
+                        save_frame(bounds, str(log_dir / f"periodic_{stamp}_{idx+1}.png"))
+            if not result.success:
+                consecutive_failures += 1
+            else:
+                consecutive_failures = 0
+            if consecutive_failures >= 2:
+                _capture_stuck_artifacts(snap, intent.intent_id, result.failure_reason)
+                consecutive_failures = 0
             if ui_changes:
                 print(f"Aborting after {intent.intent_id}: ui changed {ui_changes}")
                 break
@@ -1728,9 +1853,14 @@ def cmd_decision_execute_file(path, dry_run=False, snapshot_path="", max_actions
     burst_count = 0
     results = []
     last_action_ts = time.time()
+    consecutive_failures = 0
+    periodic_every = 5
     variability = float(session_cfg.get("action_order_variability", 0.2))
     intents = vary_action_order(intents, variability_rate=variability)
     for idx, intent in enumerate(intents):
+        if _escape_pressed():
+            print("Escape pressed. Aborting execution.")
+            break
         if isinstance(intent.payload, dict) and isinstance(snap, dict):
             intent.payload.setdefault("snapshot", snap)
         snap_before = snap
@@ -1816,7 +1946,7 @@ def cmd_decision_execute_file(path, dry_run=False, snapshot_path="", max_actions
                 snap_check = load_json(Path(snapshot_path), {})
                 if isinstance(snap_check, dict):
                     hover_text = snap_check.get("ui", {}).get("hover_text", "")
-                    if intent.action_type == "click" and not hover_text:
+                    if intent.action_type == "click" and not hover_text and not _snapshot_stale(snap_check):
                         result = ActionResult(
                             intent_id=intent.intent_id,
                             success=False,
@@ -1850,7 +1980,7 @@ def cmd_decision_execute_file(path, dry_run=False, snapshot_path="", max_actions
                         timing_payload = {}
                         intent.payload["timing"] = timing_payload
                     timing_payload.setdefault("hover_check_pause_ms", float(hover_pause_ms))
-                if not hover_text:
+                if not hover_text and not _snapshot_stale(snap_check):
                     result = ActionResult(
                         intent_id=intent.intent_id,
                         success=False,
@@ -2003,6 +2133,21 @@ def cmd_decision_execute_file(path, dry_run=False, snapshot_path="", max_actions
             cooldown_ms = int(session_cfg.get("cooldown_ms", 0) or 0)
         _sleep_ms(cooldown_ms)
         print(f"Executed {intent.intent_id}: {result.success} {result.failure_reason}")
+        if not is_dry_run and snapshot_path and isinstance(snap, dict) and periodic_every > 0:
+            if (idx + 1) % periodic_every == 0:
+                bounds = _client_bounds_tuple(snap)
+                if bounds:
+                    stamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+                    log_dir = ROOT / "logs"
+                    log_dir.mkdir(exist_ok=True)
+                    save_frame(bounds, str(log_dir / f"periodic_{stamp}_{idx+1}.png"))
+        if not result.success:
+            consecutive_failures += 1
+        else:
+            consecutive_failures = 0
+        if consecutive_failures >= 2:
+            _capture_stuck_artifacts(snap, intent.intent_id, result.failure_reason)
+            consecutive_failures = 0
         last_action_ts = time.time()
         burst_count += 1
         if idx != len(intents) - 1:
@@ -2156,7 +2301,7 @@ def main():
     elif cmd == "plan":
         cfg = load_config()
         prefer_model = cfg.get("plan_default", "heuristic") == "model"
-        cmd_plan(state, args.model_message, prefer_model=prefer_model)
+        cmd_plan(state, args.model_message, prefer_model=prefer_model, snapshot_path=args.snapshot)
     elif cmd == "quests":
         cmd_quests(state)
     elif cmd == "diaries":
@@ -2218,7 +2363,7 @@ def main():
     elif cmd == "model":
         cmd_model(state, args.message, args.chat_log)
     elif cmd == "model-decision":
-        cmd_model_decision(state, args.message)
+        cmd_model_decision(state, args.message, snapshot_path=args.snapshot)
     elif cmd == "profiles":
         cmd_profiles(args.profile)
     elif cmd == "profile-select":

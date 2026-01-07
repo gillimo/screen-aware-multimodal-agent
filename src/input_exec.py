@@ -170,6 +170,9 @@ def press_key_name(name: str, hold_ms: Optional[float] = None) -> None:
     if key == "BACKSPACE" or key == "BS":
         press_key(0x08, hold_ms=hold_ms)
         return
+    if key == "SPACE":
+        press_key(0x20, hold_ms=hold_ms)
+        return
     if key == "SHIFT":
         press_key(0x10, hold_ms=hold_ms)
         return

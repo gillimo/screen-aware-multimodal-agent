@@ -43,6 +43,7 @@ Purpose: define the normalized JSON snapshot emitted by perception.
 - highlight_state: string
 - modal_state: string
 - hover_text: string
+- chat_prompt: string (e.g., "continue")
 
 ## derived
 - location: object (region, subarea, coordinates optional)

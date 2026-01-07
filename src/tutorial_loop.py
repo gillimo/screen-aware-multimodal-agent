@@ -21,11 +21,26 @@ def load_json(path):
         return {}
 
 
-def select_decision(phase, decisions):
+def select_decision(phase, decisions, index=0):
     phase_list = decisions.get("phases", {}).get(phase, [])
     if not phase_list:
         return None
-    return phase_list[0]
+    if index < 0 or index >= len(phase_list):
+        index = 0
+    return phase_list[index]
+
+
+def cues_met(snapshot, decision) -> bool:
+    if not isinstance(decision, dict):
+        return True
+    required = decision.get("required_cues", [])
+    if not required:
+        return True
+    cues = snapshot.get("cues", {}) if isinstance(snapshot.get("cues"), dict) else {}
+    for cue in required:
+        if not cues.get(cue):
+            return False
+    return True
 
 
 def run_loop(snapshot_path, state_path, decisions_path, out_path=None):
@@ -44,7 +59,17 @@ def run_loop(snapshot_path, state_path, decisions_path, out_path=None):
         raise SystemExit(f"Tutorial decisions schema errors: {decisions_errors}")
 
     phase = state.get("phase", "welcome")
-    decision = select_decision(phase, decisions)
+    phase_list = decisions.get("phases", {}).get(phase, [])
+    decision_index = int(state.get("decision_index", 0) or 0)
+    repeat_count = int(state.get("repeat_count", 0) or 0)
+    stale = bool(snapshot.get("stale", False))
+    decision = select_decision(phase, decisions, index=decision_index)
+    if decision is not None and repeat_count >= 2 and (stale or not cues_met(snapshot, decision)):
+        if phase_list:
+            decision_index = (decision_index + 1) % len(phase_list)
+            decision = select_decision(phase, decisions, index=decision_index)
+            state["decision_index"] = decision_index
+            Path(state_path).write_text(json.dumps(state, indent=2), encoding="utf-8")
     if decision is None:
         raise SystemExit(f"No decision template for phase: {phase}")
 

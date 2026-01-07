@@ -167,3 +167,22 @@ def _capture_image(bounds: Tuple[int, int, int, int]):
         raise RuntimeError("No capture backend available. Install mss or Pillow.") from exc
 
     return ImageGrab.grab(bbox=(left, top, right, bottom))
+
+
+def save_frame(bounds: Tuple[int, int, int, int], path: str) -> bool:
+    image = _capture_image(bounds)
+    try:
+        if hasattr(image, "save"):
+            image.save(path)
+            return True
+        if hasattr(image, "rgb") and hasattr(image, "size"):
+            try:
+                from PIL import Image
+            except Exception:
+                return False
+            raw = Image.frombytes("RGB", image.size, image.rgb)
+            raw.save(path)
+            return True
+    except Exception:
+        return False
+    return False

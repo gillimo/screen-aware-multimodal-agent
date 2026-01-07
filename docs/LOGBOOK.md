@@ -8,6 +8,12 @@ Handles:
 - Kya
 
 Entries (newest first):
+- 2026-01-07: MimicryModel: added repeat_count/decision_index fallback to cycle tutorial decisions when cues are missing.
+- 2026-01-07: Codex-Aster: added snapshot chat/dialogue/hover context to model decision prompts.
+- 2026-01-07: Codex-Aster: added quest guide RAG stub + periodic screenshots and stuck logging; logged mouse-jump bug.
+- 2026-01-07: MimicryModel: added Esc abort key for execution loops and documented emergency stop.
+- 2026-01-07: Codex-Aster: added chat prompt cue, SPACE key support, and tutorial space-continue decision.
+- 2026-01-07: MimicryModel: skipped hover gating when snapshot is stale and flagged OCR-zero regions as stale to unblock tutorial clicks.
 - 2026-01-07: Codex-Aster: fixed indentation errors in capture and pre_action_gate; validate + validate-profiles passed.
 - 2026-01-07: MimicryModel: added mimicry scoring script and wired rubric scoring into docs/tickets.
 - 2026-01-07: MimicryModel: added per-action reaction delays and camera micro-adjustments; updated profiles, status, tickets, and schemas.

@@ -18,6 +18,8 @@
     "required_cues": "array",
     "notes": "string",
     "last_decision_id": "string",
-    "last_execution": "object"
+    "last_execution": "object",
+    "repeat_count": "number",
+    "decision_index": "number"
   }
 }

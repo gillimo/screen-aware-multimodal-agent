@@ -165,6 +165,7 @@
 - [ ] Add a compliance review section in docs covering acceptable use, user consent, and risk boundaries.
 - [x] Add a monitoring/audit log spec that records inputs, decisions, and actions for post-run review.
 - [ ] Add a safety checklist for any deployment or live testing (manual review steps, rollback plan).
+- [x] Add an emergency stop key (Esc) to abort execution loops for regaining control.
 - [ ] Design a GUI control panel with presets (e.g., “Make best money”, “Train for best money”, “Quest unlock path”).
 - [ ] Implement GUI presets mapping to planner goals and constraints.
 - [ ] Add a custom goal builder UI (select skills, target levels, time budget, risk tolerance).

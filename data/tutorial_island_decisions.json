@@ -37,6 +37,23 @@
             "payload": { "expected_hover_text": "Click here to continue" }
           }
         ]
+      },
+      {
+        "decision_id": "ti_welcome_003",
+        "intent": "continue_with_space",
+        "confidence": 0.6,
+        "rationale": ["chat prompt indicates space continue"],
+        "required_cues": ["chat_prompt"],
+        "risks": ["space_misaligned"],
+        "actions": [
+          {
+            "action_id": "ti_space_continue",
+            "action_type": "type",
+            "target": { "x": 0, "y": 0 },
+            "confidence": 0.6,
+            "payload": { "text": " " }
+          }
+        ]
       }
     ],
     "movement": [

@@ -76,6 +76,7 @@ This project provides planning and analysis for OSRS, with optional action execu
 - Retry/backoff can be configured per intent (`payload.retry`) or profile (`retry`).
 - Action policy config lives at `data/action_policy.json` (allowed/denied actions, rate limits).
 - Execution will pause if snapshot chat lines indicate a random event.
+- Press `Esc` in the console to abort a running execution loop.
 
 ## Human-Like Execution Notes
 - Live clicks apply a short settle delay and click dwell based on the active humanization profile.

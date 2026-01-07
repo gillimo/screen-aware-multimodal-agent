@@ -123,6 +123,7 @@ Note: some tickets span modules; listed under the module that owns the main impl
 - Add a policy layer for allowed action types, rate limits, and cooldowns.
 - Add a human-in-the-loop mode with step-by-step approval toggles.
 - Add a sandbox action mode for dry runs that logs actions without executing them.
+- Add an emergency stop key (Esc) to abort execution loops for regaining control.
 
 ## Chat and Social
 - Add local-model chat responses when a player name is detected (opt-in, rate-limited, context-aware).

@@ -83,6 +83,8 @@ Purpose: consolidated, actionable checklist for remaining hands/eyes work.
 - [x] Add action/context schema refs to `docs/LOG_CHECKLIST.md`.
 - [x] Add action/context schema refs to `docs/DOCS_CHECKLIST.md`.
 - [x] Add execution summary schema link to `docs/SCHEMAS.md`.
+- [x] Add periodic screenshot capture to spot stuck runs.
+- [x] Add stuck detection logging to BUG_LOG with snapshot artifacts.
 
 ## Tutorial Island Execution
 - [x] Align decision JSON with executor target resolution (coords vs ui IDs).
