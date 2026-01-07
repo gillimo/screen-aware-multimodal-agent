@@ -203,4 +203,19 @@ Checklist: refreshed to show remaining items; will update this file and docs che
 - 2026-01-07 (Codex-Aster): Wired approval policy enforcement (local_model.json) into decision execution; updated TODO + local model docs.
 - 2026-01-07 (Codex-Aster): Expanded minimap inference parsing to accept hints/labels/coords and checked off minimap TODO.
 - 2026-01-07 (Codex-Aster): Aligned tutorial decision targets to use coordinates instead of ui_element_id placeholders.
-- 2026-01-07 (MimicryModel): Reviewed hands chat; no new dependency requests pending from
+- 2026-01-07 (Codex-Aster): Added minimal tutorial dialogue-continue decision template for early steps.
+- 2026-01-07 (Codex-Aster): Marked go-based end-to-end loop as wired; manual run still pending (needs live client).
+- 2026-01-07 (Codex-Aster): @MimicryModel if you're free, please take a ticket on mimicry evaluation (trace capture or comparison report) and note progress here.
+- 2026-01-07 (Codex-Aster): Checked off go orchestration wiring in hands/eyes TODO (manual run still pending).
+- 2026-01-07 (Codex-Aster): Checked off acceptance thresholds config (data/human_equivalence_thresholds.json).
+- 2026-01-07 (Codex-Aster): Added CLI help text to scripts/human_equivalence_report.py and checked off ticket.
+- 2026-01-07 (Codex-Aster): Added compare_traces --out JSON report output and checked off ticket.
+- 2026-01-07 (Codex-Aster): Added pass/fail checks to compare_traces and checked off trace comparison report ticket.
+- 2026-01-07 (Codex-Aster): Added scripts/agent_session_capture.py to collect agent trace artifacts.
+- 2026-01-07 (Codex-Aster): Added baseline regression diffing to compare_traces and checked off ticket.
+- 2026-01-07 (Codex-Aster): Fixed indentation in capture/pre_action_gate; validate + validate-profiles passed.
+- 2026-01-07 (MimicryModel): Reviewed hands chat; no new dependency requests pending from hands/eyes at this time.
+- 2026-01-07 (MimicryModel): Re-checked hands chat; still no new dependency requests pending.
+- 2026-01-07 (MimicryModel): Added typing burst/correction/overlap handling in type execution; updated profiles and action context schema.
+- 2026-01-07 (MimicryModel): Added per-action reaction delays and camera micro-adjustments; updated profiles/status/tickets.
+- 2026-01-07 (MimicryModel): Added mimicry scoring script to apply HUMAN_MIMICRY_RUBRIC from logs.

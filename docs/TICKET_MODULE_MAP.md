@@ -154,6 +154,7 @@ Note: some tickets span modules; listed under the module that owns the main impl
 - Add human-like pacing model tied to animation and UI feedback cues.
 - Define calibration workflow for human-like baselines (data capture, fitting, review).
 - Ingest human-likeness KPI output into metrics reporting.
+- Apply HUMAN_MIMICRY_RUBRIC per run and persist scores (e.g., logs/mimicry_scores.jsonl).
 - Create Mimicry and Model acceptance checklist tied to END_STATE goals.
 
 ## Testing and Documentation

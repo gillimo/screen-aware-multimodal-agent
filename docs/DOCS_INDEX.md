@@ -10,6 +10,7 @@ Start here: `HOW_TO_OPERATE.md`
 - Project vision and priorities: `PROJECT_VISION.md`, `PRIORITIES.md`
 - End state target: `END_STATE.md`
 - Human-like goals and behaviors: `HUMAN_LIKE_GOALS.md`, `HUMAN_LIKE_BEHAVIOR_CATALOG.md`
+- Human mimicry rubric: `HUMAN_MIMICRY_RUBRIC.md`
 - Human equivalence criteria: `HUMAN_EQUIVALENCE.md`
 - Human-like toolchain plan: `HUMAN_LIKE_TOOLCHAIN_PLAN.md`
 - Human-like toolchain schema: `HUMAN_LIKE_TOOLCHAIN_SCHEMA.md`
@@ -55,6 +56,7 @@ Start here: `HOW_TO_OPERATE.md`
 - Git strategy: `GIT_STRATEGY.md`
 - Automation concepts: `AUTOMATION_CONCEPTS.md`
 - Docs checklist: `DOCS_CHECKLIST.md`
+- Mimicry scoring tool: `scripts/score_mimicry.py`
 - State awareness spec: `STATE_AWARENESS_REQUIREMENTS.md`
 - Tutorial Island milestone: `TUTORIAL_ISLAND.md`
 - Tutorial Island loop contract: `TUTORIAL_ISLAND_LOOP_CONTRACT.md`

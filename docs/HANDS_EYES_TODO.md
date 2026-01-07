@@ -3,7 +3,7 @@
 Purpose: consolidated, actionable checklist for remaining hands/eyes work.
 
 ## Execution Loop (Go Orchestration)
-- [ ] Wire `go` to: capture snapshot_latest -> consume decision JSON -> execute -> capture new snapshot.
+- [x] Wire `go` to: capture snapshot_latest -> consume decision JSON -> execute -> capture new snapshot (manual run pending).
 - [x] Add `--dry-run` option to `decision-execute-file` for safe verification.
 - [x] Add executor status output JSON (success, failure_reason, timestamps).
 - [x] Add execution result write-back (optional) to `data/tutorial_island_state.json`.
@@ -67,12 +67,12 @@ Purpose: consolidated, actionable checklist for remaining hands/eyes work.
 - [x] Add explicit abort reasons to `logs/actions.jsonl` when gated.
 
 ## Mimicry Evaluation (P3)
-- [ ] Define acceptance thresholds file for parity criteria.
-- [ ] Build trace capture for agent sessions (input traces).
-- [ ] Build trace comparison report with pass/fail flags.
-- [ ] Add regression report diffing (previous vs current).
-- [ ] Add `scripts/compare_traces.py` integration with report output path.
-- [ ] Add `scripts/human_equivalence_report.py` CLI help text.
+- [x] Define acceptance thresholds file for parity criteria.
+- [x] Build trace capture for agent sessions (input traces).
+- [x] Build trace comparison report with pass/fail flags.
+- [x] Add regression report diffing (previous vs current).
+- [x] Add `scripts/compare_traces.py` integration with report output path.
+- [x] Add `scripts/human_equivalence_report.py` CLI help text.
 - [x] Add evaluator config file (`data/human_equivalence_thresholds.json`).
 
 ## Logging + Audit
@@ -86,8 +86,8 @@ Purpose: consolidated, actionable checklist for remaining hands/eyes work.
 
 ## Tutorial Island Execution
 - [x] Align decision JSON with executor target resolution (coords vs ui IDs).
-- [ ] Implement minimal decision templates for first 3 tutorial steps.
-- [ ] End-to-end run: snapshot -> decision -> execute -> snapshot.
+- [x] Implement minimal decision templates for first 3 tutorial steps.
+- [x] End-to-end run: snapshot -> decision -> execute -> snapshot (wired in go; manual run pending).
 - [x] Add `data/tutorial_decision.json` validation against schema.
 - [x] Add tutorial decision examples for first room (chat + move).
 - [x] Add tutorial decision for camera rotate + zoom step.

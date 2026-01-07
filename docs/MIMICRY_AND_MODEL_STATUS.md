@@ -10,15 +10,15 @@ Legend: done, partial, todo.
 - (done) Snapshot schema is validated and versioned.
 
 ## Response Modeling
-- (partial) Reaction-time distributions are configurable per action type.
+- (done) Reaction-time distributions are configurable per action type.
 - (partial) Attention checks and confidence gates are enforced on uncertain actions.
 - (partial) Context pacing aligns with animation/cooldown cues.
 
 ## Input Mimicry
 - (partial) Mouse motion shows curvature, acceleration, overshoot, and correction.
 - (partial) Click timing and dwell variance are within human-like ranges.
-- (partial) Keyboard cadence includes burst/pauses and correction behavior.
-- (todo) Camera movement includes nudges, over-rotation, and micro-adjustments.
+- (done) Keyboard cadence includes burst/pauses and correction behavior.
+- (done) Camera movement includes nudges, over-rotation, and micro-adjustments.
 
 ## Session Rhythm
 - (partial) Micro-pauses and burst/rest cycles are observable in traces.

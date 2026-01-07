@@ -19,6 +19,24 @@
             "gating": { "verification_steps": ["hover_text=RuneScape Guide"], "abort_conditions": ["modal_open"] }
           }
         ]
+      },
+      {
+        "decision_id": "ti_welcome_002",
+        "intent": "continue_dialogue",
+        "confidence": 0.6,
+        "rationale": ["dialogue prompt active"],
+        "required_cues": ["dialogue_ready"],
+        "risks": ["misclick_dialogue"],
+        "actions": [
+          {
+            "action_id": "ti_welcome_continue",
+            "action_type": "click",
+            "target": { "x": 0, "y": 0, "bounds": { "x": 0, "y": 0, "width": 0, "height": 0 } },
+            "confidence": 0.6,
+            "gating": { "verification_steps": ["hover_text=Click here to continue"], "abort_conditions": ["modal_open"] },
+            "payload": { "expected_hover_text": "Click here to continue" }
+          }
+        ]
       }
     ],
     "movement": [

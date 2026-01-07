@@ -8,6 +8,20 @@ Handles:
 - Kya
 
 Entries (newest first):
+- 2026-01-07: Codex-Aster: fixed indentation errors in capture and pre_action_gate; validate + validate-profiles passed.
+- 2026-01-07: MimicryModel: added mimicry scoring script and wired rubric scoring into docs/tickets.
+- 2026-01-07: MimicryModel: added per-action reaction delays and camera micro-adjustments; updated profiles, status, tickets, and schemas.
+- 2026-01-07: Codex-Aster: added regression diffing in compare_traces via baseline report option.
+- 2026-01-07: Codex-Aster: added agent_session_capture script for collecting action logs and snapshot_latest.
+- 2026-01-07: MimicryModel: added human mimicry rubric and indexed it in docs.
+- 2026-01-07: Codex-Aster: added pass/fail checks to compare_traces using thresholds config.
+- 2026-01-07: Codex-Aster: added --out JSON report support to compare_traces script.
+- 2026-01-07: MimicryModel: added typing bursts/corrections/overlap in type execution, expanded profiles, and updated schema/tickets.
+- 2026-01-07: Codex-Aster: added CLI help text for human_equivalence_report.py.
+- 2026-01-07: Codex-Aster: confirmed human equivalence thresholds config and checked off acceptance thresholds task.
+- 2026-01-07: Codex-Aster: marked go wiring checklist item complete (manual run pending).
+- 2026-01-07: Codex-Aster: marked go-based end-to-end loop as wired; noted manual run pending.
+- 2026-01-07: Codex-Aster: added minimal tutorial dialogue-continue decision template for early steps.
 - 2026-01-07: Codex-Aster: aligned tutorial decision targets with executor (coords vs ui ids).
 - 2026-01-07: Codex-Aster: enhanced minimap region inference parsing and checked off minimap TODO.
 - 2026-01-07: MimicryModel: clarified BUG_LOG resolution notes; pending cursor-settle items marked historical.

@@ -17,9 +17,13 @@ def _load_json(path):
 
 def main():
     parser = argparse.ArgumentParser(description="Human equivalence report")
-    parser.add_argument("--compare", default="")
-    parser.add_argument("--calibration", default="")
-    parser.add_argument("--out", default="data/human_equivalence_report.json")
+    parser.add_argument("--compare", default="", help="Path to compare_traces JSON output.")
+    parser.add_argument("--calibration", default="", help="Path to calibration summary JSON.")
+    parser.add_argument(
+        "--out",
+        default="data/human_equivalence_report.json",
+        help="Output path for the combined human-equivalence report JSON.",
+    )
     args = parser.parse_args()
 
     compare = _load_json(args.compare)

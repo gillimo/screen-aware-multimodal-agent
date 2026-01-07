@@ -19,6 +19,7 @@
 - [ ] STATE_AWARENESS_REQUIREMENTS.md updated
 - [ ] HUMAN_LIKE_GOALS.md updated
 - [x] HUMAN_LIKE_BEHAVIOR_CATALOG.md updated
+- [x] HUMAN_MIMICRY_RUBRIC.md updated
 - [ ] HUMAN_LIKE_TOOLCHAIN_PLAN.md updated
 - [ ] HUMAN_LIKE_TOOLCHAIN_SCHEMA.md updated
 - [x] SCHEMAS.md updated
@@ -26,7 +27,7 @@
 - [x] SNAPSHOT_SCHEMA.md updated
 - [ ] MIMICRY_AND_MODEL_ACCEPTANCE.md updated
 - [ ] MIMICRY_AND_MODEL_OVERVIEW.md updated
-- [ ] MIMICRY_AND_MODEL_STATUS.md updated
+- [x] MIMICRY_AND_MODEL_STATUS.md updated
 - [ ] MODEL_OUTPUT_SCHEMA.md updated
 - [x] ACTION_TRACE_SCHEMA.md updated
 - [x] ACTION_CONTEXT_SCHEMA.md updated

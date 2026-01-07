@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 import json
 import math
 import random
+import string
 import time
 from datetime import datetime
 from datetime import datetime
@@ -433,6 +434,8 @@ class LiveExecutor(ActionExecutor):
                 return ActionResult(intent_id=intent.intent_id, success=True)
             if intent.action_type == "type":
                 from src.keyboard import TypingProfile, sample_key_delay_ms
+                from src.keyboard import sample_burst_chars, should_correct_typo
+                from src.keyboard import sample_backspace_ms, sample_key_overlap_ms
 
                 payload = intent.payload if isinstance(intent.payload, dict) else {}
                 text = str(payload.get("text", ""))
@@ -440,10 +443,30 @@ class LiveExecutor(ActionExecutor):
                 profile = get_active_profile() or {}
                 typing_cfg = profile.get("typing", {}) if isinstance(profile, dict) else {}
                 delays_cfg = typing_cfg.get("key_delay_ms") if isinstance(typing_cfg, dict) else None
+                burst_cfg = typing_cfg.get("burst_chars") if isinstance(typing_cfg, dict) else None
+                backspace_cfg = typing_cfg.get("backspace_ms") if isinstance(typing_cfg, dict) else None
+                overlap_cfg = typing_cfg.get("overlap_ms") if isinstance(typing_cfg, dict) else None
+                correction_rate = typing_cfg.get("correction_rate") if isinstance(typing_cfg, dict) else None
+                modifier_rate = typing_cfg.get("modifier_rate") if isinstance(typing_cfg, dict) else None
                 typing_profile = TypingProfile(
                     key_delay_ms=tuple(delays_cfg)
                     if isinstance(delays_cfg, (list, tuple)) and len(delays_cfg) == 4
-                    else TypingProfile().key_delay_ms
+                    else TypingProfile().key_delay_ms,
+                    burst_chars=tuple(burst_cfg)
+                    if isinstance(burst_cfg, (list, tuple)) and len(burst_cfg) == 4
+                    else TypingProfile().burst_chars,
+                    correction_rate=float(correction_rate)
+                    if correction_rate is not None
+                    else TypingProfile().correction_rate,
+                    backspace_ms=tuple(backspace_cfg)
+                    if isinstance(backspace_cfg, (list, tuple)) and len(backspace_cfg) == 4
+                    else TypingProfile().backspace_ms,
+                    overlap_ms=tuple(overlap_cfg)
+                    if isinstance(overlap_cfg, (list, tuple)) and len(overlap_cfg) == 4
+                    else TypingProfile().overlap_ms,
+                    modifier_rate=float(modifier_rate)
+                    if modifier_rate is not None
+                    else TypingProfile().modifier_rate,
                 )
                 timing_payload = payload.get("timing") if isinstance(payload, dict) else None
                 if not isinstance(timing_payload, dict) and isinstance(payload, dict):
@@ -453,13 +476,49 @@ class LiveExecutor(ActionExecutor):
                     input_exec.type_text(text, delay_ms=int(delay))
                 else:
                     delays = []
-                    for ch in text:
-                        key_delay = max(10.0, sample_key_delay_ms(typing_profile))
-                        delays.append(key_delay)
-                        input_exec.type_text(ch, delay_ms=int(key_delay))
+                    overlap_samples = []
+                    corrections = 0
+                    bursts = 0
+                    idx = 0
+                    while idx < len(text):
+                        burst_len = max(1, sample_burst_chars(typing_profile))
+                        bursts += 1
+                        for _ in range(burst_len):
+                            if idx >= len(text):
+                                break
+                            ch = text[idx]
+                            if ch.isalpha() and should_correct_typo(typing_profile):
+                                wrong = random.choice(string.ascii_lowercase)
+                                if ch.isupper():
+                                    wrong = wrong.upper()
+                                if wrong == ch:
+                                    wrong = "x" if ch.lower() != "x" else "z"
+                                key_delay = max(10.0, sample_key_delay_ms(typing_profile))
+                                input_exec.type_text(wrong, delay_ms=int(key_delay))
+                                backspace_ms = max(20.0, sample_backspace_ms(typing_profile))
+                                input_exec.press_key_name("BACKSPACE", hold_ms=backspace_ms)
+                                corrections += 1
+                            key_delay = max(10.0, sample_key_delay_ms(typing_profile))
+                            if random.random() < 0.2:
+                                overlap_ms = max(0.0, sample_key_overlap_ms(typing_profile))
+                                overlap_samples.append(overlap_ms)
+                                key_delay = max(0.0, key_delay - overlap_ms)
+                            delays.append(key_delay)
+                            input_exec.type_text(ch, delay_ms=int(key_delay))
+                            idx += 1
+                        if idx < len(text):
+                            pause_ms = random.uniform(40.0, 120.0)
+                            time.sleep(pause_ms / 1000.0)
                     if delays and isinstance(timing_payload, dict):
                         timing_payload.setdefault("typing_avg_delay_ms", float(sum(delays) / len(delays)))
                         timing_payload.setdefault("typing_chars", len(text))
+                        timing_payload.setdefault("typing_bursts", int(bursts))
+                        timing_payload.setdefault("typing_corrections", int(corrections))
+                        if overlap_samples:
+                            timing_payload.setdefault(
+                                "typing_overlap_avg_ms",
+                                float(sum(overlap_samples) / len(overlap_samples)),
+                            )
                 return ActionResult(intent_id=intent.intent_id, success=True)
             if intent.action_type == "drag":
                 start = intent.payload.get("start")
@@ -554,6 +613,17 @@ class LiveExecutor(ActionExecutor):
                         motion_payload.setdefault("camera_overrotate_px", float(over_px))
                         motion_payload.setdefault("camera_slip_px", float(slip_px))
                     input_exec.drag((int(start[0]), int(start[1])), adjusted_end, hold_ms=hold_ms)
+                    micro_chance = float(motion_cfg.get("camera_micro_adjust_chance", 0.0))
+                    micro_px = float(motion_cfg.get("camera_micro_adjust_px", 0.0))
+                    if micro_chance > 0 and micro_px > 0 and random.random() < micro_chance:
+                        micro_end = (
+                            int(adjusted_end[0] + random.uniform(-micro_px, micro_px)),
+                            int(adjusted_end[1] + random.uniform(-micro_px, micro_px)),
+                        )
+                        time.sleep(random.uniform(0.04, 0.12))
+                        input_exec.drag(adjusted_end, micro_end, hold_ms=max(20, int((hold_ms or 40) * 0.6)))
+                        if isinstance(motion_payload, dict):
+                            motion_payload.setdefault("camera_micro_adjust_px", float(micro_px))
                     return ActionResult(intent_id=intent.intent_id, success=True)
                 amount = payload.get("amount")
                 if amount is not None:
@@ -625,11 +695,9 @@ def pre_action_gate(intent: ActionIntent, snapshot: Optional[Dict[str, Any]] = N
     ui = snapshot.get("ui", {})
     cues = snapshot.get("cues", {})
 
-                require_focus = intent.gating.get("require_focus")
-                if require_focus is None and isinstance(gates, dict):
-                    require_focus = gates.get("require_focus", True)
-                if require_focus is None:
-                    require_focus = True
+    require_focus = intent.gating.get("require_focus")
+    if require_focus is None:
+        require_focus = True
     if require_focus and not client.get("focused", False):
         errors.append("client not focused")
 

@@ -61,6 +61,7 @@ This project provides planning and analysis for OSRS, with optional action execu
 - `python run_app.py go --seed 123 --max-actions 2` to run deterministic input timing for reproducible tests.
 - `python run_app.py go --out data/tutorial_decision.json --trace-path logs/model_decisions.jsonl` to log decisions to a specific trace file.
 - `python run_app.py purge-decisions --days 30` to prune old decision logs.
+- `python scripts/score_mimicry.py --run-id test --scenario tutorial` to score the mimicry rubric from logs.
 
 ## OSRS Client Overlay (Planned)
 - Primary UI surface is a silent overlay attached to the OSRS original client.

@@ -139,6 +139,22 @@ def _maybe_seed_session(profile, seed_arg):
     return seed_session(seed_value)
 
 
+def _sample_reaction_delay(profile, action_type: str) -> float:
+    if not isinstance(profile, dict):
+        return 0.0
+    timing_cfg = profile.get("timing_ms", {}) if isinstance(profile.get("timing_ms"), dict) else {}
+    mean = float(timing_cfg.get("reaction_mean", 180.0))
+    stdev = float(timing_cfg.get("reaction_stdev", 60.0))
+    reaction_by_action = timing_cfg.get("reaction_by_action")
+    if isinstance(reaction_by_action, dict):
+        action_cfg = reaction_by_action.get(action_type)
+        if isinstance(action_cfg, dict):
+            mean = float(action_cfg.get("mean", mean))
+            stdev = float(action_cfg.get("stdev", stdev))
+    delay = max(20.0, random.gauss(mean, stdev))
+    return delay
+
+
 def _get_client_bounds(snapshot):
     if not isinstance(snapshot, dict):
         return {}
@@ -915,18 +931,18 @@ def cmd_capture(title_contains, fps, duration_s, roi_path):
         {"region": entry.region, "text": entry.text, "confidence": entry.confidence}
         for entry in ocr_entries
     ]
-        for entry in ocr_entries:
-            if entry.region == "hover_text":
-                snapshot["ui"]["hover_text"] = entry.text
-            elif entry.region == "dialogue":
-                snapshot["ui"]["dialogue_options"] = [line for line in entry.text.splitlines() if line.strip()]
-            elif entry.region == "chat_box":
-                snapshot["chat"] = [line for line in entry.text.splitlines() if line.strip()]
-            elif entry.region == "inventory":
-                items = [line.strip() for line in entry.text.splitlines() if line.strip()]
-                snapshot["ocr_metadata"]["inventory_lines"] = items
-            elif entry.region == "tooltips":
-                snapshot["ocr_metadata"]["tooltips"] = [line.strip() for line in entry.text.splitlines() if line.strip()]
+    for entry in ocr_entries:
+        if entry.region == "hover_text":
+            snapshot["ui"]["hover_text"] = entry.text
+        elif entry.region == "dialogue":
+            snapshot["ui"]["dialogue_options"] = [line for line in entry.text.splitlines() if line.strip()]
+        elif entry.region == "chat_box":
+            snapshot["chat"] = [line for line in entry.text.splitlines() if line.strip()]
+        elif entry.region == "inventory":
+            items = [line.strip() for line in entry.text.splitlines() if line.strip()]
+            snapshot["ocr_metadata"]["inventory_lines"] = items
+        elif entry.region == "tooltips":
+            snapshot["ocr_metadata"]["tooltips"] = [line.strip() for line in entry.text.splitlines() if line.strip()]
     if snapshot["ui"]["hover_text"]:
         snapshot["ui"]["cursor_state"] = "interact"
     ui_regions = load_json(DATA_DIR / "ui_detector_regions.json", {})
@@ -1420,6 +1436,10 @@ def cmd_decision_consume(trace_path, execute=False, snapshot_path="", max_action
                     {"intent_id": intent.intent_id, "success": False, "failure_reason": result.failure_reason}
                 )
                 continue
+            reaction_ms = _sample_reaction_delay(profile, intent.action_type)
+            if reaction_ms:
+                _sleep_ms(reaction_ms)
+                timing_payload.setdefault("reaction_ms", float(reaction_ms))
             low_confidence = requires_confidence_gate(intent, threshold=confidence_threshold)
             if low_confidence:
                 pause_ms = random.uniform(80.0, 180.0)
@@ -1778,6 +1798,10 @@ def cmd_decision_execute_file(path, dry_run=False, snapshot_path="", max_actions
                 {"intent_id": intent.intent_id, "success": False, "failure_reason": result.failure_reason}
             )
             continue
+        reaction_ms = _sample_reaction_delay(profile, intent.action_type)
+        if reaction_ms:
+            _sleep_ms(reaction_ms)
+            timing_payload.setdefault("reaction_ms", float(reaction_ms))
         low_confidence = requires_confidence_gate(intent, threshold=confidence_threshold)
         if low_confidence:
             pause_ms = random.uniform(80.0, 180.0)

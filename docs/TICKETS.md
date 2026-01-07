@@ -48,7 +48,7 @@
 - [ ] Implement action executor interfaces (mouse move/click, keyboard input, camera control).
 - [ ] Add variable click timing (jitter and configurable distributions) for input actions.
 - [x] Add non-linear mouse pathing (curves and easing) for mouse move actions.
-- [ ] Add a reaction-time model (stimulus-to-action delay) with per-action distributions.
+- [x] Add a reaction-time model (stimulus-to-action delay) with per-action distributions.
 - [x] Add hover dwell before click to simulate target acquisition.
 - [x] Add occasional mouse overshoot with corrective micro-moves.
 - [x] Add click down/up dwell variance and long-press support for drag actions.
@@ -66,10 +66,10 @@
 - [x] Add stochastic idle behaviors (hover, camera glance, inventory check) within safe bounds.
 - [x] Add UI scan patterns before actions (mouse sweep or hover checks).
 - [ ] Add “hesitation” mechanics before high-impact actions (bank, trade, drop).
-- [ ] Add corrective camera adjustments after minor overshoot or misclick.
+- [x] Add corrective camera adjustments after minor overshoot or misclick.
 - [ ] Add target acquisition model (aim point selection within UI bounds).
 - [ ] Add click pressure simulation (down/up cadence by action type).
-- [ ] Add typing cadence modeling (key delays, bursts, corrections, backspace).
+- [x] Add typing cadence modeling (key delays, bursts, corrections, backspace).
 - [ ] Add chat cooldown rules (per player, per session, per channel).
 - [ ] Add input device noise model (USB polling jitter, frame-time variance).
 - [x] Add action chaining variability (different orderings for equivalent steps).
@@ -124,6 +124,7 @@
 - [ ] Add calibration tooling to fit timing/motion distributions to human baselines.
 - [ ] Add evaluation datasets for input traces (mouse, click, camera) from real sessions.
 - [ ] Add per-module KPI tracking for human-likeness (input, camera, response).
+- [x] Apply HUMAN_MIMICRY_RUBRIC per run and persist scores (e.g., logs/mimicry_scores.jsonl).
 - [ ] Define stimulus parity requirements (visual cues vs. structured JSON inputs).
 - [ ] Add perception parity checks to ensure agent reacts to on-screen cues.
 - [ ] Add visual cue extraction for animations, hover text, highlights, and overlays.

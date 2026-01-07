@@ -167,6 +167,18 @@ def press_key_name(name: str, hold_ms: Optional[float] = None) -> None:
     if key == "ESC" or key == "ESCAPE":
         press_key(0x1B, hold_ms=hold_ms)
         return
+    if key == "BACKSPACE" or key == "BS":
+        press_key(0x08, hold_ms=hold_ms)
+        return
+    if key == "SHIFT":
+        press_key(0x10, hold_ms=hold_ms)
+        return
+    if key == "CTRL" or key == "CONTROL":
+        press_key(0x11, hold_ms=hold_ms)
+        return
+    if key == "ALT":
+        press_key(0x12, hold_ms=hold_ms)
+        return
     if len(key) == 1:
         press_key(ord(key), hold_ms=hold_ms)
 
