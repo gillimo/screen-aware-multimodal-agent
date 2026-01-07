@@ -1,5 +1,45 @@
 # Ticket Log
 
+## Performance Optimization - Rust Core (Future)
+Note: Target is processing within 1 game tick (~600ms)
+- [ ] Evaluate Rust for performance-critical components
+- [ ] Rust module for screen capture and ROI extraction
+- [ ] Rust module for fast pixel analysis (arrow detection, highlights)
+- [ ] PyO3 bindings for Python integration
+- [ ] Keep Python for decision making, Rust for perception
+- [ ] Benchmark: capture->detect->decide->act in <600ms
+- [ ] Consider: Rust WebSocket client for RuneLite instead of file polling
+
+## RuneLite API Integration (Priority)
+- [ ] Extend RuneLite plugin to expose game data via local socket/file
+- [ ] Export player world coordinates (x, y, plane) from RuneLite
+- [ ] Export NPC data (id, name, position, health) for nearby NPCs
+- [ ] Export game object data (id, name, position) for interactable objects
+- [ ] Export inventory contents (slot, item id, item name, quantity)
+- [ ] Export current skill levels and XP
+- [ ] Export compass/camera orientation (yaw angle)
+- [ ] Export tutorial progress varbit (for Tutorial Island phase)
+- [ ] Export current animation state (idle, walking, interacting)
+- [ ] Create Python client to read RuneLite exported data
+- [ ] Merge RuneLite data with OCR snapshot for hybrid state
+
+## Tutorial Island Autonomous Completion (Priority)
+Note: Quest Helper does NOT cover Tutorial Island - must handle ourselves
+- [x] Define Tutorial Island phases and transitions
+- [x] Create tutorial_island_decisions.json with phase-based actions
+- [ ] Implement Gielinor Guide phase (character creation done)
+- [ ] Implement Survival Expert phase (fishing, cooking, fire)
+- [ ] Implement Master Chef phase (bread making)
+- [ ] Implement Quest Guide phase (quest tab intro)
+- [ ] Implement Mining Instructor phase (mining, smithing)
+- [ ] Implement Combat Instructor phase (melee, ranged)
+- [ ] Implement Financial Advisor phase (bank intro)
+- [ ] Implement Brother Brace phase (prayer, friends tab)
+- [ ] Implement Magic Instructor phase (spellcasting, leaving island)
+- [ ] Add phase detection from tutorial hint OCR
+- [ ] Add phase transition verification
+- [ ] Test end-to-end Tutorial Island completion
+
 ## Hands and Eyes (Focused)
 - [ ] Build client window discovery and focus tracking.
 - [ ] Implement screen capture with FPS and ROI configuration.

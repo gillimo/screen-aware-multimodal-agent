@@ -41,7 +41,24 @@ class LibrarianServer:
         self.port = port
         self.client: Optional[anthropic.Anthropic] = None
         self.running = False
+        self.config = self._load_config()
         self._init_client()
+
+    def _load_config(self) -> dict:
+        """Load config with model preferences."""
+        config_path = DATA_DIR / "claude_config.json"
+        defaults = {
+            "vision_model": "claude-sonnet-4-20250514",
+            "text_model": "claude-3-5-haiku-20241022",
+            "max_tokens": 300,
+        }
+        if config_path.exists():
+            try:
+                loaded = json.loads(config_path.read_text())
+                defaults.update(loaded)
+            except Exception:
+                pass
+        return defaults
 
     def _init_client(self):
         if not HAS_ANTHROPIC:
@@ -52,14 +69,20 @@ class LibrarianServer:
             if config_path.exists():
                 try:
                     config = json.loads(config_path.read_text())
-                    api_key = config.get("api_key")
+                    # Support api_key_env to read from env var specified in config
+                    env_var = config.get("api_key_env")
+                    if env_var:
+                        api_key = os.environ.get(env_var)
+                    # Fallback to direct api_key (not recommended)
+                    if not api_key:
+                        api_key = config.get("api_key")
                 except Exception:
                     pass
         if api_key:
             self.client = anthropic.Anthropic(api_key=api_key)
             print("Claude API initialized")
         else:
-            print("Warning: No ANTHROPIC_API_KEY found")
+            print("Warning: No ANTHROPIC_API_KEY found. Set environment variable or update data/claude_config.json")
 
     def handle_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Process incoming request and return response."""
@@ -128,9 +151,11 @@ Respond ONLY with valid JSON:
                 "text": prompt,
             })
 
+            model = self.config.get("vision_model", "claude-sonnet-4-20250514")
+            max_tokens = self.config.get("max_tokens", 300)
             response = self.client.messages.create(
-                model="claude-sonnet-4-20250514",
-                max_tokens=500,
+                model=model,
+                max_tokens=max_tokens,
                 messages=[{"role": "user", "content": messages_content}],
             )
 
@@ -158,9 +183,11 @@ Respond ONLY with valid JSON:
 
         prompt = request.get("prompt", "")
         try:
+            model = self.config.get("text_model", "claude-3-5-haiku-20241022")
+            max_tokens = self.config.get("max_tokens", 300)
             response = self.client.messages.create(
-                model="claude-sonnet-4-20250514",
-                max_tokens=1000,
+                model=model,
+                max_tokens=max_tokens,
                 messages=[{"role": "user", "content": prompt}],
             )
             return {

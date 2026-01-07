@@ -13,3 +13,12 @@ __pycache__/
 # OS-specific
 .DS_Store
 Thumbs.db
+
+# Secrets - NEVER commit API keys
+.env
+*.env
+data/claude_config.json
+secrets/
+
+# Screenshots (large files)
+data/screenshots/

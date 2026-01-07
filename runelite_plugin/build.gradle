@@ -2,8 +2,8 @@ plugins {
     id 'java'
 }
 
-group = 'com.osrscoach'
-version = '0.1.0'
+group = 'com.sessionstats'
+version = '1.0.0'
 
 repositories {
     mavenCentral()
@@ -14,7 +14,6 @@ dependencies {
     compileOnly group: 'net.runelite', name: 'client', version: 'latest.release'
     compileOnly group: 'net.runelite', name: 'runelite-api', version: 'latest.release'
     compileOnly group: 'net.runelite', name: 'runelite-client', version: 'latest.release'
-    testImplementation 'junit:junit:4.13.2'
 }
 
 java {
