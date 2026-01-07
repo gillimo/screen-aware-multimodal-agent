@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_409e1486411d4355b4ee38ac416065b4",
-  "timestamp": "2026-01-07T19:55:11.826883+00:00",
+  "capture_id": "cap_76351c6f34b34529ab2f173bb50a0113",
+  "timestamp": "2026-01-07T19:54:31.794199+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 58
+    "capture_latency_ms": 53
   },
   "roi": {
     "fullscreen": {
@@ -87,17 +87,16 @@
     "hover_text": "ee EE",
     "elements": [],
     "dialogue_options": [
-      "\"C:/Users/gilli/OneDrive/Desktop/proje",
+      "ight - go is single-pass. Let me creat",
+      "\"C: /Users/gilli/OneDrive/Desktop/proje",
       "rt subprocess...)",
-      "ed ti_door_walkthrough: hover_check_mi",
-      "red snapshot to",
-      "a,  , , . a ee en"
+      "rr ee ee a ee es cn"
     ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "L Skipped ti_door_walk\nCaptured snapshot to\nc:\\Users\\gilli\\OneDr\nc:\\Users\\gilli\\OneDr\ndatetime.datetime.ut",
+      "text": "\u00bb Bash(cd \"C:/Users/gilli\nimport subprocess...)\n\nL Skipped ti_door_walk\nCaptured snapshot to\ncC:\\Users\\gilli\\OneDr",
       "confidence": 0.5
     },
     {
@@ -107,31 +106,31 @@
     },
     {
       "region": "dialogue",
-      "text": "\"C:/Users/gilli/OneDrive/Desktop/proje\nrt subprocess...)\ned ti_door_walkthrough: hover_check_mi\nred snapshot to\n\na,  , , . a ee en",
+      "text": "ight - go is single-pass. Let me creat\n\n\"C: /Users/gilli/OneDrive/Desktop/proje\nrt subprocess...)\n\nrr ee ee a ee es cn",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "create a conti\n/projects/agent\neck_missing\n\ncts\\agentosrs\\d\n\ncts\\agentosrs\\s\nted and schedul",
+      "text": "a Loop\ncreate a conti\n/projects/agent\neck_missing\n\ncts\\agentosrs\\d",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "es across 49 files\n\nNanqantncrec\\dnacc\\EIINCTTOR",
+      "text": "\u2018smd\n\nAc arrnece L190 \u00a3L31lac",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "iandqexead s/o Tunc'\n\n\u00bb Read(OneDrive\\Deskt\u00a2\n\nDean ACN leazwnaec",
+      "text": "amport OS...)\nL Created docs/FUN\nIndexed 378 funct",
       "confidence": 0.5
     }
   ],
   "chat": [
+    "\u00bb Bash(cd \"C:/Users/gilli",
+    "import subprocess...)",
     "L Skipped ti_door_walk",
     "Captured snapshot to",
-    "c:\\Users\\gilli\\OneDr",
-    "c:\\Users\\gilli\\OneDr",
-    "datetime.datetime.ut"
+    "cC:\\Users\\gilli\\OneDr"
   ],
   "cues": {
     "animation_state": "unknown",
@@ -159,16 +158,15 @@
   "ocr_metadata": {
     "provider": "tesseract",
     "inventory_lines": [
+      "a Loop",
       "create a conti",
       "/projects/agent",
       "eck_missing",
-      "cts\\agentosrs\\d",
-      "cts\\agentosrs\\s",
-      "ted and schedul"
+      "cts\\agentosrs\\d"
     ],
     "tooltips": [
-      "es across 49 files",
-      "Nanqantncrec\\dnacc\\EIINCTTOR"
+      "\u2018smd",
+      "Ac arrnece L190 \u00a3L31lac"
     ]
   }
 }

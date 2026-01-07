@@ -1,21 +1,21 @@
 {
   "version": 1,
-  "capture_id": "cap_409e1486411d4355b4ee38ac416065b4",
-  "timestamp": "2026-01-07T19:55:11.826883+00:00",
+  "capture_id": "cap_af01325d43b74a659fb2c001e60cc54a",
+  "timestamp": "2026-01-07T19:54:16.533312+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
-    "window_title": "\u2733 Jagex Launcher RuneLite",
+    "window_title": "RuneLite - rickyspanesh",
     "bounds": {
-      "x": -7,
-      "y": -7,
-      "width": 1141,
-      "height": 717
+      "x": -8,
+      "y": -8,
+      "width": 1144,
+      "height": 720
     },
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 58
+    "capture_latency_ms": 85
   },
   "roi": {
     "fullscreen": {
@@ -83,56 +83,44 @@
   "ui": {
     "open_interface": "none",
     "selected_tab": "unknown",
-    "cursor_state": "interact",
-    "hover_text": "ee EE",
+    "cursor_state": "default",
+    "hover_text": "",
     "elements": [],
-    "dialogue_options": [
-      "\"C:/Users/gilli/OneDrive/Desktop/proje",
-      "rt subprocess...)",
-      "ed ti_door_walkthrough: hover_check_mi",
-      "red snapshot to",
-      "a,  , , . a ee en"
-    ]
+    "dialogue_options": []
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "L Skipped ti_door_walk\nCaptured snapshot to\nc:\\Users\\gilli\\OneDr\nc:\\Users\\gilli\\OneDr\ndatetime.datetime.ut",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "hover_text",
-      "text": "ee EE",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "dialogue",
-      "text": "\"C:/Users/gilli/OneDrive/Desktop/proje\nrt subprocess...)\ned ti_door_walkthrough: hover_check_mi\nred snapshot to\n\na,  , , . a ee en",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "create a conti\n/projects/agent\neck_missing\n\ncts\\agentosrs\\d\n\ncts\\agentosrs\\s\nted and schedul",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "es across 49 files\n\nNanqantncrec\\dnacc\\EIINCTTOR",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "iandqexead s/o Tunc'\n\n\u00bb Read(OneDrive\\Deskt\u00a2\n\nDean ACN leazwnaec",
+      "text": "follow the path to fim\nEe Sorvall insbrnicko",
       "confidence": 0.5
     }
   ],
-  "chat": [
-    "L Skipped ti_door_walk",
-    "Captured snapshot to",
-    "c:\\Users\\gilli\\OneDr",
-    "c:\\Users\\gilli\\OneDr",
-    "datetime.datetime.ut"
-  ],
+  "chat": [],
   "cues": {
     "animation_state": "unknown",
     "highlight_state": "none",
@@ -158,17 +146,7 @@
   },
   "ocr_metadata": {
     "provider": "tesseract",
-    "inventory_lines": [
-      "create a conti",
-      "/projects/agent",
-      "eck_missing",
-      "cts\\agentosrs\\d",
-      "cts\\agentosrs\\s",
-      "ted and schedul"
-    ],
-    "tooltips": [
-      "es across 49 files",
-      "Nanqantncrec\\dnacc\\EIINCTTOR"
-    ]
+    "inventory_lines": [],
+    "tooltips": []
   }
 }

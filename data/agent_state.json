@@ -12,7 +12,7 @@
   "notes": "",
   "last_decision_id": "ti_open_door",
   "last_execution": {
-    "timestamp": "2026-01-07T19:37:22.015846Z",
+    "timestamp": "2026-01-07T19:55:11.565632Z",
     "decision_id": "ti_open_door",
     "count": 2,
     "success_count": 2,
@@ -30,6 +30,6 @@
       }
     ]
   },
-  "repeat_count": 2,
+  "repeat_count": 23,
   "decision_index": 1
 }

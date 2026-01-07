@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "capture_id": "cap_409e1486411d4355b4ee38ac416065b4",
-  "timestamp": "2026-01-07T19:55:11.826883+00:00",
+  "capture_id": "cap_f190d857f62b444ea2b0d4a1cba4d514",
+  "timestamp": "2026-01-07T19:53:44.770948+00:00",
   "session_id": "local_capture",
   "stale": false,
   "client": {
@@ -15,7 +15,7 @@
     "focused": true,
     "scale": 1.0,
     "fps": 0,
-    "capture_latency_ms": 58
+    "capture_latency_ms": 74
   },
   "roi": {
     "fullscreen": {
@@ -87,17 +87,16 @@
     "hover_text": "ee EE",
     "elements": [],
     "dialogue_options": [
-      "\"C:/Users/gilli/OneDrive/Desktop/proje",
-      "rt subprocess...)",
-      "ed ti_door_walkthrough: hover_check_mi",
-      "red snapshot to",
-      "a,  , , . a ee en"
+      "ed docs/FUNCTION_INDEX.md",
+      "ed 378 functions/classes across 49 fil",
+      "Drive\\Desktop\\projects\\agentosrs\\docs\\",
+      "ACN Aeun ee"
     ]
   },
   "ocr": [
     {
       "region": "chat_box",
-      "text": "L Skipped ti_door_walk\nCaptured snapshot to\nc:\\Users\\gilli\\OneDr\nc:\\Users\\gilli\\OneDr\ndatetime.datetime.ut",
+      "text": "\u00bb Read(OneDrive\\Desktop\\p\nL Read 150 lines\n\n> isnt the go command a s",
       "confidence": 0.5
     },
     {
@@ -107,31 +106,29 @@
     },
     {
       "region": "dialogue",
-      "text": "\"C:/Users/gilli/OneDrive/Desktop/proje\nrt subprocess...)\ned ti_door_walkthrough: hover_check_mi\nred snapshot to\n\na,  , , . a ee en",
+      "text": "ed docs/FUNCTION_INDEX.md\ned 378 functions/classes across 49 fil\n\nDrive\\Desktop\\projects\\agentosrs\\docs\\\n\nACN Aeun ee",
       "confidence": 0.5
     },
     {
       "region": "inventory",
-      "text": "create a conti\n/projects/agent\neck_missing\n\ncts\\agentosrs\\d\n\ncts\\agentosrs\\s\nted and schedul",
+      "text": "/projects/agent\n\n49 files\n\n\\docs\\FUNCTION_\n\na Loop",
       "confidence": 0.5
     },
     {
       "region": "tooltips",
-      "text": "es across 49 files\n\nNanqantncrec\\dnacc\\EIINCTTOR",
+      "text": "",
       "confidence": 0.5
     },
     {
       "region": "tutorial_hint",
-      "text": "iandqexead s/o Tunc'\n\n\u00bb Read(OneDrive\\Deskt\u00a2\n\nDean ACN leazwnaec",
+      "text": "RI AaACrCHR ee",
       "confidence": 0.5
     }
   ],
   "chat": [
-    "L Skipped ti_door_walk",
-    "Captured snapshot to",
-    "c:\\Users\\gilli\\OneDr",
-    "c:\\Users\\gilli\\OneDr",
-    "datetime.datetime.ut"
+    "\u00bb Read(OneDrive\\Desktop\\p",
+    "L Read 150 lines",
+    "> isnt the go command a s"
   ],
   "cues": {
     "animation_state": "unknown",
@@ -159,16 +156,11 @@
   "ocr_metadata": {
     "provider": "tesseract",
     "inventory_lines": [
-      "create a conti",
       "/projects/agent",
-      "eck_missing",
-      "cts\\agentosrs\\d",
-      "cts\\agentosrs\\s",
-      "ted and schedul"
+      "49 files",
+      "\\docs\\FUNCTION_",
+      "a Loop"
     ],
-    "tooltips": [
-      "es across 49 files",
-      "Nanqantncrec\\dnacc\\EIINCTTOR"
-    ]
+    "tooltips": []
   }
 }

@@ -15,6 +15,7 @@ from src.fast_perception import perceive
 from src.local_model import build_decision_prompt, run_local_model, load_config
 from src.model_output import validate_planner_output
 from src.humanization import get_active_profile
+from src.input_exec import move_mouse_path, click
 
 
 def save_snapshot(snapshot, path):
@@ -122,11 +123,19 @@ def run_agent(window_title="RuneLite", max_iterations=50, sleep_between=2.0):
 
         if action == "wait":
             print("Waiting...")
-        elif action in ("click", "right_click"):
+        elif action in ("click", "right_click", "look"):
             tx, ty = target.get("x", 0), target.get("y", 0)
             if tx > 0 and ty > 0:
-                print(f"Would click at ({tx}, {ty})")
-                # TODO: Execute actual click with humanization
+                # Convert relative coords to absolute screen coords
+                abs_x = x + tx
+                abs_y = y + ty
+                print(f"Moving mouse to ({abs_x}, {abs_y})...")
+                move_mouse_path(abs_x, abs_y, steps=25, curve_strength=0.2, jitter_px=1.5, step_delay_ms=8)
+                if action != "look":
+                    time.sleep(0.1)
+                    button = "right" if action == "right_click" else "left"
+                    click(button=button, dwell_ms=50)
+                    print(f"Clicked {button} at ({abs_x}, {abs_y})")
         else:
             print(f"Action not yet implemented: {action}")
 
