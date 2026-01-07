@@ -45,11 +45,11 @@ The foundation (eyes, hands, humanization) is solid. These tickets fill the gap 
 - [ ] Replace silent `pass` blocks with proper error handling
 - [x] Add recovery strategies for common failures:
   - [x] Target not found → rotate camera → retry
-  - [ ] Click missed → re-aim → retry
+  - [x] Click missed → re-aim → retry - click_with_verify() with spiral search
   - [x] Dialogue unexpected → close → retry (via ESCAPE)
-  - [ ] Inventory full → handle gracefully
+  - [x] Inventory full → handle gracefully - handle_inventory_full(), InventoryFullStrategy
 - [x] Add stuck detection (no progress for N ticks)
-- [ ] Implement reset-to-known-state fallback
+- [x] Implement reset-to-known-state fallback - reset_to_known_state()
 
 ### State Machine Framework (src/state_machine.py)
 - [x] Create generic Phase class with entry/exit/tick methods
@@ -124,7 +124,7 @@ Core autonomous behaviors that make the agent self-sufficient.
 - [x] Nearby player detection (for safety)
 - [ ] Resource availability scanning
 - [x] Death detection and respawn handling
-- [ ] Login/logout state handling
+- [x] Login/logout state handling - LoginState enum, detect_login_state(), handle_disconnect()
 
 ### Activity Scheduler (src/autonomy.py)
 - [x] Time-based activity switching
@@ -208,7 +208,7 @@ Note: Quest Helper does NOT cover Tutorial Island - must handle ourselves
 - [x] Add focus recovery before any input execution.
 - [x] Add action gating with UI pre-checks and abort rules.
 - [x] Implement dry-run mode with action logging only.
-- [ ] Add post-action verification with bounded retry and failure classification.
+- [x] Add post-action verification with bounded retry and failure classification - ActionVerification, execute_with_verification()
 - [ ] Add human-in-the-loop approval toggle for unsafe actions.
 - [ ] Add hardware device enumeration for mouse/keyboard with metadata capture.
 - [ ] Add device-level input profiles (DPI, polling rate, accel) for timing modeling.

@@ -1772,3 +1772,611 @@ def unequip_item(
         success=True,
         details={"slot": slot_name, "item": hover}
     )
+
+
+# =============================================================================
+# LOGIN/LOGOUT STATE HANDLING
+# =============================================================================
+
+class LoginState(Enum):
+    """Current login state."""
+    LOGGED_IN = "logged_in"
+    LOGIN_SCREEN = "login_screen"
+    LOBBY = "lobby"
+    DISCONNECTED = "disconnected"
+    UNKNOWN = "unknown"
+
+
+# Keywords that indicate login screen
+LOGIN_SCREEN_KEYWORDS = [
+    'existing user', 'new user', 'login', 'password',
+    'enter your username', 'click here to play',
+    'welcome to', 'old school runescape'
+]
+
+# Keywords that indicate in-game
+IN_GAME_KEYWORDS = [
+    'inventory', 'attack', 'skills', 'quest', 'prayer',
+    'magic', 'combat', 'options', 'logout'
+]
+
+# Keywords that indicate disconnection
+DISCONNECT_KEYWORDS = [
+    'connection lost', 'please wait', 'attempting to reestablish',
+    'login server', 'your session has ended', 'disconnected'
+]
+
+
+def detect_login_state(snapshot: Dict[str, Any]) -> LoginState:
+    """
+    Detect current login state from snapshot.
+    """
+    if not snapshot:
+        return LoginState.UNKNOWN
+
+    ui = snapshot.get("ui", {})
+    ocr = snapshot.get("ocr", [])
+
+    # Collect all text from OCR
+    all_text = ""
+    for item in ocr:
+        if isinstance(item, dict):
+            all_text += " " + item.get("text", "").lower()
+        elif isinstance(item, str):
+            all_text += " " + item.lower()
+
+    # Also check hover text
+    hover = ui.get("hover_text", "").lower()
+    all_text += " " + hover
+
+    # Check for disconnect indicators first (highest priority)
+    if any(kw in all_text for kw in DISCONNECT_KEYWORDS):
+        return LoginState.DISCONNECTED
+
+    # Check for login screen
+    if any(kw in all_text for kw in LOGIN_SCREEN_KEYWORDS):
+        return LoginState.LOGIN_SCREEN
+
+    # Check for in-game indicators
+    if any(kw in all_text for kw in IN_GAME_KEYWORDS):
+        return LoginState.LOGGED_IN
+
+    # Check tabs - if we can see game tabs, we're logged in
+    tabs = ui.get("tabs", {})
+    if tabs and any(tabs.values()):
+        return LoginState.LOGGED_IN
+
+    return LoginState.UNKNOWN
+
+
+def wait_for_login(
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    timeout: float = 60.0,
+    poll_interval: float = 1.0,
+) -> bool:
+    """
+    Wait for the game to reach logged-in state.
+    Returns True if logged in within timeout, False otherwise.
+    """
+    start = time.time()
+    while time.time() - start < timeout:
+        snapshot = snapshot_fn()
+        state = detect_login_state(snapshot)
+
+        if state == LoginState.LOGGED_IN:
+            return True
+
+        time.sleep(poll_interval)
+
+    return False
+
+
+def handle_disconnect(
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    max_wait: float = 30.0,
+) -> ActionResult:
+    """
+    Handle a disconnection by waiting for reconnection or login screen.
+    """
+    start = time.time()
+
+    while time.time() - start < max_wait:
+        snapshot = snapshot_fn()
+        state = detect_login_state(snapshot)
+
+        if state == LoginState.LOGGED_IN:
+            return ActionResult(
+                intent_id="handle_disconnect",
+                success=True,
+                details={"result": "reconnected"}
+            )
+
+        if state == LoginState.LOGIN_SCREEN:
+            return ActionResult(
+                intent_id="handle_disconnect",
+                success=False,
+                failure_reason="need_login",
+                details={"result": "at_login_screen"}
+            )
+
+        time.sleep(1.0)
+
+    return ActionResult(
+        intent_id="handle_disconnect",
+        success=False,
+        failure_reason="timeout"
+    )
+
+
+# =============================================================================
+# CLICK VERIFICATION AND RETRY
+# =============================================================================
+
+def click_with_verify(
+    x: int,
+    y: int,
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    expected_hover: Optional[str] = None,
+    expected_change: Optional[str] = None,
+    max_retries: int = 3,
+    button: str = 'left',
+) -> ActionResult:
+    """
+    Click a location with verification and retry.
+
+    Args:
+        x, y: Click coordinates
+        expected_hover: If provided, verify hover text contains this before clicking
+        expected_change: If provided, verify something changed after clicking
+        max_retries: Number of retry attempts
+        button: Mouse button to use
+    """
+    wx, wy, ww, wh = window_bounds
+
+    for attempt in range(max_retries):
+        # Add small random offset on retries to avoid exact same click
+        jitter_x = random.randint(-3, 3) if attempt > 0 else 0
+        jitter_y = random.randint(-3, 3) if attempt > 0 else 0
+        target_x = x + jitter_x
+        target_y = y + jitter_y
+
+        # Move to target
+        move_mouse_path(target_x, target_y, steps=random.randint(6, 10))
+        time.sleep(0.05)
+
+        # Verify hover text if expected
+        if expected_hover:
+            snapshot = snapshot_fn()
+            hover = get_hover_text(snapshot).lower()
+
+            if expected_hover.lower() not in hover:
+                # Missed target - try slight re-aim
+                time.sleep(0.1)
+                # Spiral search pattern around target
+                for offset in [(0, -5), (5, 0), (0, 5), (-5, 0), (-5, -5), (5, 5)]:
+                    move_mouse_path(target_x + offset[0], target_y + offset[1], steps=3)
+                    time.sleep(0.03)
+                    snap = snapshot_fn()
+                    if expected_hover.lower() in get_hover_text(snap).lower():
+                        break
+                else:
+                    continue  # Try next attempt
+
+        # Capture state before click for change detection
+        pre_state = None
+        if expected_change:
+            pre_snapshot = snapshot_fn()
+            pre_state = _extract_state_hash(pre_snapshot, expected_change)
+
+        # Perform click
+        click(button=button, dwell_ms=random.randint(40, 70))
+        time.sleep(0.15)
+
+        # Verify change occurred if expected
+        if expected_change and pre_state:
+            post_snapshot = snapshot_fn()
+            post_state = _extract_state_hash(post_snapshot, expected_change)
+
+            if pre_state == post_state:
+                # No change detected - click may have missed
+                continue
+
+        return ActionResult(
+            intent_id=f"click_verify_{x}_{y}",
+            success=True,
+            details={"attempts": attempt + 1, "x": target_x, "y": target_y}
+        )
+
+    return ActionResult(
+        intent_id=f"click_verify_{x}_{y}",
+        success=False,
+        failure_reason="max_retries_exceeded",
+        details={"attempts": max_retries}
+    )
+
+
+def _extract_state_hash(snapshot: Dict[str, Any], state_type: str) -> str:
+    """Extract a hashable state for change detection."""
+    if state_type == "dialogue":
+        ui = snapshot.get("ui", {})
+        return str(ui.get("dialogue_options", []))
+
+    if state_type == "inventory":
+        ui = snapshot.get("ui", {})
+        return str(ui.get("inventory", []))
+
+    if state_type == "position":
+        player = snapshot.get("player", {})
+        return f"{player.get('x', 0)},{player.get('y', 0)}"
+
+    if state_type == "hover":
+        ui = snapshot.get("ui", {})
+        return ui.get("hover_text", "")
+
+    # Default: hash the whole UI state
+    return str(snapshot.get("ui", {}))
+
+
+# =============================================================================
+# INVENTORY FULL HANDLING
+# =============================================================================
+
+class InventoryFullStrategy(Enum):
+    """Strategy when inventory is full."""
+    DROP_JUNK = "drop_junk"
+    BANK_TRIP = "bank_trip"
+    STOP = "stop"
+    CONTINUE = "continue"  # For activities that don't need inventory space
+
+
+# Items that are safe to drop when inventory is full
+DROPPABLE_JUNK = [
+    'bones', 'ashes', 'burnt', 'junk', 'rock', 'empty vial',
+    'empty pot', 'empty bucket', 'empty jug'
+]
+
+
+def detect_inventory_full(snapshot: Dict[str, Any]) -> bool:
+    """Check if inventory is full."""
+    ui = snapshot.get("ui", {})
+    inventory = ui.get("inventory", [])
+
+    if inventory:
+        # Count filled slots
+        filled = sum(1 for item in inventory if item and item.get("name"))
+        return filled >= 28
+
+    # Fallback: check OCR for "full" message
+    ocr = snapshot.get("ocr", [])
+    for item in ocr:
+        text = item.get("text", "").lower() if isinstance(item, dict) else str(item).lower()
+        if "inventory" in text and "full" in text:
+            return True
+
+    return False
+
+
+def handle_inventory_full(
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    strategy: InventoryFullStrategy = InventoryFullStrategy.DROP_JUNK,
+    bank_callback: Optional[Callable[[], bool]] = None,
+) -> ActionResult:
+    """
+    Handle a full inventory based on the chosen strategy.
+
+    Args:
+        window_bounds: Game window bounds
+        snapshot_fn: Function to get current game state
+        strategy: How to handle the full inventory
+        bank_callback: Optional callback to execute bank trip
+    """
+    if strategy == InventoryFullStrategy.CONTINUE:
+        return ActionResult(
+            intent_id="inv_full_continue",
+            success=True,
+            details={"strategy": "continue"}
+        )
+
+    if strategy == InventoryFullStrategy.STOP:
+        return ActionResult(
+            intent_id="inv_full_stop",
+            success=False,
+            failure_reason="inventory_full_stop",
+            details={"strategy": "stop"}
+        )
+
+    if strategy == InventoryFullStrategy.DROP_JUNK:
+        dropped = 0
+        snapshot = snapshot_fn()
+        inventory = snapshot.get("ui", {}).get("inventory", [])
+
+        for slot, item in enumerate(inventory):
+            if not item:
+                continue
+
+            item_name = item.get("name", "").lower()
+            if any(junk in item_name for junk in DROPPABLE_JUNK):
+                # Drop this item
+                result = drop_inventory_slot(slot, window_bounds)
+                if result.success:
+                    dropped += 1
+                time.sleep(0.1)
+
+        if dropped > 0:
+            return ActionResult(
+                intent_id="inv_full_drop",
+                success=True,
+                details={"dropped": dropped, "strategy": "drop_junk"}
+            )
+        else:
+            # No junk to drop - fall through to bank or stop
+            if bank_callback:
+                strategy = InventoryFullStrategy.BANK_TRIP
+            else:
+                return ActionResult(
+                    intent_id="inv_full_no_junk",
+                    success=False,
+                    failure_reason="no_droppable_junk"
+                )
+
+    if strategy == InventoryFullStrategy.BANK_TRIP:
+        if bank_callback:
+            success = bank_callback()
+            return ActionResult(
+                intent_id="inv_full_bank",
+                success=success,
+                details={"strategy": "bank_trip"}
+            )
+        else:
+            return ActionResult(
+                intent_id="inv_full_bank",
+                success=False,
+                failure_reason="no_bank_callback"
+            )
+
+    return ActionResult(
+        intent_id="inv_full_unknown",
+        success=False,
+        failure_reason="unknown_strategy"
+    )
+
+
+def drop_inventory_slot(
+    slot: int,
+    window_bounds: Tuple[int, int, int, int],
+    shift_click: bool = True,
+) -> ActionResult:
+    """Drop an item from inventory using shift-click."""
+    from src.input_exec import key_down, key_up
+
+    pos = get_inventory_slot_position(slot, window_bounds)
+    if not pos:
+        return ActionResult(
+            intent_id=f"drop_slot_{slot}",
+            success=False,
+            failure_reason="invalid_slot"
+        )
+
+    x, y = pos
+    move_mouse_path(x, y, steps=6)
+    time.sleep(0.03)
+
+    if shift_click:
+        key_down('shift')
+        time.sleep(0.02)
+        click(button='left', dwell_ms=random.randint(40, 65))
+        time.sleep(0.02)
+        key_up('shift')
+    else:
+        # Right-click drop
+        click(button='right', dwell_ms=random.randint(40, 65))
+        time.sleep(0.15)
+        # Find and click "Drop" option (usually 5th option)
+        move_mouse_path(x, y + 75, steps=4)
+        time.sleep(0.03)
+        click(button='left', dwell_ms=random.randint(40, 65))
+
+    return ActionResult(
+        intent_id=f"drop_slot_{slot}",
+        success=True,
+        details={"slot": slot}
+    )
+
+
+# =============================================================================
+# RESET TO KNOWN STATE
+# =============================================================================
+
+def reset_to_known_state(
+    window_bounds: Tuple[int, int, int, int],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    max_attempts: int = 5,
+) -> ActionResult:
+    """
+    Attempt to reset the game to a known, clean state.
+
+    This closes all open interfaces, clears dialogue, and returns
+    to the default game view.
+    """
+    from src.input_exec import press_key
+
+    actions_taken = []
+
+    for attempt in range(max_attempts):
+        snapshot = snapshot_fn()
+        ui = snapshot.get("ui", {})
+
+        # Check if we're in a clean state
+        open_interface = ui.get("open_interface", "none")
+        dialogue_options = ui.get("dialogue_options", [])
+        in_dialogue = len(dialogue_options) > 0
+
+        if open_interface == "none" and not in_dialogue:
+            # Clean state achieved
+            return ActionResult(
+                intent_id="reset_state",
+                success=True,
+                details={"attempts": attempt + 1, "actions": actions_taken}
+            )
+
+        # Try to close things
+        if in_dialogue or open_interface not in ["none", "inventory"]:
+            # Press ESC to close
+            press_key('escape')
+            actions_taken.append("escape")
+            time.sleep(0.3)
+            continue
+
+        # Click away from any open interface
+        wx, wy, ww, wh = window_bounds
+        safe_x = wx + ww // 2
+        safe_y = wy + wh // 2
+
+        move_mouse_path(safe_x, safe_y, steps=6)
+        time.sleep(0.05)
+        click(button='left', dwell_ms=random.randint(40, 60))
+        actions_taken.append("click_center")
+        time.sleep(0.3)
+
+    return ActionResult(
+        intent_id="reset_state",
+        success=False,
+        failure_reason="could_not_reset",
+        details={"attempts": max_attempts, "actions": actions_taken}
+    )
+
+
+# =============================================================================
+# POST-ACTION VERIFICATION
+# =============================================================================
+
+@dataclass
+class ActionVerification:
+    """Configuration for post-action verification."""
+    check_type: str  # "hover_changed", "dialogue_opened", "inventory_changed", etc.
+    expected_value: Optional[str] = None  # Expected new value
+    timeout: float = 2.0
+    poll_interval: float = 0.2
+
+
+def verify_action_result(
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    verification: ActionVerification,
+    pre_snapshot: Optional[Dict[str, Any]] = None,
+) -> bool:
+    """
+    Verify that an action had the expected result.
+
+    Args:
+        snapshot_fn: Function to get current game state
+        verification: What to verify
+        pre_snapshot: State before action (for change detection)
+    """
+    start = time.time()
+
+    while time.time() - start < verification.timeout:
+        snapshot = snapshot_fn()
+        ui = snapshot.get("ui", {})
+
+        if verification.check_type == "hover_changed":
+            current_hover = ui.get("hover_text", "")
+            if pre_snapshot:
+                old_hover = pre_snapshot.get("ui", {}).get("hover_text", "")
+                if current_hover != old_hover:
+                    return True
+            elif verification.expected_value:
+                if verification.expected_value.lower() in current_hover.lower():
+                    return True
+
+        elif verification.check_type == "dialogue_opened":
+            options = ui.get("dialogue_options", [])
+            if options and len(options) > 0:
+                return True
+
+        elif verification.check_type == "dialogue_closed":
+            options = ui.get("dialogue_options", [])
+            if not options or len(options) == 0:
+                return True
+
+        elif verification.check_type == "inventory_changed":
+            current_inv = str(ui.get("inventory", []))
+            if pre_snapshot:
+                old_inv = str(pre_snapshot.get("ui", {}).get("inventory", []))
+                if current_inv != old_inv:
+                    return True
+
+        elif verification.check_type == "interface_opened":
+            interface = ui.get("open_interface", "none")
+            if verification.expected_value:
+                if interface == verification.expected_value:
+                    return True
+            else:
+                if interface != "none":
+                    return True
+
+        elif verification.check_type == "interface_closed":
+            interface = ui.get("open_interface", "none")
+            if interface == "none":
+                return True
+
+        elif verification.check_type == "position_changed":
+            player = snapshot.get("player", {})
+            current_pos = (player.get("x", 0), player.get("y", 0))
+            if pre_snapshot:
+                old_player = pre_snapshot.get("player", {})
+                old_pos = (old_player.get("x", 0), old_player.get("y", 0))
+                if current_pos != old_pos:
+                    return True
+
+        time.sleep(verification.poll_interval)
+
+    return False
+
+
+def execute_with_verification(
+    action_fn: Callable[[], ActionResult],
+    snapshot_fn: Callable[[], Dict[str, Any]],
+    verification: ActionVerification,
+    max_retries: int = 3,
+) -> ActionResult:
+    """
+    Execute an action with post-execution verification and retry.
+
+    Args:
+        action_fn: The action to execute
+        snapshot_fn: Function to get game state
+        verification: How to verify success
+        max_retries: Number of retry attempts
+    """
+    for attempt in range(max_retries):
+        # Capture pre-action state
+        pre_snapshot = snapshot_fn()
+
+        # Execute the action
+        result = action_fn()
+
+        if not result.success:
+            # Action itself failed - retry
+            time.sleep(0.2)
+            continue
+
+        # Verify the action had effect
+        if verify_action_result(snapshot_fn, verification, pre_snapshot):
+            result.details = result.details or {}
+            result.details["verified"] = True
+            result.details["attempts"] = attempt + 1
+            return result
+
+        # Verification failed - action didn't have expected effect
+        time.sleep(0.3)
+
+    # All retries exhausted
+    return ActionResult(
+        intent_id=result.intent_id if result else "unknown",
+        success=False,
+        failure_reason="verification_failed",
+        details={"attempts": max_retries}
+    )
