@@ -128,6 +128,12 @@ class CommandType(Enum):
     CHECK = "check"
     FIND_ITEM = "find_item"
 
+    # Advanced features (from autonomy_features.py)
+    PRAY = "pray"          # Start/stop prayer flicking
+    SAFE_SPOT = "safe_spot"  # Find safe spot for target
+    SCAN = "scan"          # Scan for resources
+    GOAL = "goal"          # Set a goal
+
 
 @dataclass
 class CommandResult:
