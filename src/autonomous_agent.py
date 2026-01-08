@@ -495,12 +495,15 @@ class AutonomousAgent:
         """
         Execute one tick of the agent loop.
         Returns False if agent should stop.
+
+        Note: Timing is handled by the run() loop, not here.
+        This fixes the legacy double-sleep issue.
         """
         self.tick_count += 1
 
         # Only make decisions every N ticks
+        # Note: Don't sleep here - run() handles tick timing
         if self.tick_count % self.config.ticks_per_decision != 0:
-            time.sleep(self.config.tick_ms / 1000.0)
             return True
 
         self.decision_count += 1

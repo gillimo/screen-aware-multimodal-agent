@@ -10,12 +10,15 @@ from typing import Any, Dict, List, Optional, Tuple
 # Use orjson for ~10x faster JSON parsing (Rust-based)
 try:
     import orjson
-    def _json_loads(s): return or_json_loads(s)
-    def _json_dumps(obj): return or_json_dumps(obj).decode("utf-8")
+    def _json_loads(s):
+        if isinstance(s, str):
+            s = s.encode("utf-8")
+        return orjson.loads(s)
+    def _json_dumps(obj): return orjson.dumps(obj).decode("utf-8")
 except ImportError:
     import json
-    def _json_loads(s): return _json_loads(s)
-    def _json_dumps(obj): return _json_dumps(obj)
+    def _json_loads(s): return json.loads(s)
+    def _json_dumps(obj): return json.dumps(obj)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"

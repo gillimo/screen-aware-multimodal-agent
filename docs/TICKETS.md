@@ -9,7 +9,7 @@ Align automation to the JSON action-intent pipeline and its contracts.
 - [x] Wire decision validation + trace logging into the canonical loop before execution. (canonical_loop.py)
 - [x] Execute intents through policy/approval gating and log action context + execution summaries in the same loop. (canonical_loop.py)
 - [x] Align tutorial loop orchestration with the canonical action-intent pipeline (state updates, cues, and decision replay). (canonical_loop.py, tutorial_phases.py)
-- [ ] Retire or fix legacy loop timing issues (e.g., double sleep) once canonical loop owns timing.
+- [x] Retire or fix legacy loop timing issues (e.g., double sleep) once canonical loop owns timing. (autonomous_agent.py tick() - removed double sleep)
 - [x] Define RSProx-first pipeline stages with explicit timing budgets and short-circuit rules. (canonical_loop.py, rust_core/integration.rs)
 - [x] Gate heavy OCR/snapshot capture behind stuck/uncertain triggers; keep RSProx hot path lightweight. (snapshot_schema.py)
 - [x] Define fallback triggers (stuck, low-confidence, verification failures) and recovery flow. (snapshot_schema.py)
@@ -58,7 +58,7 @@ The foundation (eyes, hands, humanization) is solid. These tickets fill the gap 
 - [x] Implement wait-for-object-respawn pattern - wait_for_object_respawn()
 
 ### Error Recovery (src/game_actions.py)
-- [ ] Replace silent `pass` blocks with proper error handling
+- [x] Replace silent `pass` blocks with proper error handling (fast_perception.py - added logging)
 - [x] Add recovery strategies for common failures:
   - [x] Target not found → rotate camera → retry
   - [x] Click missed → re-aim → retry - click_with_verify() with spiral search
@@ -333,18 +333,18 @@ If RSProx approach has issues, try submitting to Plugin Hub:
 Note: Quest Helper does NOT cover Tutorial Island - must handle ourselves
 - [x] Define Tutorial Island phases and transitions
 - [x] Create tutorial_island_decisions.json with phase-based actions
-- [ ] Implement Gielinor Guide phase (character creation done)
-- [ ] Implement Survival Expert phase (fishing, cooking, fire)
-- [ ] Implement Master Chef phase (bread making)
-- [ ] Implement Quest Guide phase (quest tab intro)
-- [ ] Implement Mining Instructor phase (mining, smithing)
-- [ ] Implement Combat Instructor phase (melee, ranged)
-- [ ] Implement Financial Advisor phase (bank intro)
-- [ ] Implement Brother Brace phase (prayer, friends tab)
-- [ ] Implement Magic Instructor phase (spellcasting, leaving island)
-- [ ] Add phase detection from tutorial hint OCR
-- [ ] Add phase transition verification
-- [ ] Test end-to-end Tutorial Island completion
+- [x] Implement Gielinor Guide phase (character creation done) - tutorial_phases.py GielinorGuideHandler
+- [x] Implement Survival Expert phase (fishing, cooking, fire) - tutorial_phases.py SurvivalExpertHandler
+- [x] Implement Master Chef phase (bread making) - tutorial_phases.py MasterChefHandler
+- [x] Implement Quest Guide phase (quest tab intro) - tutorial_phases.py QuestGuideHandler
+- [x] Implement Mining Instructor phase (mining, smithing) - tutorial_phases.py MiningInstructorHandler
+- [x] Implement Combat Instructor phase (melee, ranged) - tutorial_phases.py CombatInstructorHandler
+- [x] Implement Financial Advisor phase (bank intro) - tutorial_phases.py FinancialAdvisorHandler
+- [x] Implement Brother Brace phase (prayer, friends tab) - tutorial_phases.py BrotherBraceHandler
+- [x] Implement Magic Instructor phase (spellcasting, leaving island) - tutorial_phases.py MagicInstructorHandler
+- [x] Add phase detection from tutorial hint OCR - tutorial_phases.py detect_phase()
+- [x] Add phase transition verification - tutorial_phases.py PhaseVerifier
+- [ ] Test end-to-end Tutorial Island completion (needs live testing)
 
 ## Hands and Eyes (Focused)
 - [x] Build client window discovery and focus tracking. (perception_infra.py WindowTracker)
