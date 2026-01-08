@@ -37,6 +37,32 @@ class TimingProfile:
     drag_start_hesitation_ms: Tuple[float, float, float, float] = (80, 25, 20, 200)
 
 
+# Profile presets
+TimingProfile.NORMAL = TimingProfile()
+TimingProfile.FAST = TimingProfile(
+    reaction_ms=(150, 40, 60, 350),
+    dwell_ms=(60, 20, 15, 150),
+    inter_action_ms=(120, 40, 40, 280),
+)
+TimingProfile.SLOW = TimingProfile(
+    reaction_ms=(300, 80, 120, 700),
+    dwell_ms=(120, 35, 40, 300),
+    inter_action_ms=(280, 80, 100, 600),
+)
+TimingProfile.CAREFUL = TimingProfile(
+    reaction_ms=(350, 100, 150, 800),
+    dwell_ms=(150, 45, 50, 350),
+    think_pause_ms=(250, 80, 100, 600),
+    inter_action_ms=(350, 100, 120, 700),
+)
+TimingProfile.AGGRESSIVE = TimingProfile(
+    reaction_ms=(120, 30, 50, 280),
+    dwell_ms=(50, 15, 12, 120),
+    inter_action_ms=(100, 30, 30, 220),
+)
+TimingProfile.CAUTIOUS = TimingProfile.CAREFUL  # Alias
+
+
 def sample_reaction_ms(profile: TimingProfile) -> float:
     mean, stdev, min_val, max_val = profile.reaction_ms
     return sample_gaussian(mean, stdev, (min_val, max_val))

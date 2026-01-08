@@ -11,6 +11,9 @@ Handles:
 - Nightfall
 
 Entries (newest first):
+- 2026-01-08: Nightfall: Agent testing session. Fixed: (1) HP detection returning 0% when no data - now returns 100% (2) TimingProfile presets added (NORMAL/FAST/SLOW/CAREFUL/AGGRESSIVE/CAUTIOUS) (3) TimingVariance method names (get_reaction_delay, get_action_gap) (4) flee command handler added (5) NPC finding now uses RSProx screen positions first for faster targeting. RSProx data confirmed working: sees NPCs, player position, tutorial progress.
+- 2026-01-08: Nightfall: RSProx GUI launched successfully. Model training NOT yet run - 16k images in dataset but no trained model. Need to run `python scripts/train_classifier.py`.
+- 2026-01-08: Nightfall: RSProx GUI is the launcher for RuneLite. Start with `cd rsprox_fork && ./gradlew proxy`. User logs in via Jagex auth through RSProx GUI.
 - 2026-01-07: Nightfall: signed in; working through 50+ tickets autonomously.
 - 2026-01-07: loop-audit-oxide: added normalization contract appendix to RSProx pipeline spec; preparing commit.
 - 2026-01-07: loop-audit-oxide: added RSProx-first pipeline spec doc for hot-path + fallback flow.

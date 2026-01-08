@@ -93,7 +93,7 @@ except ImportError as e:
 
 # Import timing variance
 try:
-    from src.agent_tools import TimingVariance, TimingProfile
+    from src.agent_tools import TimingVariance, TimingProfile, TIMING_PROFILES
     HAS_TIMING_VARIANCE = True
 except ImportError:
     HAS_TIMING_VARIANCE = False
@@ -303,12 +303,8 @@ class AutonomousAgent:
             return
 
         try:
-            profile_map = {
-                "normal": TimingProfile.NORMAL,
-                "aggressive": TimingProfile.AGGRESSIVE,
-                "cautious": TimingProfile.CAUTIOUS,
-            }
-            profile = profile_map.get(self.config.timing_profile, TimingProfile.NORMAL)
+            # Use TIMING_PROFILES from agent_tools (normal, subtle, heavy)
+            profile = TIMING_PROFILES.get(self.config.timing_profile, TIMING_PROFILES["normal"])
             self.timing_variance = TimingVariance(profile=profile)
             logger.info(f"Timing variance initialized: {self.config.timing_profile}")
         except Exception as e:
@@ -442,7 +438,7 @@ class AutonomousAgent:
 
             # Apply timing variance if available
             if self.timing_variance:
-                delay = self.timing_variance.pre_action_delay()
+                delay = self.timing_variance.get_reaction_delay()
                 time.sleep(delay / 1000.0)
 
             # Click the prayer
@@ -451,7 +447,7 @@ class AutonomousAgent:
             click(button='left', dwell_ms=random.randint(30, 50))
 
             if self.timing_variance:
-                delay = self.timing_variance.post_action_delay()
+                delay = self.timing_variance.get_action_gap()
                 time.sleep(delay / 1000.0)
 
     def execute_command(self, command: str) -> bool:
@@ -460,7 +456,7 @@ class AutonomousAgent:
 
         # Apply pre-action timing variance (from agent_tools.py)
         if self.timing_variance:
-            delay = self.timing_variance.pre_action_delay()
+            delay = self.timing_variance.get_reaction_delay()
             time.sleep(delay / 1000.0)
 
         if cmd == "handle_event":
@@ -472,7 +468,7 @@ class AutonomousAgent:
 
         # Apply post-action timing variance
         if self.timing_variance:
-            delay = self.timing_variance.post_action_delay()
+            delay = self.timing_variance.get_action_gap()
             time.sleep(delay / 1000.0)
 
         # Record success/failure for fallback trigger (from snapshot_schema.py)

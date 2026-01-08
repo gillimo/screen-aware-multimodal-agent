@@ -536,7 +536,7 @@ def get_health_percent(snapshot: Dict[str, Any]) -> float:
     """Get current health percentage from snapshot."""
     # Try RuneLite data first
     runelite = snapshot.get("runelite_data", {})
-    if runelite:
+    if runelite and "current_hp" in runelite and "max_hp" in runelite:
         current = runelite.get("current_hp", 0)
         max_hp = runelite.get("max_hp", 1)
         if max_hp > 0:
@@ -546,7 +546,7 @@ def get_health_percent(snapshot: Dict[str, Any]) -> float:
     account = snapshot.get("account", {})
     skills = account.get("skills", {})
     hitpoints = skills.get("hitpoints", {})
-    if hitpoints:
+    if hitpoints and "current" in hitpoints:
         current = hitpoints.get("current", hitpoints.get("level", 10))
         max_hp = hitpoints.get("level", 10)
         if max_hp > 0:

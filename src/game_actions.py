@@ -635,27 +635,46 @@ def find_npc_by_hover(
     max_attempts: int = 20,
 ) -> Optional[NPCTarget]:
     """
-    Find an NPC by scanning the game area and checking hover text.
-
-    Scans a grid pattern, checking hover text at each position.
-    Returns NPCTarget if found, None otherwise.
+    Find an NPC by checking RSProx NPC data first, then hover scan as fallback.
     """
     win_x, win_y, win_w, win_h = window_bounds
+    target_lower = target_name.lower()
 
-    # Define scan grid (game area, excluding UI panels)
+    # FIRST: Check RSProx NPC positions (fast path)
+    snapshot = snapshot_fn()
+    runelite = snapshot.get("runelite_data", {})
+    npcs = runelite.get("npcs_on_screen", [])
+
+    for npc in npcs:
+        if target_lower in npc.get("name", "").lower():
+            # Found NPC via RSProx - use its screen position
+            npc_x = npc.get("x", 0) + win_x
+            npc_y = npc.get("y", 0) + win_y
+            # Move to NPC and verify hover
+            move_mouse_path(npc_x, npc_y, steps=12, curve_strength=0.08, step_delay_ms=8)
+            time.sleep(0.15)
+            snap2 = snapshot_fn()
+            hover = get_hover_text(snap2)
+            if target_lower in hover.lower():
+                actions = parse_hover_actions(hover)
+                return NPCTarget(
+                    name=target_name,
+                    screen_x=npc_x,
+                    screen_y=npc_y,
+                    actions=actions,
+                    confidence=0.95
+                )
+
+    # FALLBACK: Grid scan (slow path)
     scan_start_x = win_x + 50
-    scan_end_x = win_x + win_w - 250  # Avoid right panel
+    scan_end_x = win_x + win_w - 250
     scan_start_y = win_y + 50
-    scan_end_y = win_y + win_h - 200  # Avoid bottom panel
+    scan_end_y = win_y + win_h - 200
 
-    # Grid step size
     step_x = (scan_end_x - scan_start_x) // 5
     step_y = (scan_end_y - scan_start_y) // 4
 
-    target_lower = target_name.lower()
-
     for attempt in range(max_attempts):
-        # Randomize scan order for natural movement
         grid_points = []
         for gx in range(5):
             for gy in range(4):
@@ -665,9 +684,9 @@ def find_npc_by_hover(
 
         random.shuffle(grid_points)
 
-        for x, y in grid_points[:6]:  # Check 6 points per attempt
+        for x, y in grid_points[:6]:
             move_mouse_path(x, y, steps=18, curve_strength=0.1, step_delay_ms=10)
-            time.sleep(0.12)  # Pause to let hover text update
+            time.sleep(0.12)
 
             snapshot = snapshot_fn()
             hover = get_hover_text(snapshot)

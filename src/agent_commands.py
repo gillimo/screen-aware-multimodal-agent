@@ -252,6 +252,8 @@ class AgentCommander:
             return self._check(args)
         elif cmd == "find_item":
             return self._find_item(args)
+        elif cmd == "flee":
+            return self._flee()
         else:
             return CommandResult(
                 success=False,
@@ -410,6 +412,29 @@ class AgentCommander:
         return CommandResult(
             success=False,
             message="No food found in inventory"
+        )
+
+    def _flee(self) -> CommandResult:
+        """Flee from combat by running away."""
+        # Click away on minimap to flee
+        # Minimap is usually in top-right corner
+        x, y, w, h = self.window_bounds
+        # Click on edge of minimap to run away
+        minimap_center_x = x + w - 70  # Approximate minimap center
+        minimap_center_y = y + 90
+        # Run south (bottom of minimap)
+        flee_x = minimap_center_x
+        flee_y = minimap_center_y + 40
+
+        from src.input_exec import click, move_mouse_path
+        move_mouse_path(flee_x, flee_y, steps=3, curve_strength=0.05)
+        click(button='left', dwell_ms=40)
+
+        return CommandResult(
+            success=True,
+            message="Fleeing from combat",
+            action_taken="flee",
+            details={"flee_to": (flee_x, flee_y)}
         )
 
     def _walk_to(self, target: str) -> CommandResult:
