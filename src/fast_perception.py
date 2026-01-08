@@ -201,8 +201,14 @@ def _python_detect(result: PerceptionResult, x: int, y: int, w: int, h: int):
 
             result.detect_ms = int((time.time() - detect_start) * 1000)
 
-    except Exception:
-        pass
+    except ImportError as e:
+        # Missing dependencies - log once and continue
+        import logging
+        logging.getLogger(__name__).debug(f"Python detection dependencies unavailable: {e}")
+    except Exception as e:
+        # Detection failed - log error with context
+        import logging
+        logging.getLogger(__name__).warning(f"Python detection failed for region ({x}, {y}, {w}, {h}): {e}")
 
 
 def find_npc(name: str) -> Optional[Tuple[int, int]]:
@@ -322,9 +328,18 @@ def capture_snapshot(
                     for e in ocr_entries
                 ]
 
+        except ImportError as e:
+            # OCR dependencies not available - this is expected in some environments
+            import logging
+            logging.getLogger(__name__).debug(f"OCR dependencies unavailable: {e}")
+        except json.JSONDecodeError as e:
+            # Config file parsing failed
+            import logging
+            logging.getLogger(__name__).error(f"OCR config parsing failed: {e}")
         except Exception as e:
-            # OCR failed - continue without it
-            pass
+            # OCR failed - log with context for debugging
+            import logging
+            logging.getLogger(__name__).warning(f"OCR processing failed for window {window_bounds}: {e}")
 
     # Add arrow/highlight if detected
     if result.arrow_position:

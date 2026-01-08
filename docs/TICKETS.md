@@ -4,17 +4,17 @@
 
 Align automation to the JSON action-intent pipeline and its contracts.
 
-- [ ] Make the JSON action-intent loop the default automation path; keep free-text commands test-only.
-- [ ] Ensure snapshot capture outputs `SNAPSHOT_SCHEMA.md` fields (client, roi, cues, derived, account, stale, runelite_data) or add an adapter layer.
-- [ ] Wire decision validation + trace logging into the canonical loop before execution.
-- [ ] Execute intents through policy/approval gating and log action context + execution summaries in the same loop.
-- [ ] Align tutorial loop orchestration with the canonical action-intent pipeline (state updates, cues, and decision replay).
+- [x] Make the JSON action-intent loop the default automation path; keep free-text commands test-only. (canonical_loop.py)
+- [x] Ensure snapshot capture outputs `SNAPSHOT_SCHEMA.md` fields (client, roi, cues, derived, account, stale, runelite_data) or add an adapter layer. (snapshot_schema.py)
+- [x] Wire decision validation + trace logging into the canonical loop before execution. (canonical_loop.py)
+- [x] Execute intents through policy/approval gating and log action context + execution summaries in the same loop. (canonical_loop.py)
+- [x] Align tutorial loop orchestration with the canonical action-intent pipeline (state updates, cues, and decision replay). (canonical_loop.py, tutorial_phases.py)
 - [ ] Retire or fix legacy loop timing issues (e.g., double sleep) once canonical loop owns timing.
-- [ ] Define RSProx-first pipeline stages with explicit timing budgets and short-circuit rules.
-- [ ] Gate heavy OCR/snapshot capture behind stuck/uncertain triggers; keep RSProx hot path lightweight.
-- [ ] Define fallback triggers (stuck, low-confidence, verification failures) and recovery flow.
-- [ ] Establish minimal normalization contract for model/executor input; add optional enrichment path.
-- [ ] Define logging boundaries for hot path vs fallback (always-on vs on-demand logs).
+- [x] Define RSProx-first pipeline stages with explicit timing budgets and short-circuit rules. (canonical_loop.py, rust_core/integration.rs)
+- [x] Gate heavy OCR/snapshot capture behind stuck/uncertain triggers; keep RSProx hot path lightweight. (snapshot_schema.py)
+- [x] Define fallback triggers (stuck, low-confidence, verification failures) and recovery flow. (snapshot_schema.py)
+- [x] Establish minimal normalization contract for model/executor input; add optional enrichment path. (rust_core/integration.rs)
+- [x] Define logging boundaries for hot path vs fallback (always-on vs on-demand logs). (canonical_loop.py)
 
 ## Game Logic Layer (PRIORITY - Current Sprint)
 
@@ -82,17 +82,17 @@ Core autonomous behaviors that make the agent self-sufficient.
 
 ### Pathfinding & Navigation
 - [x] Multi-waypoint pathfinding (click intermediate points) - walk_waypoints(), Waypoint class
-- [ ] Obstacle detection and avoidance
+- [x] Obstacle detection and avoidance - autonomy_features.py ObstacleDetector
 - [x] Door/gate auto-open when blocked - detect_blocking_door(), try_open_door(), walk_with_door_handling()
 - [x] Stuck detection with auto-unstick - StuckState class, auto_unstick()
-- [ ] Long-distance navigation using landmarks
-- [ ] Region-based navigation hints
+- [x] Long-distance navigation using landmarks - autonomy_features.py LandmarkNavigator, LANDMARKS
+- [x] Region-based navigation hints - autonomy_features.py, snapshot_schema.py _infer_region()
 
 ### Inventory Intelligence (src/autonomy.py)
 - [x] Track inventory state (item in each slot 0-27)
 - [x] Find item by name/ID in inventory
 - [x] Detect inventory full condition
-- [ ] Smart item organization (stack similar items)
+- [x] Smart item organization (stack similar items) - autonomy_features.py ItemOrganizer
 - [x] Use-item-on-object flow (click item, click world object)
 - [x] Equipment management (equip/unequip items) - equip_item(), unequip_item(), EQUIPMENT_SLOTS
 
@@ -119,9 +119,9 @@ Core autonomous behaviors that make the agent self-sufficient.
 - [x] Target selection (click enemy)
 - [x] Auto-attack continuation
 - [x] Health monitoring (eat food when low)
-- [ ] Prayer flicking (if applicable)
+- [x] Prayer flicking (if applicable) - autonomy_features.py PrayerFlicker
 - [x] Loot pickup after kill
-- [ ] Safe-spot detection and usage
+- [x] Safe-spot detection and usage - autonomy_features.py SafeSpotDetector
 - [x] Run away when health critical
 
 ### Random Events (src/autonomy.py)
@@ -129,8 +129,8 @@ Core autonomous behaviors that make the agent self-sufficient.
 - [x] Common random event handlers:
   - [x] Dismiss unwanted events
   - [x] Genie lamp (click for XP)
-  - [ ] Quiz master (answer questions)
-  - [ ] Frog princess (kiss frog)
+  - [x] Quiz master (answer questions) - autonomy_features.py QuizMasterHandler
+  - [x] Frog princess (kiss frog) - autonomy_features.py FrogPrincessHandler
 - [x] Pause main activity during random event
 - [x] Resume after random event resolved
 
@@ -138,16 +138,16 @@ Core autonomous behaviors that make the agent self-sufficient.
 - [x] Player position tracking (via RuneLite data)
 - [x] Nearby NPC detection
 - [x] Nearby player detection (for safety)
-- [ ] Resource availability scanning
+- [x] Resource availability scanning - autonomy_features.py ResourceScanner
 - [x] Death detection and respawn handling
 - [x] Login/logout state handling - LoginState enum, detect_login_state(), handle_disconnect()
 
 ### Activity Scheduler (src/autonomy.py)
 - [x] Time-based activity switching
 - [x] XP/hour tracking per skill - SkillXP, XPTracker classes with xp_per_hour(), format_summary()
-- [ ] Goal-based activity selection (e.g., "get 40 fishing")
+- [x] Goal-based activity selection (e.g., "get 40 fishing") - autonomy_features.py GoalBasedPlanner
 - [x] Break scheduling (human-like session patterns)
-- [ ] Daily task rotation
+- [x] Daily task rotation - autonomy_features.py DailyRotation
 
 ### Agent Command Interface (src/agent_commands.py)
 - [x] Simple text command parser (talk_to, click, chop, etc.)
@@ -347,30 +347,30 @@ Note: Quest Helper does NOT cover Tutorial Island - must handle ourselves
 - [ ] Test end-to-end Tutorial Island completion
 
 ## Hands and Eyes (Focused)
-- [ ] Build client window discovery and focus tracking.
-- [ ] Implement screen capture with FPS and ROI configuration.
-- [ ] Track capture latency and dropped-frame metrics per session.
-- [ ] Add OCR backend with pluggable providers and per-region confidence scoring.
+- [x] Build client window discovery and focus tracking. (perception_infra.py WindowTracker)
+- [x] Implement screen capture with FPS and ROI configuration. (perception_infra.py ScreenCapture)
+- [x] Track capture latency and dropped-frame metrics per session. (perception_infra.py MetricsTracker)
+- [x] Add OCR backend with pluggable providers and per-region confidence scoring. (perception_infra.py OCRManager)
 - [x] Add OCR config file and provider hook (noop/tesseract) with basic calibration helper.
-- [ ] Create UI element detector for core panels and tabs.
-- [ ] Implement minimap parsing for region inference.
-- [ ] Add cursor state and hover text extraction.
-- [ ] Define and validate the snapshot schema (JSON).
-- [ ] Build a "capture and annotate" dataset tool.
-- [ ] Add a replay viewer for frame sequences and UI overlays.
-- [ ] Define a unified action API (move, click, drag, key, scroll).
+- [x] Create UI element detector for core panels and tabs. (perception_infra.py UIDetector)
+- [x] Implement minimap parsing for region inference. (perception_infra.py MinimapParser)
+- [x] Add cursor state and hover text extraction. (perception_infra.py CursorTracker)
+- [x] Define and validate the snapshot schema (JSON). (snapshot_schema.py)
+- [x] Build a "capture and annotate" dataset tool. (agent_tools.py DatasetCapture)
+- [x] Add a replay viewer for frame sequences and UI overlays. (agent_tools.py ReplayViewer)
+- [x] Define a unified action API (move, click, drag, key, scroll). (agent_tools.py UnifiedAction)
 - [x] Define the expected model output schema for action intents and constraints.
 - [x] Add mouse pathing with curve/easing presets.
-- [ ] Add timing variance (dwell, jitter, reaction delay).
-- [ ] Implement drag actions with human-like start and end jitter.
+- [x] Add timing variance (dwell, jitter, reaction delay). (agent_tools.py TimingVariance)
+- [x] Implement drag actions with human-like start and end jitter. (agent_tools.py HumanDrag)
 - [x] Add focus recovery before any input execution.
 - [x] Add action gating with UI pre-checks and abort rules.
 - [x] Implement dry-run mode with action logging only.
 - [x] Add post-action verification with bounded retry and failure classification - ActionVerification, execute_with_verification()
-- [ ] Add human-in-the-loop approval toggle for unsafe actions.
-- [ ] Add hardware device enumeration for mouse/keyboard with metadata capture.
-- [ ] Add device-level input profiles (DPI, polling rate, accel) for timing modeling.
-- [ ] Detect display refresh rate and OS input latency (where supported).
+- [x] Add human-in-the-loop approval toggle for unsafe actions. (agent_tools.py ApprovalManager)
+- [x] Add hardware device enumeration for mouse/keyboard with metadata capture. (agent_tools.py DeviceEnumerator)
+- [x] Add device-level input profiles (DPI, polling rate, accel) for timing modeling. (agent_tools.py ProfileManager)
+- [x] Detect display refresh rate and OS input latency (where supported). (agent_tools.py DisplayInfo)
 - [ ] Define pass/fail acceptance criteria for perception parity.
 - [ ] Define pass/fail acceptance criteria for timing/motion parity.
 - [ ] Define pass/fail acceptance criteria for error and recovery parity.
