@@ -33,6 +33,12 @@ from src.game_actions import (
     drop_item,
     click_minimap,
     rotate_camera,
+    # Keyboard-based dialogue (faster)
+    press_dialogue_continue,
+    press_dialogue_option,
+    handle_dialogue_keyboard,
+    # Chat logging
+    get_chat_logger,
     search_and_click,
     get_hover_text,
     # New pathfinding and tracking
@@ -218,8 +224,12 @@ class AgentCommander:
             return self._deposit(args)
         elif cmd == "continue":
             return self._continue_dialogue()
+        elif cmd == "continue_key":
+            return self._continue_dialogue_key()
         elif cmd == "select":
             return self._select_option(args)
+        elif cmd == "option_key":
+            return self._select_option_key(args)
         elif cmd == "wait":
             return self._wait(args)
         elif cmd == "rotate":
@@ -482,6 +492,50 @@ class AgentCommander:
 
         return CommandResult(False, "No continue option available")
 
+    def _continue_dialogue_key(self) -> CommandResult:
+        """Continue through dialogue using spacebar (faster, more reliable)."""
+        snapshot = self.snapshot_fn()
+        dialogue = detect_dialogue_state(snapshot)
+
+        if dialogue.state == DialogueState.NONE:
+            return CommandResult(False, "No dialogue active")
+
+        # Log dialogue before continuing
+        chat_logger = get_chat_logger()
+        chat_logger.log_dialogue(dialogue)
+
+        result = press_dialogue_continue()
+        return CommandResult(
+            success=result.success,
+            message="Pressed SPACE to continue",
+            action_taken="continue_key"
+        )
+
+    def _select_option_key(self, option: str) -> CommandResult:
+        """Select dialogue option using number key (1-5)."""
+        snapshot = self.snapshot_fn()
+        dialogue = detect_dialogue_state(snapshot)
+
+        if dialogue.state != DialogueState.PLAYER_OPTIONS:
+            return CommandResult(False, "No dialogue options available")
+
+        # Log dialogue before selecting
+        chat_logger = get_chat_logger()
+        chat_logger.log_dialogue(dialogue)
+
+        # Parse option number
+        try:
+            opt_num = int(option.strip()) if option else 1
+        except ValueError:
+            opt_num = 1
+
+        result = press_dialogue_option(opt_num)
+        return CommandResult(
+            success=result.success,
+            message=f"Pressed {opt_num} to select option",
+            action_taken="option_key"
+        )
+
     def _select_option(self, option_text: str) -> CommandResult:
         """Select a dialogue option."""
         snapshot = self.snapshot_fn()
@@ -739,7 +793,10 @@ def get_available_commands() -> List[str]:
         "bank",
         "deposit [all|item_name]",
 
-        # Dialogue
+        # Dialogue (keyboard - preferred)
+        "continue_key",  # Press spacebar
+        "option_key <1-5>",  # Press number key
+        # Dialogue (mouse - legacy)
         "continue",
         "select <option_text>",
 

@@ -1,0 +1,59 @@
+{
+  "_comment": "Fixed Classic Layout UI coordinates (765x503 game area)",
+  "layout": "fixed_classic",
+  "game_area": {
+    "x": 4,
+    "y": 4,
+    "width": 512,
+    "height": 334
+  },
+  "minimap": {
+    "x": 550,
+    "y": 8,
+    "width": 146,
+    "height": 151
+  },
+  "compass": {
+    "x": 545,
+    "y": 4,
+    "width": 33,
+    "height": 33
+  },
+  "tabs": {
+    "combat": {"x": 526, "y": 168, "width": 30, "height": 33},
+    "skills": {"x": 559, "y": 168, "width": 30, "height": 33},
+    "quest": {"x": 592, "y": 168, "width": 30, "height": 33},
+    "inventory": {"x": 625, "y": 168, "width": 30, "height": 33},
+    "equipment": {"x": 658, "y": 168, "width": 30, "height": 33},
+    "prayer": {"x": 691, "y": 168, "width": 30, "height": 33},
+    "magic": {"x": 724, "y": 168, "width": 30, "height": 33}
+  },
+  "inventory_panel": {
+    "x": 519,
+    "y": 205,
+    "width": 186,
+    "height": 248,
+    "slot_width": 36,
+    "slot_height": 32,
+    "slots_per_row": 4,
+    "total_slots": 28
+  },
+  "chat_box": {
+    "x": 7,
+    "y": 345,
+    "width": 506,
+    "height": 129
+  },
+  "hover_text": {
+    "x": 4,
+    "y": 4,
+    "width": 400,
+    "height": 20
+  },
+  "orbs": {
+    "hp": {"x": 521, "y": 52, "width": 27, "height": 25},
+    "prayer": {"x": 521, "y": 85, "width": 27, "height": 25},
+    "run": {"x": 521, "y": 118, "width": 27, "height": 25},
+    "special": {"x": 521, "y": 151, "width": 27, "height": 25}
+  }
+}

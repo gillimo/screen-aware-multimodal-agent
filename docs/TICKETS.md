@@ -1,5 +1,21 @@
 # Ticket Log
 
+## Canonical JSON Action-Intent Loop (HIGH PRIORITY)
+
+Align automation to the JSON action-intent pipeline and its contracts.
+
+- [ ] Make the JSON action-intent loop the default automation path; keep free-text commands test-only.
+- [ ] Ensure snapshot capture outputs `SNAPSHOT_SCHEMA.md` fields (client, roi, cues, derived, account, stale, runelite_data) or add an adapter layer.
+- [ ] Wire decision validation + trace logging into the canonical loop before execution.
+- [ ] Execute intents through policy/approval gating and log action context + execution summaries in the same loop.
+- [ ] Align tutorial loop orchestration with the canonical action-intent pipeline (state updates, cues, and decision replay).
+- [ ] Retire or fix legacy loop timing issues (e.g., double sleep) once canonical loop owns timing.
+- [ ] Define RSProx-first pipeline stages with explicit timing budgets and short-circuit rules.
+- [ ] Gate heavy OCR/snapshot capture behind stuck/uncertain triggers; keep RSProx hot path lightweight.
+- [ ] Define fallback triggers (stuck, low-confidence, verification failures) and recovery flow.
+- [ ] Establish minimal normalization contract for model/executor input; add optional enrichment path.
+- [ ] Define logging boundaries for hot path vs fallback (always-on vs on-demand logs).
+
 ## Game Logic Layer (PRIORITY - Current Sprint)
 
 The foundation (eyes, hands, humanization) is solid. These tickets fill the gap between perception/action and autonomous gameplay.
@@ -158,18 +174,160 @@ Note: Target is processing within 1 game tick (~600ms)
 - [ ] Benchmark: capture->detect->decide->act in <600ms
 - [ ] Consider: Rust WebSocket client for RuneLite instead of file polling
 
-## RuneLite API Integration (Priority)
-- [ ] Extend RuneLite plugin to expose game data via local socket/file
-- [ ] Export player world coordinates (x, y, plane) from RuneLite
-- [ ] Export NPC data (id, name, position, health) for nearby NPCs
-- [ ] Export game object data (id, name, position) for interactable objects
-- [ ] Export inventory contents (slot, item id, item name, quantity)
-- [ ] Export current skill levels and XP
-- [ ] Export compass/camera orientation (yaw angle)
-- [ ] Export tutorial progress varbit (for Tutorial Island phase)
-- [ ] Export current animation state (idle, walking, interacting)
-- [ ] Create Python client to read RuneLite exported data
-- [ ] Merge RuneLite data with OCR snapshot for hybrid state
+## RuneLite API Integration (Priority) - BLOCKED
+
+**STATUS: BLOCKED** - Custom RuneLite plugins cannot load with Jagex Launcher auth.
+Standard RuneLite only loads plugins from the official Plugin Hub.
+Dev-mode RuneLite doesn't work with Jagex account authentication.
+
+**Original approach (blocked):**
+- [ ] ~~Extend RuneLite plugin to expose game data via local socket/file~~
+
+**New approach: RSProx Integration (see below)**
+
+---
+
+## RSProx Game Data API (PRIORITY - Unblocks Everything)
+
+**Problem**: Need game state data (player position, NPCs, inventory, skills, varps) but:
+- Custom RuneLite plugins don't work with Jagex Launcher authentication
+- Only Plugin Hub plugins load in standard RuneLite
+
+**Solution**: Use [RSProx](https://github.com/blurite/rsprox) - a packet proxy that:
+- ✅ Works with Jagex Account authentication (fully supported)
+- ✅ Works with RuneLite as the client
+- ✅ Intercepts ALL game packets at network level
+- ✅ Already decodes player info, NPCs, inventory, skills, varps
+- ✅ Open source (MIT license)
+
+**Implementation Plan**:
+
+### Phase 1: Fork RSProx and Add HTTP API
+- [ ] Fork RSProx to `rsprox_fork/` (DONE - cloned to agentosrs/rsprox_fork)
+- [ ] Study existing architecture:
+  - `transcriber/state/SessionState.kt` - holds player, NPCs, varps, XP
+  - `transcriber/state/SessionTracker.kt` - updates state from packets
+  - `transcriber/state/World.kt` - holds NPCs map
+  - `proxy/http/HttpServerHandler.kt` - existing HTTP server (port 8081)
+- [ ] Add new HTTP endpoints to HttpServerHandler:
+
+**Endpoints to implement:**
+```
+GET /gamestate    - Full game state snapshot (JSON)
+GET /player       - Local player: index, name, coord (level, x, z)
+GET /npcs         - Nearby NPCs: index, id, name, coord, angle
+GET /inventory    - Inventory contents (requires tracking UpdateInv packets)
+GET /skills       - All skill levels and XP
+GET /varps        - Varp values (for tutorial progress varbit 281, etc.)
+GET /camera       - Camera position (from CAM_* packets)
+```
+
+**JSON response format (matches our existing RuneLite plugin schema):**
+```json
+{
+  "timestamp": 1704654321000,
+  "tick": 12345,
+  "player": {
+    "index": 2047,
+    "name": "PlayerName",
+    "coord": {"level": 0, "x": 3100, "z": 3200}
+  },
+  "npcs": [
+    {"index": 1, "id": 3308, "name": "Survival Expert", "coord": {...}}
+  ],
+  "skills": {"attack": {"level": 1, "xp": 0}, ...},
+  "varps": {"281": 10}
+}
+```
+
+### Phase 2: Connect RSProx State to HTTP
+- [ ] Expose SessionState from transcriber module to proxy module
+- [ ] Add singleton/registry for active session state
+- [ ] Wire HTTP handler to read from SessionState
+- [ ] Add JSON serialization for Player, Npc, World data
+- [ ] Handle multiple sessions (if multiple clients connected)
+
+### Phase 3: Python Client
+- [ ] Create `src/rsprox_client.py` to fetch from RSProx HTTP API
+- [ ] Replace file-based RuneLite data reader with HTTP client
+- [ ] Update `fast_perception.py` to use RSProx data
+- [ ] Test with live game session
+
+### Phase 4: Integration
+- [ ] Update agent to use RSProx data for:
+  - Player position tracking
+  - NPC detection and targeting
+  - Skill level checks
+  - Tutorial progress (varbit 281)
+- [ ] Remove dependency on custom RuneLite plugin
+- [ ] Document RSProx setup in README
+
+**Key Files in RSProx:**
+- `transcriber/state/SessionState.kt` - Main state container
+  - `localPlayerIndex: Int` - Which player is us
+  - `getPlayer(index): Player` - Get player coord
+  - `getActiveWorld(): World` - Get world with NPCs
+  - `getVarp(id): Int` - Get varp values
+  - `getExperience(skill): Int` - Get skill XP
+- `transcriber/state/Player.kt` - `data class Player(index, name, coord)`
+- `transcriber/state/Npc.kt` - `data class Npc(index, id, name, coord, angle)`
+- `transcriber/state/World.kt` - Has `npcs: MutableMap<Int, Npc>`
+- `proxy/http/HttpServerHandler.kt` - Add our endpoints here
+
+**Build & Run RSProx:**
+```bash
+cd rsprox_fork
+./gradlew proxy   # Launches RSProx GUI
+# Select Jagex Account mode, link account, launch RuneLite
+# HTTP server runs on port 8081
+```
+
+**Estimated Effort**: Medium (Kotlin changes, but architecture is clean)
+
+---
+
+## RuneLite Plugin Hub Submission (Backup Plan)
+If RSProx approach has issues, try submitting to Plugin Hub:
+- [ ] Simplify plugin to minimal data export (JSON file only)
+- [ ] Frame as "Session Stats Logger" for personal use
+- [ ] Submit PR to runelite/plugin-hub
+- [ ] Risk: May be rejected for automation potential
+
+---
+
+## Periodic Cloud Model Strategic Planning (Future)
+
+**Concept**: Every hour, call Claude (cloud model) for high-level strategic planning while local model handles tick-by-tick decisions.
+
+**Architecture**:
+- Local model (Phi3/Ollama): Fast, tick-rate decisions - "click this NPC", "walk here"
+- Cloud model (Claude): Hourly strategic planning - "next hour: train fishing to 40, then start Cook's Assistant quest"
+
+**Implementation**:
+- [ ] Create `src/strategic_planner.py` module
+- [ ] Schedule hourly cloud model call (configurable interval)
+- [ ] Pass current game state summary to Claude:
+  - All skill levels and XP
+  - Inventory contents
+  - Current location
+  - Quest status
+  - Bank contents (if recently banked)
+  - Recent activity log
+- [ ] Claude returns strategic plan:
+  - Next hour's goals (prioritized list)
+  - Suggested activities
+  - Risk assessment (PKers, random events)
+  - Break recommendations
+- [ ] Store plan in `data/strategic_plan.json`
+- [ ] Local model references plan for context
+- [ ] Track plan execution progress
+- [ ] Re-plan early if major events (death, quest complete, goal reached)
+
+**Benefits**:
+- Local model stays fast (no API latency for decisions)
+- Cloud model provides intelligent long-term strategy
+- Reduces API costs (1 call/hour vs continuous)
+- Better goal-oriented behavior
 
 ## Tutorial Island Autonomous Completion (Priority)
 Note: Quest Helper does NOT cover Tutorial Island - must handle ourselves

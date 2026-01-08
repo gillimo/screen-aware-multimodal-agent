@@ -2,6 +2,14 @@
 
 This project provides planning and analysis for OSRS, with optional action execution when explicitly enabled.
 
+## Canonical Automation Loop (JSON Action Intents)
+The automation loop is JSON-first and uses structured action intents (see `CORE_LOOP.md`).
+- Capture a snapshot (`SNAPSHOT_SCHEMA.md`).
+- Produce JSON action intents (`MODEL_OUTPUT_SCHEMA.md`).
+- Validate, log, and execute intents with policy gating.
+
+Free-text command loops are for testing and manual probing only.
+
 ## Reference Order
 1) `PERMISSIONS.md`
 2) This file

@@ -2,6 +2,7 @@
 
 Start here: `HOW_TO_OPERATE.md`
 
+- Core loop and positioning: `CORE_LOOP.md`
 - Permissions and scope: `PERMISSIONS.md`, `SCOPE.md`
 - Install and setup: `INSTALL.md`
 - Capabilities: `CAPABILITIES.md`
@@ -63,6 +64,7 @@ Start here: `HOW_TO_OPERATE.md`
 - Tutorial Island milestone: `TUTORIAL_ISLAND.md`
 - Tutorial Island loop contract: `TUTORIAL_ISLAND_LOOP_CONTRACT.md`
 - Audit log spec: `AUDIT_LOG_SPEC.md`
+- RSProx-first pipeline spec: `RSPROX_PIPELINE_SPEC.md`
 - Tutorial Island state schema: `data/tutorial_island_state_schema.json`
 - Tutorial Island decisions schema: `data/tutorial_island_decisions_schema.json`
 - Git workflow: `HOW_TO_OPERATE.md`, `SIGNING_OFF.md`

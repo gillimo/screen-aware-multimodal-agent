@@ -18,7 +18,291 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple, Callable
 
 from src.actions import ActionIntent, ActionResult, LiveExecutor, ActionLogger
-from src.input_exec import move_mouse_path, click, get_cursor_pos
+from src.input_exec import move_mouse_path, click, get_cursor_pos, press_key_name
+
+from pathlib import Path
+import json
+from datetime import datetime
+
+
+# =============================================================================
+# CHAT/DIALOGUE LOGGING
+# =============================================================================
+
+class ChatLogger:
+    """
+    Logs all chat and dialogue for tracking progress.
+
+    User note: "some chat doesnt imply progress until we hit a checkpoint"
+    So we log everything and let the decision system determine progress.
+    """
+
+    def __init__(self, log_path: Optional[Path] = None):
+        self.log_path = log_path or Path(__file__).resolve().parents[1] / "data" / "chat_log.jsonl"
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        self._entries: List[Dict[str, Any]] = []
+
+    def log(self,
+            text: str,
+            source: str = "unknown",
+            npc_name: str = "",
+            options: Optional[List[str]] = None,
+            phase: str = "") -> None:
+        """
+        Log a chat/dialogue entry.
+
+        Args:
+            text: The dialogue text
+            source: "npc", "player", "system", "tutorial"
+            npc_name: Name of NPC if applicable
+            options: Dialogue options if player choice
+            phase: Current tutorial/game phase
+        """
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "source": source,
+            "text": text,
+            "npc_name": npc_name,
+            "options": options or [],
+            "phase": phase,
+        }
+        self._entries.append(entry)
+
+        # Append to file
+        with open(self.log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+
+    def log_dialogue(self, info: "DialogueInfo", phase: str = "") -> None:
+        """Log from DialogueInfo object."""
+        if info.state == DialogueState.NONE:
+            return
+
+        source = "npc" if info.state == DialogueState.NPC_CHAT else "player_choice"
+        if info.state == DialogueState.SYSTEM_MESSAGE:
+            source = "system"
+
+        self.log(
+            text=info.text,
+            source=source,
+            npc_name=info.npc_name,
+            options=info.options,
+            phase=phase,
+        )
+
+    def get_recent(self, n: int = 10) -> List[Dict[str, Any]]:
+        """Get the n most recent entries."""
+        return self._entries[-n:]
+
+    def load_history(self, limit: int = 100) -> List[Dict[str, Any]]:
+        """Load chat history from file."""
+        if not self.log_path.exists():
+            return []
+
+        entries = []
+        with open(self.log_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        entries.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+
+        return entries[-limit:]
+
+
+# Global chat logger instance
+_chat_logger: Optional[ChatLogger] = None
+
+
+def get_chat_logger() -> ChatLogger:
+    """Get or create the global chat logger."""
+    global _chat_logger
+    if _chat_logger is None:
+        _chat_logger = ChatLogger()
+    return _chat_logger
+
+
+def log_chat(text: str, source: str = "unknown", **kwargs) -> None:
+    """Convenience function to log chat."""
+    get_chat_logger().log(text, source, **kwargs)
+
+
+def get_recent_chat(n: int = 10) -> List[Dict[str, Any]]:
+    """Get recent chat entries."""
+    return get_chat_logger().get_recent(n)
+
+
+# =============================================================================
+# TUTORIAL HINT INGESTION
+# =============================================================================
+
+def get_tutorial_hint(snapshot: Dict[str, Any]) -> str:
+    """
+    Extract tutorial hint text from snapshot.
+
+    Tutorial hints appear in the tutorial_hint OCR region and guide
+    the player through Tutorial Island.
+    """
+    ocr_data = snapshot.get("ocr", [])
+    for entry in ocr_data:
+        if entry.get("region") == "tutorial_hint":
+            return entry.get("text", "").strip()
+    return ""
+
+
+def get_all_screen_text(snapshot: Dict[str, Any]) -> Dict[str, str]:
+    """
+    Get all OCR text from all regions.
+
+    Returns dict with region names as keys and text as values.
+    """
+    result = {}
+    ocr_data = snapshot.get("ocr", [])
+    for entry in ocr_data:
+        region = entry.get("region", "unknown")
+        text = entry.get("text", "").strip()
+        if text:
+            result[region] = text
+    return result
+
+
+def log_tutorial_hint(snapshot: Dict[str, Any], phase: str = "") -> None:
+    """Log tutorial hint to chat log for tracking."""
+    hint = get_tutorial_hint(snapshot)
+    if hint:
+        log_chat(hint, source="tutorial", phase=phase)
+
+
+# =============================================================================
+# UI TAB FUNCTIONS (Fixed Classic Layout)
+# =============================================================================
+
+# Tab positions relative to game window (Fixed Classic Layout)
+# These are approximate pixel offsets from the window's top-left
+UI_TABS = {
+    "combat": {"x": 526, "y": 168},
+    "skills": {"x": 559, "y": 168},
+    "quest": {"x": 592, "y": 168},
+    "inventory": {"x": 625, "y": 168},
+    "equipment": {"x": 658, "y": 168},
+    "prayer": {"x": 691, "y": 168},
+    "magic": {"x": 724, "y": 168},
+}
+
+def open_inventory() -> ActionResult:
+    """
+    Open the inventory tab by pressing F1.
+    This is the fastest and most reliable method.
+    """
+    press_key_name("F1", hold_ms=50)
+    time.sleep(0.15)
+    return ActionResult(
+        intent_id="open_inventory",
+        success=True,
+        details={"method": "F1"}
+    )
+
+
+def open_prayer() -> ActionResult:
+    """Open the prayer tab by pressing F5."""
+    press_key_name("F5", hold_ms=50)
+    time.sleep(0.15)
+    return ActionResult(
+        intent_id="open_prayer",
+        success=True,
+        details={"method": "F5"}
+    )
+
+
+def open_magic() -> ActionResult:
+    """Open the magic tab by pressing F6."""
+    press_key_name("F6", hold_ms=50)
+    time.sleep(0.15)
+    return ActionResult(
+        intent_id="open_magic",
+        success=True,
+        details={"method": "F6"}
+    )
+
+
+def open_equipment() -> ActionResult:
+    """Open the equipment tab by pressing F4."""
+    press_key_name("F4", hold_ms=50)
+    time.sleep(0.15)
+    return ActionResult(
+        intent_id="open_equipment",
+        success=True,
+        details={"method": "F4"}
+    )
+
+
+def open_combat() -> ActionResult:
+    """Open the combat options tab by pressing F2."""
+    press_key_name("F2", hold_ms=50)
+    time.sleep(0.15)
+    return ActionResult(
+        intent_id="open_combat",
+        success=True,
+        details={"method": "F2"}
+    )
+
+
+def open_skills() -> ActionResult:
+    """Open the skills tab by pressing F3."""
+    press_key_name("F3", hold_ms=50)
+    time.sleep(0.15)
+    return ActionResult(
+        intent_id="open_skills",
+        success=True,
+        details={"method": "F3"}
+    )
+
+
+def click_tab(tab_name: str, window_offset: Tuple[int, int] = (0, 0)) -> ActionResult:
+    """
+    Click a UI tab by name. Use keyboard shortcuts when possible.
+
+    Args:
+        tab_name: One of "combat", "skills", "quest", "inventory", "equipment", "prayer", "magic"
+        window_offset: (x, y) offset of game window on screen
+    """
+    tab_name = tab_name.lower()
+
+    # Use keyboard shortcuts for common tabs
+    if tab_name == "inventory":
+        return open_inventory()
+    elif tab_name == "prayer":
+        return open_prayer()
+    elif tab_name == "magic":
+        return open_magic()
+    elif tab_name == "equipment":
+        return open_equipment()
+    elif tab_name == "combat":
+        return open_combat()
+    elif tab_name == "skills":
+        return open_skills()
+
+    # Fallback to clicking for quest tab (no F-key shortcut)
+    if tab_name in UI_TABS:
+        tab = UI_TABS[tab_name]
+        x = window_offset[0] + tab["x"]
+        y = window_offset[1] + tab["y"]
+        move_mouse_path(x, y, steps=15)
+        time.sleep(0.1)
+        click()
+        return ActionResult(
+            intent_id=f"open_{tab_name}",
+            success=True,
+            details={"method": "click", "pos": (x, y)}
+        )
+
+    return ActionResult(
+        intent_id="open_tab",
+        success=False,
+        failure_reason="unknown_tab",
+        details={"tab_name": tab_name}
+    )
 
 
 # =============================================================================
@@ -204,6 +488,88 @@ def select_dialogue_by_text(
     )
 
 
+# -----------------------------------------------------------------------------
+# KEYBOARD-BASED DIALOGUE (faster and more reliable than mouse clicks)
+# -----------------------------------------------------------------------------
+
+def press_dialogue_continue() -> ActionResult:
+    """
+    Press spacebar to continue through NPC dialogue.
+    Much faster and more reliable than clicking.
+    """
+    press_key_name("SPACE", hold_ms=50)
+    time.sleep(0.15)  # Small delay for game to process
+
+    return ActionResult(
+        intent_id="dialogue_continue_key",
+        success=True,
+        details={"key": "SPACE"}
+    )
+
+
+def press_dialogue_option(option_number: int) -> ActionResult:
+    """
+    Press a number key (1-5) to select a dialogue option.
+    Much faster and more reliable than clicking.
+
+    Args:
+        option_number: 1-5 for the dialogue option
+    """
+    if not 1 <= option_number <= 5:
+        return ActionResult(
+            intent_id="dialogue_option_key",
+            success=False,
+            failure_reason="invalid_option",
+            details={"option": option_number, "valid_range": "1-5"}
+        )
+
+    press_key_name(str(option_number), hold_ms=50)
+    time.sleep(0.15)  # Small delay for game to process
+
+    return ActionResult(
+        intent_id="dialogue_option_key",
+        success=True,
+        details={"key": str(option_number), "option": option_number}
+    )
+
+
+def handle_dialogue_keyboard(
+    snapshot: Dict[str, Any],
+    option_preference: Optional[int] = None,
+) -> ActionResult:
+    """
+    Handle dialogue using keyboard only.
+
+    - If NPC is talking: press spacebar to continue
+    - If player has options: press the specified number, or 1 by default
+
+    Args:
+        snapshot: Game state snapshot
+        option_preference: Which option to select (1-5), defaults to 1
+    """
+    info = detect_dialogue_state(snapshot)
+
+    if info.state == DialogueState.NONE:
+        return ActionResult(
+            intent_id="dialogue_handle",
+            success=False,
+            failure_reason="no_dialogue"
+        )
+
+    if info.state == DialogueState.NPC_CHAT or info.continue_available:
+        return press_dialogue_continue()
+
+    if info.state == DialogueState.PLAYER_OPTIONS:
+        option = option_preference if option_preference else 1
+        # Make sure option is valid for available options
+        if info.options and option > len(info.options):
+            option = 1
+        return press_dialogue_option(option)
+
+    # System message - try spacebar
+    return press_dialogue_continue()
+
+
 # =============================================================================
 # HOVER TEXT DETECTION
 # =============================================================================
@@ -300,8 +666,8 @@ def find_npc_by_hover(
         random.shuffle(grid_points)
 
         for x, y in grid_points[:6]:  # Check 6 points per attempt
-            move_mouse_path(x, y, steps=8, curve_strength=0.1, step_delay_ms=2)
-            time.sleep(0.04)  # Brief pause to let hover text update
+            move_mouse_path(x, y, steps=18, curve_strength=0.1, step_delay_ms=10)
+            time.sleep(0.12)  # Pause to let hover text update
 
             snapshot = snapshot_fn()
             hover = get_hover_text(snapshot)
@@ -542,8 +908,9 @@ def find_object_by_hover(
     random.shuffle(positions)
 
     for x, y in positions[:max_positions]:
-        move_mouse_path(x, y, steps=6, curve_strength=0.08, step_delay_ms=2)
-        time.sleep(0.035)
+        # Use smooth, human-like movement during scanning
+        move_mouse_path(x, y, steps=20, curve_strength=0.10, step_delay_ms=10)
+        time.sleep(0.15)  # Pause to let hover text update
 
         snapshot = snapshot_fn()
         hover = get_hover_text(snapshot)
@@ -575,6 +942,11 @@ def interact_with_object(
         )
 
     x, y = pos
+
+    # Move back to position in case mouse drifted during snapshot
+    move_mouse_path(x, y, steps=15)
+    time.sleep(0.1)
+
     snapshot = snapshot_fn()
     hover = get_hover_text(snapshot)
     actions = parse_hover_actions(hover)
@@ -583,7 +955,8 @@ def interact_with_object(
     is_default = actions and action_lower in actions[0].lower()
 
     if is_default:
-        click(button='left', dwell_ms=random.randint(45, 80))
+        # Ensure we're at target position and click
+        click(button='left', dwell_ms=random.randint(60, 100))
     else:
         click(button='right', dwell_ms=random.randint(40, 70))
         time.sleep(random.uniform(0.12, 0.20))
@@ -989,7 +1362,7 @@ def detect_object_state(
     # Check hover text for actions
     # Move to position and get hover
     x, y = pos
-    move_mouse_path(x, y, steps=5, curve_strength=0.05, step_delay_ms=2)
+    move_mouse_path(x, y, steps=5, curve_strength=0.05, step_delay_ms=10)
     time.sleep(0.04)
 
     snapshot = snapshot_fn()
@@ -1326,7 +1699,7 @@ def scan_inventory_slots(
             continue
 
         x, y = pos
-        move_mouse_path(x, y, steps=4, curve_strength=0.03, step_delay_ms=2)
+        move_mouse_path(x, y, steps=4, curve_strength=0.03, step_delay_ms=10)
         time.sleep(0.04)
 
         snap = snapshot_fn()
@@ -1409,7 +1782,7 @@ def detect_blocking_door(
         x += random.randint(-10, 10)
         y += random.randint(-10, 10)
 
-        move_mouse_path(x, y, steps=5, curve_strength=0.05, step_delay_ms=2)
+        move_mouse_path(x, y, steps=5, curve_strength=0.05, step_delay_ms=10)
         time.sleep(0.03)
 
         snapshot = snapshot_fn()

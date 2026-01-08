@@ -23,7 +23,7 @@ class NoopOcrProvider:
 
 class TesseractOcrProvider:
     def __init__(self, tesseract_cmd: str = "") -> None:
-        self.tesseract_cmd = tesseract_cmd
+        self.tesseract_cmd = tesseract_cmd or r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
     def read(self, regions: Dict[str, Any]) -> List[OcrEntry]:
         try:
@@ -32,8 +32,8 @@ class TesseractOcrProvider:
         except Exception:
             return []
 
-        if self.tesseract_cmd:
-            pytesseract.pytesseract.tesseract_cmd = self.tesseract_cmd
+        # Always set tesseract path
+        pytesseract.pytesseract.tesseract_cmd = self.tesseract_cmd
 
         entries: List[OcrEntry] = []
         for name, bounds in regions.items():

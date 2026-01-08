@@ -90,35 +90,37 @@ def move_mouse(x: int, y: int) -> None:
 def move_mouse_path(
     x: int,
     y: int,
-    steps: int = 20,
-    curve_strength: float = 0.15,
+    steps: int = 30,
+    curve_strength: float = 0.0,  # No curve by default
     jitter_px: float = 0.0,
-    step_delay_ms: float = 0.0,
+    step_delay_ms: float = 8.0,
     start_jitter_px: float = 0.0,
     edge_margin_px: float = 4.0,
-    speed_ramp_mode: str = "ease_in_out",
+    speed_ramp_mode: str = "linear",
 ) -> None:
-    from src.mouse_pathing import generate_path, add_tremor, generate_speed_ramp
-    from src.mouse_pathing import jitter_start_point
-
+    """Simple smooth A-to-B mouse movement."""
     start = get_cursor_pos()
-    if start_jitter_px:
-        start = jitter_start_point(start, radius_px=float(start_jitter_px))
-    path = generate_path(start, (x, y), steps=steps, curve_strength=curve_strength, easing="ease_in_out")
-    if jitter_px:
-        path = add_tremor(path, amplitude_px=jitter_px)
+    sx, sy = start
+    ex, ey = x, y
+
     width, height = _screen_size()
     margin = max(0.0, float(edge_margin_px))
-    max_x = max(0.0, width - 1 - margin)
-    max_y = max(0.0, height - 1 - margin)
-    ramp = generate_speed_ramp(len(path), mode=speed_ramp_mode)
-    for idx, (px, py) in enumerate(path):
+    max_x = width - 1 - margin
+    max_y = height - 1 - margin
+
+    # Simple linear interpolation
+    for i in range(steps + 1):
+        t = i / steps
+        # Linear interpolation
+        px = sx + (ex - sx) * t
+        py = sy + (ey - sy) * t
+
+        # Clamp to screen
         clamped_x = max(margin, min(max_x, px))
         clamped_y = max(margin, min(max_y, py))
+
         move_mouse(int(clamped_x), int(clamped_y))
-        if step_delay_ms:
-            factor = 0.4 + 1.2 * ramp[idx]
-            time.sleep(float(step_delay_ms) * factor / 1000.0)
+        time.sleep(step_delay_ms / 1000.0)
 
 
 def click(button: str = "left", dwell_ms: Optional[float] = None, pressure_ms: Optional[float] = None) -> None:
@@ -128,12 +130,22 @@ def click(button: str = "left", dwell_ms: Optional[float] = None, pressure_ms: O
     else:
         down = MOUSEEVENTF_LEFTDOWN
         up = MOUSEEVENTF_LEFTUP
+
+    # Small delay before click to ensure cursor has settled
+    time.sleep(0.02)
+
     _send_input(INPUT(type=INPUT_MOUSE, mi=MOUSEINPUT(0, 0, 0, down, 0, None)))
-    if pressure_ms:
-        time.sleep(float(pressure_ms) / 1000.0)
+
+    # Minimum hold time for click to register (games often need this)
+    hold_time = max(0.05, float(pressure_ms or 0) / 1000.0)
     if dwell_ms:
-        time.sleep(float(dwell_ms) / 1000.0)
+        hold_time = max(hold_time, float(dwell_ms) / 1000.0)
+    time.sleep(hold_time)
+
     _send_input(INPUT(type=INPUT_MOUSE, mi=MOUSEINPUT(0, 0, 0, up, 0, None)))
+
+    # Small delay after click
+    time.sleep(0.02)
 
 
 def scroll(amount: int) -> None:

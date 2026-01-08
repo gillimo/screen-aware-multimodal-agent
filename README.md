@@ -41,6 +41,8 @@ AgentOSRS is designed to be an **autonomous agent** that can play Old School Run
 
 ## Architecture
 
+Canonical automation uses the JSON action-intent loop (snapshot -> model output -> intent execution). Free-text command loops are test-only.
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                         AGENT LOOP                          │

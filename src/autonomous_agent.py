@@ -27,7 +27,7 @@ sys.path.insert(0, str(ROOT))
 
 from src.perception import find_window
 from src.fast_perception import capture_snapshot
-from src.local_model import query_local_model
+from src.local_model import run_local_model
 from src.agent_commands import (
     AgentCommander,
     parse_model_command,
@@ -42,7 +42,17 @@ from src.autonomy import (
     detect_death,
     is_player_idle,
 )
-from src.game_actions import detect_dialogue_state, DialogueState
+from src.game_actions import (
+    detect_dialogue_state,
+    DialogueState,
+    press_dialogue_continue,
+    press_dialogue_option,
+    handle_dialogue_keyboard,
+    get_chat_logger,
+    get_tutorial_hint,
+    get_all_screen_text,
+    log_tutorial_hint,
+)
 
 
 # =============================================================================
@@ -75,20 +85,18 @@ class AgentConfig:
 # PROMPT TEMPLATES
 # =============================================================================
 
-SYSTEM_PROMPT = """You are an OSRS game agent. You observe the game state and issue simple commands.
+SYSTEM_PROMPT = """You are an OSRS game agent. Output ONE command based on the game state.
 
-Available commands:
+Commands:
 {commands}
 
-Rules:
-- Issue ONE command per response
-- Be direct - just output the command, no explanation
-- If in dialogue, use 'continue' or 'select <option>'
-- If you see a random event NPC, handle it first
-- If inventory is full, bank or drop items
-- If health is low, eat food
+Goal: {goal}
 
-Current goal: {goal}
+Output ONLY the command, nothing else. Examples:
+- walk_dir north
+- chop tree
+- click npc
+- wait 2
 """
 
 def build_prompt(context: Dict[str, Any], goal: str) -> str:
@@ -185,11 +193,7 @@ class AutonomousAgent:
         prompt = build_prompt(context, self.goal)
 
         try:
-            response = query_local_model(
-                prompt,
-                model=self.config.model_name,
-                max_tokens=self.config.max_tokens
-            )
+            response = run_local_model(prompt, timeout_s=15)
 
             # Clean up response - just get the command
             response = response.strip()
@@ -227,8 +231,20 @@ class AutonomousAgent:
 
         # Priority 4: Dialogue needs attention
         dialogue = detect_dialogue_state(snapshot)
-        if dialogue.state == DialogueState.NPC_CHAT and dialogue.continue_available:
-            return "continue"
+        if dialogue.state != DialogueState.NONE:
+            # Log the dialogue for tracking
+            chat_logger = get_chat_logger()
+            chat_logger.log_dialogue(dialogue)
+
+            if dialogue.state == DialogueState.NPC_CHAT or dialogue.continue_available:
+                return "continue_key"  # Use keyboard
+            if dialogue.state == DialogueState.PLAYER_OPTIONS:
+                return "option_key 1"  # Default to option 1
+
+        # Also log tutorial hints
+        hint = get_tutorial_hint(snapshot)
+        if hint:
+            log_tutorial_hint(snapshot)
 
         return None
 

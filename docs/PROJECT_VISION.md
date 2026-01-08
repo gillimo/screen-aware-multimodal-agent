@@ -91,6 +91,9 @@ The agent thinks using AI models:
 Input: Snapshot + goal + context
 Output: **ActionIntent** - what to do next (click, move, type, wait)
 
+Action intents are emitted as JSON and validated against `MODEL_OUTPUT_SCHEMA.md`.
+This JSON action-intent loop is the canonical automation path (see `CORE_LOOP.md`).
+
 ### Hands (Execution)
 
 The agent acts through humanized input:

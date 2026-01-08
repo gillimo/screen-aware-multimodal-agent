@@ -226,6 +226,124 @@ def rust_available() -> bool:
     return HAS_RUST
 
 
+def capture_snapshot(
+    window_bounds: Optional[Tuple[int, int, int, int]] = None,
+) -> Dict[str, Any]:
+    """
+    Capture a game snapshot with OCR using existing infrastructure.
+    """
+    from pathlib import Path
+    from src.perception import capture_frame
+    from src.ocr import run_ocr
+
+    ROOT = Path(__file__).resolve().parents[1]
+    DATA_DIR = ROOT / "data"
+
+    result = perceive(window_bounds=window_bounds)
+
+    # Default snapshot structure
+    snapshot = {
+        "player": {
+            "x": result.player_world[0] if result.player_world else 0,
+            "y": result.player_world[1] if result.player_world else 0,
+            "plane": result.player_world[2] if result.player_world else 0,
+            "screen_x": result.player_position[0] if result.player_position else 0,
+            "screen_y": result.player_position[1] if result.player_position else 0,
+        },
+        "ui": {
+            "hover_text": "",
+            "dialogue_options": [],
+            "open_interface": "none",
+            "inventory": [],
+            "tabs": {},
+        },
+        "npcs": result.npcs_on_screen,
+        "objects": [],
+        "ocr": [],
+        "camera": {
+            "direction": result.camera_direction,
+        },
+        "meta": {
+            "tutorial_progress": result.tutorial_progress,
+            "inventory_count": result.inventory_count,
+            "runelite_fresh": result.runelite_fresh,
+            "capture_ms": result.capture_ms,
+            "detect_ms": result.detect_ms,
+            "total_ms": result.total_ms,
+        },
+    }
+
+    # Run OCR using existing config
+    if window_bounds:
+        try:
+            # Load OCR config
+            ocr_config_path = DATA_DIR / "ocr_config.json"
+            ocr_regions_path = DATA_DIR / "ocr_regions.json"
+
+            ocr_config = {}
+            ocr_regions = {}
+
+            if ocr_config_path.exists():
+                ocr_config = json.loads(ocr_config_path.read_text())
+            if ocr_regions_path.exists():
+                ocr_regions = json.loads(ocr_regions_path.read_text())
+
+            provider = ocr_config.get("provider", "tesseract")
+
+            # Capture frame for OCR
+            wx, wy, ww, wh = window_bounds
+            frame = capture_frame((wx, wy, ww, wh))
+            image = frame.get("image")
+
+            if image and ocr_regions:
+                # Prepare regions with image reference
+                prepared_regions = {}
+                for name, bounds in ocr_regions.items():
+                    if isinstance(bounds, dict):
+                        prepared_regions[name] = {
+                            **bounds,
+                            "_image": image,
+                        }
+
+                # Run OCR
+                ocr_entries = run_ocr(prepared_regions, provider_name=provider, provider_config=ocr_config)
+
+                # Extract results
+                for entry in ocr_entries:
+                    if entry.region == "hover_text":
+                        snapshot["ui"]["hover_text"] = entry.text
+                    elif entry.region == "dialogue":
+                        snapshot["ui"]["dialogue_options"] = [
+                            line for line in entry.text.splitlines() if line.strip()
+                        ]
+
+                snapshot["ocr"] = [
+                    {"region": e.region, "text": e.text, "confidence": e.confidence}
+                    for e in ocr_entries
+                ]
+
+        except Exception as e:
+            # OCR failed - continue without it
+            pass
+
+    # Add arrow/highlight if detected
+    if result.arrow_position:
+        snapshot["arrow"] = {
+            "x": result.arrow_position[0],
+            "y": result.arrow_position[1],
+            "confidence": result.arrow_confidence,
+        }
+
+    if result.highlight_position:
+        snapshot["highlight"] = {
+            "x": result.highlight_position[0],
+            "y": result.highlight_position[1],
+            "confidence": result.highlight_confidence,
+        }
+
+    return snapshot
+
+
 if __name__ == "__main__":
     print(f"Rust module available: {HAS_RUST}")
     print("\nTesting perception...")

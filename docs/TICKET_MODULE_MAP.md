@@ -4,6 +4,19 @@ Purpose: map tickets in docs/TICKETS.md to the modules they primarily belong to.
 
 Note: some tickets span modules; listed under the module that owns the main implementation.
 
+## Core Loop Orchestration
+- Make the JSON action-intent loop the default automation path; keep free-text commands test-only.
+- Ensure snapshot capture outputs `SNAPSHOT_SCHEMA.md` fields (client, roi, cues, derived, account, stale, runelite_data) or add an adapter layer.
+- Wire decision validation + trace logging into the canonical loop before execution.
+- Execute intents through policy/approval gating and log action context + execution summaries in the same loop.
+- Align tutorial loop orchestration with the canonical action-intent pipeline (state updates, cues, and decision replay).
+- Retire or fix legacy loop timing issues (e.g., double sleep) once canonical loop owns timing.
+- Define RSProx-first pipeline stages with explicit timing budgets and short-circuit rules.
+- Gate heavy OCR/snapshot capture behind stuck/uncertain triggers; keep RSProx hot path lightweight.
+- Define fallback triggers (stuck, low-confidence, verification failures) and recovery flow.
+- Establish minimal normalization contract for model/executor input; add optional enrichment path.
+- Define logging boundaries for hot path vs fallback (always-on vs on-demand logs).
+
 ## Data and Models
 - Add project-specific datasets in data/reference.json.
 - Expand dependency graph for key workflows.

@@ -1,10 +1,21 @@
-"""Read game data exported by RuneLite plugin."""
+"""Read game data exported by RuneLite plugin or RSProx packet proxy."""
 from __future__ import annotations
 
-import json
 import time
+import urllib.request
+import urllib.error
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+
+# Use orjson for ~10x faster JSON parsing (Rust-based)
+try:
+    import orjson
+    def _json_loads(s): return or_json_loads(s)
+    def _json_dumps(obj): return or_json_dumps(obj).decode("utf-8")
+except ImportError:
+    import json
+    def _json_loads(s): return _json_loads(s)
+    def _json_dumps(obj): return _json_dumps(obj)
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -12,14 +23,118 @@ DATA_DIR = ROOT / "data"
 EXPORT_PATH = Path.home() / ".runelite" / "session_stats.json"
 FALLBACK_PATH = DATA_DIR / "runelite_export.json"
 
+# RSProx HTTP API (packet proxy - preferred source)
+RSPROX_HOST = "http://localhost:8081"
+RSPROX_TIMEOUT = 0.5  # 500ms timeout for HTTP requests
+
+# Data source preference: rsprox first, then file
+_use_rsprox = True
+_rsprox_available = None  # None = unknown, True/False = cached check
+_last_rsprox_check = 0
+RSPROX_CHECK_INTERVAL = 5.0  # Re-check RSProx availability every 5 seconds
+
+
+def _check_rsprox_available() -> bool:
+    """Check if RSProx API is available."""
+    global _rsprox_available, _last_rsprox_check
+    now = time.time()
+    if _rsprox_available is not None and (now - _last_rsprox_check) < RSPROX_CHECK_INTERVAL:
+        return _rsprox_available
+    try:
+        req = urllib.request.Request(f"{RSPROX_HOST}/status", method="GET")
+        with urllib.request.urlopen(req, timeout=RSPROX_TIMEOUT) as resp:
+            data = _json_loads(resp.read().decode("utf-8"))
+            _rsprox_available = data.get("active", False)
+    except Exception:
+        _rsprox_available = False
+    _last_rsprox_check = now
+    return _rsprox_available
+
+
+def _fetch_rsprox(endpoint: str) -> Optional[Dict[str, Any]]:
+    """Fetch data from RSProx HTTP API."""
+    if not _use_rsprox:
+        return None
+    try:
+        req = urllib.request.Request(f"{RSPROX_HOST}{endpoint}", method="GET")
+        with urllib.request.urlopen(req, timeout=RSPROX_TIMEOUT) as resp:
+            data = _json_loads(resp.read().decode("utf-8"))
+            if "error" in data:
+                return None
+            return data
+    except Exception:
+        return None
+
+
+def _rsprox_to_normalized(rsprox_data: Dict[str, Any]) -> Dict[str, Any]:
+    """Convert RSProx /gamestate response to our normalized format."""
+    data = {}
+    data["timestamp"] = rsprox_data.get("timestamp", int(time.time() * 1000))
+    data["game_tick"] = rsprox_data.get("tick", 0)
+    data["source"] = "rsprox"
+
+    # Player data
+    p = rsprox_data.get("player")
+    if p:
+        coord = p.get("coord", {})
+        data["player"] = {
+            "world_x": coord.get("x"),
+            "world_y": coord.get("z"),  # RSProx uses z for y
+            "plane": coord.get("level", 0),
+            "screen_x": None,  # RSProx doesn't have screen coords
+            "screen_y": None,
+            "animation": -1,  # TODO: Add animation tracking to RSProx
+            "name": p.get("name"),
+        }
+
+    # NPCs
+    npcs = rsprox_data.get("npcs", [])
+    data["npcs"] = []
+    for npc in npcs:
+        coord = npc.get("coord", {})
+        data["npcs"].append({
+            "id": npc.get("id"),
+            "name": npc.get("name"),
+            "world_x": coord.get("x"),
+            "world_y": coord.get("z"),
+            "screen_x": None,  # Not available from packets
+            "screen_y": None,
+            "on_screen": True,  # If RSProx sees it, it's nearby
+            "angle": npc.get("angle"),
+        })
+
+    # Skills and tutorial progress need separate fetch
+    data["skills"] = {}
+    data["inventory"] = []
+    data["tutorial_progress"] = 0
+
+    return data
+
+
+def set_rsprox_enabled(enabled: bool):
+    """Enable or disable RSProx as data source."""
+    global _use_rsprox
+    _use_rsprox = enabled
+
+
+def is_rsprox_connected() -> bool:
+    """Check if RSProx is connected and has an active session."""
+    return _check_rsprox_available()
+
 
 def read_export() -> Optional[Dict[str, Any]]:
-    """Read the latest RuneLite export data."""
-    # Try primary path first, then fallback
+    """Read game data from RSProx (preferred) or file fallback."""
+    # Try RSProx first (packet proxy - most accurate)
+    if _use_rsprox and _check_rsprox_available():
+        rsprox_data = _fetch_rsprox("/gamestate")
+        if rsprox_data:
+            return _rsprox_to_normalized(rsprox_data)
+
+    # Fallback to file-based export
     for path in [EXPORT_PATH, FALLBACK_PATH]:
         if path.exists():
             try:
-                raw = json.loads(path.read_text(encoding="utf-8"))
+                raw = _json_loads(path.read_text(encoding="utf-8"))
                 # Normalize short field names from Session Stats plugin
                 return _normalize_export(raw)
             except Exception:
@@ -195,6 +310,13 @@ def get_skill_level(skill_name: str) -> int:
 
 def get_tutorial_progress() -> int:
     """Get Tutorial Island progress varbit value."""
+    # Try RSProx direct varp endpoint first (fastest)
+    if _use_rsprox and _check_rsprox_available():
+        varp_data = _fetch_rsprox("/varps")
+        if varp_data:
+            return varp_data.get("tutorial_progress", 0)
+
+    # Fallback to full export
     data = read_export()
     if not data:
         return 0
@@ -299,7 +421,7 @@ if __name__ == "__main__":
             print("Survival Expert not on screen")
 
         print("\nFull context:")
-        print(json.dumps(build_game_context(), indent=2))
+        print(_json_dumps(build_game_context(), indent=2))
     else:
         print("No RuneLite export data found.")
         print(f"Expected at: {EXPORT_PATH}")

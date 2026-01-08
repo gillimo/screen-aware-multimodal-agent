@@ -7,8 +7,18 @@ Handles:
 - MimicryModel
 - Kya
 - Opus
+- RunePlugOps
 
 Entries (newest first):
+- 2026-01-07: loop-audit-oxide: added normalization contract appendix to RSProx pipeline spec; preparing commit.
+- 2026-01-07: loop-audit-oxide: added RSProx-first pipeline spec doc for hot-path + fallback flow.
+- 2026-01-07: loop-audit-oxide: added RSProx-first pipeline tickets (timing budgets, fallback triggers, normalization, logging boundaries).
+- 2026-01-07: loop-audit-oxide: signed in; auditing canonical JSON action-intent loop docs and tickets.
+- 2026-01-07: Codex: signed in; reading docs.
+- 2026-01-07: Opus: RSProx HTTP API COMPLETE. Added endpoints: /gamestate, /player, /npcs, /skills, /varps, /status. Created GameStateRegistry singleton for session tracking. Modified BinaryBlob to register sessions. Updated runelite_data.py with RSProx support (tries RSProx first, falls back to file). Added orjson for 10x faster JSON parsing. BUILD SUCCESSFUL. Ready to test.
+- 2026-01-07: Opus: RSProx research complete; custom plugin blocked by Jagex auth. RSProx intercepts packets at network level, works with Jagex accounts, already decodes all game state (player, NPCs, varps, XP). Forked to rsprox_fork/. Created detailed ticket for HTTP API integration. Key files: SessionState.kt, SessionTracker.kt, World.kt. Plan: add /gamestate endpoint to existing HTTP server, wire to SessionState, create Python client, gut existing runelite_data.py to use new source.
+- 2026-01-07: RunePlugOps: signed in; taking over plugin docs review.
+- 2026-01-07: Codex: signed in; starting plugin docs review.
 - 2026-01-07: Opus: built Rust core (GNU toolchain + WinLibs), RuneLite plugin v1.12.11; fixed build.gradle deps.
 - 2026-01-07: Opus: signed in; reviewed project structure and committed current state.
 - 2026-01-07: MimicryModel: Esc abort now interrupts sleep delays for quicker control recovery.
@@ -234,4 +244,3 @@ Entries (newest first):
 
 
 - 2026-01-06: <handle>: initialized project from template.
-
