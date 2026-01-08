@@ -8,8 +8,10 @@ Handles:
 - Kya
 - Opus
 - RunePlugOps
+- Nightfall
 
 Entries (newest first):
+- 2026-01-07: Nightfall: signed in; working through 50+ tickets autonomously.
 - 2026-01-07: loop-audit-oxide: added normalization contract appendix to RSProx pipeline spec; preparing commit.
 - 2026-01-07: loop-audit-oxide: added RSProx-first pipeline spec doc for hot-path + fallback flow.
 - 2026-01-07: loop-audit-oxide: added RSProx-first pipeline tickets (timing budgets, fallback triggers, normalization, logging boundaries).
@@ -244,3 +246,4 @@ Entries (newest first):
 
 
 - 2026-01-06: <handle>: initialized project from template.
+- 2026-01-07: Nightfall: Implemented 34+ tickets including snapshot_schema.py (T1-T3), autonomy_features.py (T6-T16), tutorial_phases.py (T17-T27), perception_infra.py (T28-T34). All modules include proper error handling, logging, and documentation.
