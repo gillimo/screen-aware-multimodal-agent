@@ -32,3 +32,8 @@ perceive() -> decide() -> act() -> validate() -> repeat
 ## Notes
 Legacy internal docs may reference domain-specific integrations. The core techniques
 and architecture are intentionally domain-agnostic.
+
+## Metadata
+- Completeness: 68%
+- Known issues: Domain-specific docs remain; rsprox fork untracked
+
