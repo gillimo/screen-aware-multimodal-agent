@@ -1,6 +1,11 @@
-# AgentOSRS
+# Screen-Aware Local Multimodal Agent
 
-An autonomous, task-agnostic OSRS agent with **eyes**, **hands**, and **human-like behavior**.
+Mission Learning Statement
+- Mission: Build a screen-aware local multimodal agent with perception, planning, and humanized input.
+- Learning focus: multimodal perception, state modeling, and robust action execution loops.
+- Project start date: 2026-01-06 (inferred from earliest git commit)
+
+An autonomous, task-agnostic local agent with **eyes**, **hands**, and **human-like behavior**.
 
 ## Vision
 

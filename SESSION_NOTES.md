@@ -97,7 +97,7 @@ gradlew.bat build
 
 Set environment variable:
 ```
-set ANTHROPIC_API_KEY=sk-ant-api03-...
+set ANTHROPIC_API_KEY=YOUR_KEY_HERE
 ```
 
 Or the librarian server reads from `data/claude_config.json`:
